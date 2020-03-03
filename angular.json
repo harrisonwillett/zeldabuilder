@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "Harrison": {
@@ -28,6 +28,12 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/scss/bootstrap.scss",
+              "node_modules/@fortawesome/fontawesome-pro/scss/duotone.scss",
+              "node_modules/@fortawesome/fontawesome-pro/scss/light.scss",
+              "node_modules/@fortawesome/fontawesome-pro/scss/regular.scss",
+              "node_modules/@fortawesome/fontawesome-pro/scss/solid.scss",
+              "node_modules/@fortawesome/fontawesome-pro/scss/fontawesome.scss",
               "src/styles.scss"
             ],
             "scripts": []
@@ -123,6 +129,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "Harrison"
+    }
+  },
+  "defaultProject": "Harrison",
+  "cli": {
+    "analytics": "55d2c8f8-e179-4bb7-8455-70319f024c49"
+  }
 }
