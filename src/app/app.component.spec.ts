@@ -1,35 +1,39 @@
-import { TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
+import { TestBed, async } from "@angular/core/testing";
+import { RouterTestingModule } from "@angular/router/testing";
+import { AppComponent } from "./app.component";
 
-describe('AppComponent', () => {
+import { Pipe, PipeTransform } from "@angular/core";
+
+@Pipe({ name: "rgbaString" })
+class MockPipe implements PipeTransform {
+  transform(obj: any): any {
+    return obj;
+  }
+}
+
+describe("AppComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
+      imports: [RouterTestingModule],
+      declarations: [AppComponent, MockPipe]
     }).compileComponents();
   }));
 
-  it('should create the app', () => {
+  it("should create the app", () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'Harrison'`, () => {
+  it("should have a HelloWorld function", () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('Harrison');
+    expect(app.helloWorld).toBeDefined();
   });
 
-  it('should render title', () => {
+  it("should have a HelloWorld function that returns void", () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('Harrison app is running!');
+    const app = fixture.componentInstance;
+    expect(app.helloWorld()).toBeUndefined();
   });
 });
