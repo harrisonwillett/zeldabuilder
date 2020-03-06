@@ -1,0 +1,11 @@
+<a
+  [routerLink]="tab?.routerLink"
+  role="tab"
+  routerLinkActive
+  #rla="routerLinkActive"
+  [routerLinkActiveOptions]="tab?.routerLinkActiveOptions"
+  [ngClass]="rla.isActive === true ? 'nav-link active' : 'nav-link'"
+  [attr.aria-selected]="rla.isActive"
+>
+  {{ tab.title }}
+</a>

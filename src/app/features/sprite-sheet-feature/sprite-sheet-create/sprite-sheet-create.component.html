@@ -1,0 +1,80 @@
+<div class="row mb-2 p-2">
+  <a class="btn btn-secondary" routerLink="/sprites"
+    ><i class="fas fa-chevron-left"></i> Back to Gallary</a
+  >
+</div>
+<form>
+  <div class="row mb-2">
+    <div class="col-4 p-2 d-flex flex-column">
+      <label for="sheet-name">Name of Sprite Sheet</label>
+      <input
+        type="text"
+        name="sheet-name"
+        id="sheet-name"
+        [value]="sheet?.name"
+        (keyup)="sheet.name = $event.target.value"
+      />
+    </div>
+    <ng-template [ngIf]="sheet !== undefined">
+      <input type="hidden" name="sheet-id" [value]="sheet?.id" />
+    </ng-template>
+    <div class="col-4 p-2 d-flex flex-column">
+      <label>Sprite Mode</label>
+      <select
+        #selectMode
+        name="sheet-mode"
+        id="sheet-mode"
+        (change)="updateModeDetails(selectMode.value)"
+      >
+        <option
+          *ngFor="let opt of presetOptions"
+          [value]="opt.name"
+          [disabled]="opt.disabled"
+          [selected]="opt.selectEval(sheet?.options)"
+          >{{ opt.name }}</option
+        >
+      </select>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col-4 p-2 d-flex flex-column">
+      <label for="sprite-height">Sprite Height</label>
+      <input
+        type="number"
+        name="sprite-height"
+        id="sprite-height"
+        [value]="sheet?.options.height"
+        (keyup)="setOptKey('height', $event.target.value)"
+      />
+    </div>
+    <div class="col-4 p-2 d-flex flex-column">
+      <label for="sprite-width">Sprite Width</label>
+      <input
+        type="number"
+        name="sprite-width"
+        id="sprite-width"
+        [value]="sheet?.options.width"
+        (keyup)="setOptKey('width', $event.target.value)"
+      />
+    </div>
+    <div class="col-4 p-2 d-flex flex-column">
+      <label for="sprite-color-channels">Sprite Color Channels</label>
+      <input
+        type="number"
+        name="sprite-color-channels"
+        id="sprite-color-channels"
+        [value]="sheet?.options.colorChannels"
+        (keyup)="setOptKey('colorChannels', $event.target.value)"
+      />
+    </div>
+  </div>
+  <div class="row mb-2 p-2">
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="processSheet(sheet, funcType)"
+    >
+      {{ submit }}
+    </button>
+  </div>
+</form>

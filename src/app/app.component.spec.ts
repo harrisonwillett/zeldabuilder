@@ -24,16 +24,4 @@ describe("AppComponent", () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
-
-  it("should have a HelloWorld function", () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.helloWorld).toBeDefined();
-  });
-
-  it("should have a HelloWorld function that returns void", () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.helloWorld()).toBeUndefined();
-  });
 });

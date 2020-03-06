@@ -1,0 +1,10 @@
+<div
+  class="editable-canvas"
+  #cwrapper
+  (window:resize)="resizeCanvas()"
+  style="max-width: 100%;"
+  style.width="{{ canvasWidth }}px"
+>
+  <canvas height="{{ canvasHeight }}" width="{{ canvasWidth }}" #canvas>
+  </canvas>
+</div>

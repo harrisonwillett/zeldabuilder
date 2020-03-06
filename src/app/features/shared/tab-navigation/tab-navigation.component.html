@@ -1,0 +1,12 @@
+<nav attr.aria-label="{{ tabNavName }}" class="pb-4">
+  <ul
+    class="nav nav-tabs"
+    id="myTab"
+    role="tablist"
+    attr.aria-label="{{ tabNavName }}"
+  >
+    <li class="nav-item" role="none" *ngFor="let tab of tabs; index as i">
+      <app-tab-navigation-item [tab]="tab"></app-tab-navigation-item>
+    </li>
+  </ul>
+</nav>

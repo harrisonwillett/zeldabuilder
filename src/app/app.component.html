@@ -1,36 +1,11 @@
+<header class="bg-dark">
+  <div class="container pt-2 pb-2 mb-2">
+    <div class="col-4">
+      <app-logo colors="logoColors"></app-logo>
+    </div>
+  </div>
+</header>
 <div class="container">
-  <div class="alert alert-primary" role="alert">
-    A simple primary alert—check it out!
-  </div>
-
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" href="#">Active</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
-        >Disabled</a
-      >
-    </li>
-  </ul>
-  <div class="p-2">
-    <p>
-      <i class="fas fa-pencil"></i>
-      <i class="far fa-pencil"></i>
-    </p>
-    <p>{{ red | json }}</p>
-    <p>{{ red | rgbaString }}</p>
-  </div>
-  <div>
-    <dx-button class="btn btn-primary" text="Click me" (onClick)="helloWorld()">
-    </dx-button>
-  </div>
+  <app-tab-navigation></app-tab-navigation>
+  <router-outlet></router-outlet>
 </div>
-
-<router-outlet></router-outlet>

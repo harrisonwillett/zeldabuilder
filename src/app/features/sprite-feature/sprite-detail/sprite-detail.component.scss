@@ -1,0 +1,44 @@
+/* Old RGBA inputs */
+.color-swatches {
+  .flex-fill {
+    position: relative;
+    input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.01;
+    }
+  }
+  .swatch-focus {
+    box-shadow: 0 0.325rem 0.325rem rgba(0, 0, 0, 0.35) inset;
+    border: 3px solid rgba(255, 255, 255, 0.35);
+  }
+}
+
+/* Nav Tabs */
+.btn-secondary {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+  &:hover,
+  &:focus {
+    color: #fff;
+    background-color: #5a6268;
+    border-color: #545b62;
+  }
+  &[aria-selected="true"] {
+    color: #fff;
+    background-color: #484f53;
+    border-color: #484f53;
+    &:hover,
+    &:focus {
+      color: #fff;
+      background-color: #363c3e;
+      border-color: #363c3e;
+    }
+  }
+}

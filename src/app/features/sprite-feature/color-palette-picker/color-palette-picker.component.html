@@ -1,0 +1,87 @@
+<div class="p-2">
+  <input
+    type="text"
+    [value]="
+      'rgba(' +
+      color?.red +
+      ', ' +
+      color?.green +
+      ', ' +
+      color?.blue +
+      ', ' +
+      color?.alpha +
+      ')'
+    "
+    [ngStyle]="{
+      'background-color':
+        'rgba(' +
+        color?.red +
+        ', ' +
+        color?.green +
+        ', ' +
+        color?.blue +
+        ', ' +
+        1 +
+        ')',
+      color:
+        'rgba(' +
+        (color?.red !== undefined ? (color?.red > 127 ? 0 : 255) : 0) +
+        ', ' +
+        (color?.green !== undefined ? (color?.green > 127 ? 0 : 255) : 0) +
+        ', ' +
+        (color?.blue !== undefined ? (color?.blue > 127 ? 0 : 255) : 0) +
+        ', ' +
+        1 +
+        ')'
+    }"
+    readonly="readonly"
+    (click)="colorModal.hidden = !colorModal.hidden"
+    class="form-control"
+  />
+  <div #colorModal hidden="hidden">
+    <fieldset>
+      <legend>Channels</legend>
+      <label>
+        <span>Red</span>
+        <input
+          type="number"
+          value="{{ color?.red }}"
+          min="0"
+          max="255"
+          (blur)="color.red = $event.target.value"
+        />
+      </label>
+      <label>
+        <span>Green</span>
+        <input
+          type="number"
+          value="{{ color?.green }}"
+          min="0"
+          max="255"
+          (blur)="color.green = $event.target.value"
+        />
+      </label>
+      <label>
+        <span>Blue</span>
+        <input
+          type="number"
+          value="{{ color?.blue }}"
+          min="0"
+          max="255"
+          (blur)="color.blue = $event.target.value"
+        />
+      </label>
+      <label>
+        <span>Alpha</span>
+        <input
+          type="number"
+          value="{{ color?.alpha }}"
+          min="0"
+          max="1"
+          step=".01"
+          (blur)="color.alpha = $event.target.value"
+        />
+      </label>
+    </fieldset>
+  </div>
+</div>

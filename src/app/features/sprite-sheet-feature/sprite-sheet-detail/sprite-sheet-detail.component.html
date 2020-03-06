@@ -1,0 +1,70 @@
+<ng-template [ngIf]="sheet">
+  <app-sprite-sheet-create
+    [submit]="'Update Sprite Sheet'"
+    [sheet]="sheet"
+    [funcType]="'update'"
+  ></app-sprite-sheet-create>
+  <div class="row p-2">
+    <a
+      routerLink="/sprite/{{ sheet?.id }}/"
+      role="button"
+      class="btn btn-secondary"
+      ><i class="fas fa-plus"></i> New Sprite</a
+    >
+  </div>
+
+  <div class="row p-2">
+    <ng-template [ngIf]="sheet?.sprites?.length > 0">
+      <div *ngFor="let sprite of sheet.sprites">
+        <div class="row p-2 m-1">
+          <div class="card shadow-sm">
+            <div class="img-bg-transparent">
+              <img
+                src="{{ sprite.src }}"
+                class="card-img-top"
+                alt="{{ sprite.name }}"
+              />
+            </div>
+            <div class="card-body">
+              <h2 class="card-title">{{ sprite.name }}</h2>
+              <div class="card-text">
+                <p *ngFor="let color of sprite.colors">
+                  {{ color | rgbaString }}
+                </p>
+              </div>
+              <div
+                class="btn-group"
+                role="group"
+                attr.aria-label="{{ sprite?.name }} - Sprite Options"
+              >
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  (click)="delete(sprite)"
+                >
+                  <i class="fas fa-trash"></i> Delete
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  (click)="duplicate(sprite)"
+                >
+                  <i class="fas fa-copy"></i> Duplicate
+                </button>
+                <a
+                  routerLink="/sprite/{{ sheet?.id }}/{{ sprite?.id }}"
+                  role="button"
+                  class="btn btn-primary"
+                  ><i class="fas fa-pencil-alt"></i> Edit</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="sheet?.sprites?.length < 1">
+      <p>No Sprites are currently saved. Click "New Sprite" to begin.</p>
+    </ng-template>
+  </div>
+</ng-template>

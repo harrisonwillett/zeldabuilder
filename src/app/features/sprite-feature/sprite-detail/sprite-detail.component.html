@@ -1,0 +1,104 @@
+<div *ngIf="!hasEditName">
+  <h2>
+    {{ sprite?.name }}
+    <button type="button" class="btn btn-link" (click)="editName()">
+      Edit
+    </button>
+    <small class="text-muted d-block h5" *ngIf="sheet?.name"
+      >Part of {{ sheet?.name }}</small
+    >
+  </h2>
+</div>
+<div *ngIf="hasEditName">
+  <label class="d-block" for="sprite-name">Sprite Name</label>
+  <div class="input-group mb-3">
+    <input
+      value="{{ sprite?.name }}"
+      name="sprite-name"
+      id="sprite-name"
+      type="text"
+      class="form-control"
+      (keyup)="sprite.name = $event.target.value"
+    />
+    <div class="input-group-append">
+      <button class="btn btn-secondary" type="button" (click)="editName()">
+        Button
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex">
+  <div class="p-2">
+    <div class="btn-group-vertical" role="tablist" aria-label="Sprite Tools">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        role="tab"
+        [attr.aria-selected]="tabListSelected[0]"
+        (click)="activateTab($event)"
+        aria-controls="palette-tab"
+        id="palette"
+      >
+        Palette
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        role="tab"
+        [attr.aria-selected]="tabListSelected[1]"
+        (click)="activateTab($event)"
+        aria-controls="brush-tab"
+        id="brush"
+      >
+        Brush
+      </button>
+    </div>
+  </div>
+  <div tabindex="0" role="tabpanel" id="palette-tab" aria-labelledby="palette">
+    <div class="d-flex">
+      <div *ngFor="let color of sprite?.colors; index as i" class="flex-fill">
+        <app-color-palette-picker
+          [color]="color"
+          [index]="i"
+        ></app-color-palette-picker>
+      </div>
+    </div>
+  </div>
+  <div
+    tabindex="-1"
+    hidden="hidden"
+    role="tabpanel"
+    id="brush-tab"
+    aria-labelledby="brush"
+  >
+    <div class="d-flex">
+      <div *ngFor="let color of sprite?.colors; index as i" class="flex-fill">
+        <div class="p-2">
+          <label>
+            <input
+              type="radio"
+              name="select-color"
+              id="select-color-{{ i }}"
+              [checked]="i == 0"
+              (click)="changeSelectedColor(i)"
+            />
+            Select Color {{ i + 1 }}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="sheet">
+  <div *ngIf="sprite">
+    <app-editable-canvas
+      [sprite]="sprite"
+      [selectedColor]="selectedColor"
+      [spriteWidth]="sheet.options.width"
+      [spriteHeight]="sheet.options.height"
+      [editable]="true"
+    >
+    </app-editable-canvas>
+  </div>
+</div>
