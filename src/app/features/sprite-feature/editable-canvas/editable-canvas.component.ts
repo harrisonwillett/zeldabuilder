@@ -30,17 +30,23 @@ export class EditableCanvasComponent implements OnInit, AfterViewInit {
   canvasHeight: number = 1;
   spriteColorPalette: Array<string | CanvasGradient | CanvasPattern>;
   @Input() selectedColor: number = 0;
+  bindingClientRect;
 
   constructor() {}
 
   ngOnInit() {
     this.cntxt = this.canvas.nativeElement.getContext("2d");
+    this.bindingClientRect = this.canvas.nativeElement.getBoundingClientRect();
     this.resizeCanvas();
   }
 
   ngAfterViewInit() {
     this.drawSprite();
     this.editSprite();
+  }
+
+  onScroll() {
+    this.bindingClientRect = this.canvas.nativeElement.getBoundingClientRect();
   }
 
   resizeCanvas() {
@@ -130,7 +136,7 @@ export class EditableCanvasComponent implements OnInit, AfterViewInit {
       )
         .pipe(
           map(event => {
-            console.log(event);
+            //console.log(event);
             if ((event as PointerEvent).type === "pointerdown") {
               isDrawing = true;
             }
@@ -145,15 +151,17 @@ export class EditableCanvasComponent implements OnInit, AfterViewInit {
               (event as PointerEvent).clientX !== undefined &&
               (event as PointerEvent).clientY !== undefined
             ) {
+              //this.bindingClientRect = this.canvas.nativeElement.getBoundingClientRect();
+              /* Postioning End */
               return [
                 Math.floor(
-                  ((event as PointerEvent).clientX -
-                    this.canvas.nativeElement.offsetLeft) /
+                  ((event as PointerEvent).clientX - this.bindingClientRect.x) /
+                    // this.canvas.nativeElement.offsetLeft) /
                     this.pixelScale
                 ),
                 Math.floor(
-                  ((event as PointerEvent).clientY -
-                    this.canvas.nativeElement.offsetTop) /
+                  ((event as PointerEvent).clientY - this.bindingClientRect.y) /
+                    // this.canvas.nativeElement.offsetTop) /
                     this.pixelScale
                 )
               ];
@@ -170,6 +178,7 @@ export class EditableCanvasComponent implements OnInit, AfterViewInit {
   }
 
   colorPixel(coords: number[]) {
+    console.log({ coords0: coords[0], coords1: coords[1] });
     if (this.cntxt !== undefined) {
       if (coords[0] !== undefined && [coords[1]] !== undefined) {
         this.sprite.array[coords[1]][coords[0]] = this.selectedColor;

@@ -2,6 +2,7 @@
   class="editable-canvas"
   #cwrapper
   (window:resize)="resizeCanvas()"
+  (window:scroll)="onScroll()"
   style="max-width: 100%;"
   style.width="{{ canvasWidth }}px"
 >
