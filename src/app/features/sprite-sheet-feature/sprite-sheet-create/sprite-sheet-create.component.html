@@ -68,6 +68,17 @@
       />
     </div>
   </div>
+  <div class="row mb-2">
+    <div
+      *ngFor="let color of sheet?.colors; index as i"
+      class="col-4 p-2 d-flex flex-column"
+    >
+      <app-color-palette-picker
+        [color]="color"
+        [index]="i"
+      ></app-color-palette-picker>
+    </div>
+  </div>
   <div class="row mb-2 p-2">
     <button
       type="button"

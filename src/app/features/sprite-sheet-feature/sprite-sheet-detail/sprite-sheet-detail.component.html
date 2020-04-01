@@ -18,22 +18,20 @@
       <div *ngFor="let sprite of sheet.sprites">
         <div class="row p-2 m-1">
           <div class="card shadow-sm">
-            <div class="img-bg-transparent">
-              <img
-                src="{{ sprite.src }}"
-                class="card-img-top"
-                alt="{{ sprite.name }}"
-              />
-            </div>
             <div class="card-body">
               <h2 class="card-title">{{ sprite.name }}</h2>
               <div class="card-text">
-                <p *ngFor="let color of sprite.colors">
-                  {{ color | rgbaString }}
-                </p>
+                <app-editable-canvas
+                  [sprite]="sprite"
+                  [spriteWidth]="sheet.options.width"
+                  [spriteHeight]="sheet.options.height"
+                  [spriteColors]="sheet.colors"
+                  [editable]="false"
+                >
+                </app-editable-canvas>
               </div>
               <div
-                class="btn-group"
+                class="btn-group mt-3"
                 role="group"
                 attr.aria-label="{{ sprite?.name }} - Sprite Options"
               >
@@ -52,7 +50,7 @@
                   <i class="fas fa-copy"></i> Duplicate
                 </button>
                 <a
-                  routerLink="/sprite/{{ sheet?.id }}/{{ sprite?.id }}"
+                  routerLink="/sprites/{{ sheet?.id }}/{{ sprite?.id }}"
                   role="button"
                   class="btn btn-primary"
                   ><i class="fas fa-pencil-alt"></i> Edit</a

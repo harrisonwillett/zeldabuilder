@@ -1,3 +1,9 @@
+.game-wrapper {
+  height: calc(100vh - 12rem);
+  background-color: #222;
+  text-align: center;
+}
+
 canvas {
   background-color: #0c0c0c;
 }

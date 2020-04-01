@@ -22,81 +22,62 @@
     />
     <div class="input-group-append">
       <button class="btn btn-secondary" type="button" (click)="editName()">
-        Button
+        Update Name
       </button>
     </div>
   </div>
 </div>
-
-<div class="d-flex">
-  <div class="p-2">
-    <div class="btn-group-vertical" role="tablist" aria-label="Sprite Tools">
-      <button
-        type="button"
-        class="btn btn-secondary"
-        role="tab"
-        [attr.aria-selected]="tabListSelected[0]"
-        (click)="activateTab($event)"
-        aria-controls="palette-tab"
-        id="palette"
-      >
-        Palette
-      </button>
-      <button
-        type="button"
-        class="btn btn-secondary"
-        role="tab"
-        [attr.aria-selected]="tabListSelected[1]"
-        (click)="activateTab($event)"
-        aria-controls="brush-tab"
-        id="brush"
-      >
-        Brush
-      </button>
-    </div>
-  </div>
-  <div tabindex="0" role="tabpanel" id="palette-tab" aria-labelledby="palette">
-    <div class="d-flex">
-      <div *ngFor="let color of sprite?.colors; index as i" class="flex-fill">
-        <app-color-palette-picker
-          [color]="color"
-          [index]="i"
-        ></app-color-palette-picker>
-      </div>
-    </div>
-  </div>
-  <div
-    tabindex="-1"
-    hidden="hidden"
-    role="tabpanel"
-    id="brush-tab"
-    aria-labelledby="brush"
-  >
-    <div class="d-flex">
-      <div *ngFor="let color of sprite?.colors; index as i" class="flex-fill">
-        <div class="p-2">
-          <label>
-            <input
-              type="radio"
-              name="select-color"
-              id="select-color-{{ i }}"
-              [checked]="i == 0"
-              (click)="changeSelectedColor(i)"
-            />
-            Select Color {{ i + 1 }}
-          </label>
+<fieldset class="mt-3 mb-2">
+  <legend>Color Palette</legend>
+  <div class="d-flex">
+    <div *ngFor="let color of sheet?.colors; index as i" class="flex-fill">
+      <div class="p-2">
+        <input
+          type="radio"
+          name="select-color"
+          id="select-color-{{ i }}"
+          [checked]="i == 0"
+          (click)="changeSelectedColor(i)"
+          value="RGBA color {{ (sheet?.colors)[i] | rgbaString }}"
+          class="sr-only"
+        />
+        <div class="palette-wrapper rounded-circle">
+          <label
+            class="rounded-circle p-5 m-0"
+            for="select-color-{{ i }}"
+            [attr.aria-label]="
+              'RGBA color ' + ((sheet?.colors)[i] | rgbaString)
+            "
+            [style.background-color]="(sheet?.colors)[i] | rgbaString"
+            [style.color]="
+              'rgba(' +
+              (color?.red !== undefined ? (color?.red > 127 ? 0 : 255) : 0) +
+              ', ' +
+              (color?.green !== undefined
+                ? color?.green > 127
+                  ? 0
+                  : 255
+                : 0) +
+              ', ' +
+              (color?.blue !== undefined ? (color?.blue > 127 ? 0 : 255) : 0) +
+              ', ' +
+              1 +
+              ')'
+            "
+          ></label>
         </div>
       </div>
     </div>
   </div>
-</div>
+</fieldset>
 <div *ngIf="sheet">
   <div *ngIf="sprite">
     <app-editable-canvas
+      (newPixel)="updatePixel($event)"
       [sprite]="sprite"
-      [selectedColor]="selectedColor"
       [spriteWidth]="sheet.options.width"
       [spriteHeight]="sheet.options.height"
+      [spriteColors]="sheet.colors"
       [editable]="true"
     >
     </app-editable-canvas>

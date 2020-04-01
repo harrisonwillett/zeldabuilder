@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 
-import { RgbaColor } from "src/app/model/rgba-color";
+import { RgbaColor } from "../../../model/rgba-color";
 
 @Component({
   selector: "app-logo",
@@ -26,7 +26,7 @@ export class LogoComponent implements OnInit {
     }
   ];
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit() { }
 }

@@ -31,9 +31,8 @@ export class SpriteDetailComponent implements OnInit {
   }
 
   getSpriteSheet(): void {
-    this.spriteService.getSheets().subscribe(obj => {
-      const sheets = obj;
-      for (const sheet of sheets) {
+    this.spriteService.getSheets().subscribe(sheets => {
+      for (let sheet of sheets) {
         if (sheet.id === this.sheetId) {
           this.sheet = sheet;
           this.getSprite();
@@ -50,11 +49,19 @@ export class SpriteDetailComponent implements OnInit {
         if (sprite.id === this.spriteId) {
           this.sprite = sprite;
           this.hasEditName = false;
-          this.selectedColor = this.sprite.colors[0] ? 0 : undefined;
+          this.selectedColor = this.sheet.colors[0] ? 0 : undefined;
         }
       }
     }
-    // console.log({thisSprite: this.sprite});
+  }
+
+  setSprite(): void {
+    this.sheet.sprites.forEach(sprite => {
+      if (sprite.id === this.sprite.id) {
+        sprite = this.sprite;
+      }
+    });
+    this.spriteService.updateSheet(this.sheet).subscribe();
   }
 
   editName(): void {
@@ -87,5 +94,11 @@ export class SpriteDetailComponent implements OnInit {
 
   changeSelectedColor(i: number) {
     this.selectedColor = i;
+  }
+
+  updatePixel(coords) {
+    this.sprite.array[coords[1]][coords[0]] = this.selectedColor;
+    //this.sprite = this.sprite;
+    this.setSprite();
   }
 }

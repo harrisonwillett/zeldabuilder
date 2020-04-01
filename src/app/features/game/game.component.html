@@ -1,7 +1,19 @@
-<div #gamewrapper>
+<div
+  #gamewrapper
+  class="game-wrapper"
+  (window:resize)="resizeCanvas()"
+  (window:scroll)="onScroll()"
+  (window:keydown)="controller1.onKeyDown($event)"
+  (window:keyup)="controller1.onKeyUp($event)"
+>
   <canvas
     #gamescreen
-    width="{{ gameWidth }}"
-    height="{{ gameHeight }}"
+    width="{{ scaledGameWidth }}"
+    height="{{ scaledGameHeight }}"
   ></canvas>
+  <!--
+    (touchstart)="onTouchStart($event)"
+    (touchmove)="onTouchMove($event)"
+    (touchend)="onTouchEnd($event)"
+  -->
 </div>

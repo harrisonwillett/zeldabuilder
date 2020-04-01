@@ -1,0 +1,10 @@
+$color1: #dadada;
+.color-picker-wrapper {
+  display: block;
+  background-image: linear-gradient(45deg, $color1 25%, transparent 25%),
+    linear-gradient(-45deg, $color1 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, $color1 75%),
+    linear-gradient(-45deg, transparent 75%, $color1 75%);
+  background-size: 4px 4px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}

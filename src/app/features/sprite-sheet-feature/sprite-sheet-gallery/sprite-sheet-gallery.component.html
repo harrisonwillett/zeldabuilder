@@ -1,38 +1,37 @@
 <div class="row p-2">
   <a class="btn btn-secondary" routerLink="/sprites/create-sprite-sheet"
-    ><i class="fas fa-plus" routerLink></i> New Sheet</a
+    ><i class="fas fa-plus"></i> New Sheet</a
   >
 </div>
 <div class="row p-2" *ngFor="let sheet of sheets">
   <div class="card shadow-sm">
-    <div *ngIf="sheet?.sprites.length > 0" class="card-img-top">
-      <div
-        *ngFor="let sprite of sheet.sprites; index as i; last as isLast"
-        class="float-left"
-      >
-        <div *ngIf="sprite.array?.length > 0">
-          <app-editable-canvas
-            [sprite]="sprite"
-            [selectedColor]="selectedColor"
-            [spriteWidth]="sheet.options.width"
-            [spriteHeight]="sheet.options.height"
-            [editable]="false"
-          >
-          </app-editable-canvas>
-        </div>
-      </div>
-    </div>
     <div class="card-body">
       <h2 class="card-title">{{ sheet.name }}</h2>
-      <p class="card-text" *ngIf="sheet.sprites.length > 0">
+      <div class="card-text" *ngIf="sheet.sprites.length > 0">
         <strong>Sprites:</strong><br />
-        <span *ngFor="let sprite of sheet.sprites; index as i; last as isLast"
-          ><a routerLink="/sprites/{{ sheet.id }}/{{ sprite.id }}">{{
-            sprite.name
-          }}</a
-          ><span *ngIf="!isLast">, </span></span
-        >
-      </p>
+        <div class="d-flex flex-wrap justify-content-center">
+          <figure
+            *ngFor="let sprite of sheet.sprites; index as i; last as isLast"
+            [style.width.px]="175 - (175 % sheet.options.width)"
+          >
+            <a routerLink="/sprites/{{ sheet.id }}/{{ sprite.id }}">
+              <span *ngIf="sprite.array?.length > 0">
+                <app-editable-canvas
+                  [sprite]="sprite"
+                  [spriteWidth]="sheet.options.width"
+                  [spriteHeight]="sheet.options.height"
+                  [spriteColors]="sheet.colors"
+                  [editable]="false"
+                >
+                </app-editable-canvas>
+              </span>
+              <figcaption class="figure-caption text-center">
+                {{ sprite.name }}
+              </figcaption>
+            </a>
+          </figure>
+        </div>
+      </div>
       <dl class="d-flex flex-row">
         <dt class="mr-2">Options:</dt>
         <dd class="mr-2">Height: {{ sheet.options.height }}</dd>

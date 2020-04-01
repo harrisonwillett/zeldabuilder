@@ -1,44 +1,26 @@
-/* Old RGBA inputs */
-.color-swatches {
-  .flex-fill {
-    position: relative;
-    input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.01;
-    }
-  }
-  .swatch-focus {
-    box-shadow: 0 0.325rem 0.325rem rgba(0, 0, 0, 0.35) inset;
-    border: 3px solid rgba(255, 255, 255, 0.35);
-  }
+input[type="radio"] ~ .palette-wrapper label::before {
+  font-family: "Font Awesome 5 Pro";
+  content: "\f575";
+  line-height: 0;
+  font-size: 3rem;
+  height: 0px;
+  width: 0px;
+  display: block;
+  margin: 0 0 0 -1.5rem;
 }
 
-/* Nav Tabs */
-.btn-secondary {
-  color: #fff;
-  background-color: #6c757d;
-  border-color: #6c757d;
-  &:hover,
-  &:focus {
-    color: #fff;
-    background-color: #5a6268;
-    border-color: #545b62;
-  }
-  &[aria-selected="true"] {
-    color: #fff;
-    background-color: #484f53;
-    border-color: #484f53;
-    &:hover,
-    &:focus {
-      color: #fff;
-      background-color: #363c3e;
-      border-color: #363c3e;
-    }
-  }
+input[type="radio"]:checked ~ .palette-wrapper label::before {
+  font-weight: 900;
+  content: "\f576";
+}
+
+$color1: #dadada;
+.palette-wrapper {
+  background-image: linear-gradient(45deg, $color1 25%, transparent 25%),
+    linear-gradient(-45deg, $color1 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, $color1 75%),
+    linear-gradient(-45deg, transparent 75%, $color1 75%);
+  background-size: 4px 4px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  display: inline-block;
 }

@@ -66,7 +66,7 @@ describe("EditableCanvasComponent", () => {
     }).compileComponents();
     fixture = TestBed.createComponent(EditableCanvasComponent);
     component = fixture.componentInstance;
-    component.selectedColor = 8;
+    // component.selectedColor = 8;
     let sprite: Sprite = {
       id: 1,
       name: "Stairs - Brown",
@@ -135,7 +135,7 @@ describe("EditableCanvasComponent", () => {
       return arr.slice();
     });
 
-    component.colorPixel([4, 7]);
+    // component.colorPixel([4, 7]);
     console.log({
       arrangeArray,
       assertArray: component.sprite.array
@@ -150,7 +150,7 @@ describe("EditableCanvasComponent", () => {
     component.pixelScale = 1;
     component.spriteWidth = 16;
     component.spriteHeight = 16;
-    component.selectedColor = 3;
+    // component.selectedColor = 3;
     fixture.detectChanges();
     component.cntxt = undefined;
     component.drawSprite();
@@ -158,7 +158,7 @@ describe("EditableCanvasComponent", () => {
       return arr.slice();
     });
 
-    component.colorPixel([5, 9]);
+    // component.colorPixel([5, 9]);
     const actArray = component.sprite.array.map(function(arr) {
       return arr.slice();
     });

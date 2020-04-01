@@ -1,19 +1,8 @@
-<div class="p-2">
-  <input
-    type="text"
-    [value]="
-      'rgba(' +
-      color?.red +
-      ', ' +
-      color?.green +
-      ', ' +
-      color?.blue +
-      ', ' +
-      color?.alpha +
-      ')'
-    "
-    [ngStyle]="{
-      'background-color':
+<div>
+  <div class="color-picker-wrapper">
+    <input
+      type="text"
+      [value]="
         'rgba(' +
         color?.red +
         ', ' +
@@ -21,23 +10,36 @@
         ', ' +
         color?.blue +
         ', ' +
-        1 +
-        ')',
-      color:
-        'rgba(' +
-        (color?.red !== undefined ? (color?.red > 127 ? 0 : 255) : 0) +
-        ', ' +
-        (color?.green !== undefined ? (color?.green > 127 ? 0 : 255) : 0) +
-        ', ' +
-        (color?.blue !== undefined ? (color?.blue > 127 ? 0 : 255) : 0) +
-        ', ' +
-        1 +
+        color?.alpha +
         ')'
-    }"
-    readonly="readonly"
-    (click)="colorModal.hidden = !colorModal.hidden"
-    class="form-control"
-  />
+      "
+      [ngStyle]="{
+        'background-color':
+          'rgba(' +
+          color?.red +
+          ', ' +
+          color?.green +
+          ', ' +
+          color?.blue +
+          ', ' +
+          color?.alpha +
+          ')',
+        color:
+          'rgba(' +
+          (color?.red !== undefined ? (color?.red > 127 ? 0 : 255) : 0) +
+          ', ' +
+          (color?.green !== undefined ? (color?.green > 127 ? 0 : 255) : 0) +
+          ', ' +
+          (color?.blue !== undefined ? (color?.blue > 127 ? 0 : 255) : 0) +
+          ', ' +
+          1 +
+          ')'
+      }"
+      readonly="readonly"
+      (click)="colorModal.hidden = !colorModal.hidden"
+      class="form-control"
+    />
+  </div>
   <div #colorModal hidden="hidden">
     <fieldset>
       <legend>Channels</legend>

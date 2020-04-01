@@ -31,23 +31,23 @@ describe("RgbaStringPipe", () => {
     pipe = new RgbaStringPipe();
   });
 
-  it("create an instance", () => {
+  fit("create an instance", () => {
     expect(pipe).toBeTruthy();
   });
 
-  it('shoule be "red"', () => {
+  fit('shoule be "red"', () => {
     expect(pipe.transform(red)).toEqual("rgba(255, 0, 0, 1)");
   });
 
-  it('shoule be "green"', () => {
+  fit('shoule be "green"', () => {
     expect(pipe.transform(green)).toEqual("rgba(0, 255, 0, 1)");
   });
 
-  it('shoule be "blue"', () => {
+  fit('shoule be "blue"', () => {
     expect(pipe.transform(blue)).toEqual("rgba(0, 0, 255, 1)");
   });
 
-  it('shoule be "gray and 40% opacity"', () => {
+  fit('shoule be "gray and 40% opacity"', () => {
     expect(pipe.transform(gray40)).toEqual("rgba(128, 128, 128, 0.4)");
   });
 });

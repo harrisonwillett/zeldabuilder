@@ -4,13 +4,16 @@ import {
   AfterViewInit,
   Input,
   ViewChild,
-  ElementRef
+  ElementRef,
+  Output,
+  EventEmitter
 } from "@angular/core";
 
 import { fromEvent, merge } from "rxjs";
 import { map, distinctUntilChanged } from "rxjs/operators";
 
 import { Sprite } from "../../../model/sprite";
+import { RgbaColor } from "src/app/model/rgba-color";
 
 @Component({
   selector: "app-editable-canvas",
@@ -24,13 +27,14 @@ export class EditableCanvasComponent implements OnInit, AfterViewInit {
   @Input() spriteHeight: number = 1;
   @Input() sprite: Sprite;
   @Input() editable: boolean;
+  @Input() spriteColors: RgbaColor[];
   cntxt: CanvasRenderingContext2D;
   pixelScale: number = 1;
   canvasWidth: number = 1;
   canvasHeight: number = 1;
   spriteColorPalette: Array<string | CanvasGradient | CanvasPattern>;
-  @Input() selectedColor: number = 0;
-  bindingClientRect;
+  bindingClientRect: DOMRect;
+  @Output() newPixel = new EventEmitter<number[]>();
 
   constructor() {}
 
@@ -60,8 +64,8 @@ export class EditableCanvasComponent implements OnInit, AfterViewInit {
 
   setSpriteColorPalette() {
     this.spriteColorPalette = new Array();
-    if (typeof this.sprite.colors !== "undefined") {
-      this.sprite.colors.forEach((color, index) => {
+    if (typeof this.spriteColors !== "undefined") {
+      this.spriteColors.forEach((color, index) => {
         if (color.alpha !== undefined) {
           this.spriteColorPalette.push(
             "rgba(" +
@@ -95,6 +99,7 @@ export class EditableCanvasComponent implements OnInit, AfterViewInit {
 
   drawSprite() {
     this.setSpriteColorPalette();
+    this.cntxt.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.sprite.array.forEach((row, i) => {
       row.forEach((cell, j) => {
         if (this.cntxt !== undefined) {
@@ -136,7 +141,6 @@ export class EditableCanvasComponent implements OnInit, AfterViewInit {
       )
         .pipe(
           map(event => {
-            //console.log(event);
             if ((event as PointerEvent).type === "pointerdown") {
               isDrawing = true;
             }
@@ -151,17 +155,13 @@ export class EditableCanvasComponent implements OnInit, AfterViewInit {
               (event as PointerEvent).clientX !== undefined &&
               (event as PointerEvent).clientY !== undefined
             ) {
-              //this.bindingClientRect = this.canvas.nativeElement.getBoundingClientRect();
-              /* Postioning End */
               return [
                 Math.floor(
                   ((event as PointerEvent).clientX - this.bindingClientRect.x) /
-                    // this.canvas.nativeElement.offsetLeft) /
                     this.pixelScale
                 ),
                 Math.floor(
                   ((event as PointerEvent).clientY - this.bindingClientRect.y) /
-                    // this.canvas.nativeElement.offsetTop) /
                     this.pixelScale
                 )
               ];
@@ -173,24 +173,12 @@ export class EditableCanvasComponent implements OnInit, AfterViewInit {
             (prev, curr) => prev[0] === curr[0] && prev[1] === curr[1]
           )
         )
-        .subscribe(val => this.colorPixel(val));
-    }
-  }
-
-  colorPixel(coords: number[]) {
-    console.log({ coords0: coords[0], coords1: coords[1] });
-    if (this.cntxt !== undefined) {
-      if (coords[0] !== undefined && [coords[1]] !== undefined) {
-        this.sprite.array[coords[1]][coords[0]] = this.selectedColor;
-      }
-      this.cntxt.fillStyle = this.spriteColorPalette[this.selectedColor];
-      this.cntxt.fillRect(
-        coords[0] * this.pixelScale,
-        coords[1] * this.pixelScale,
-        1 * this.pixelScale,
-        1 * this.pixelScale
-      );
-      this.cntxt.fill();
+        .subscribe(val => {
+          if (val[0] !== undefined && [val[1]] !== undefined) {
+            this.newPixel.emit(val);
+            this.drawSprite();
+          }
+        });
     }
   }
 }
