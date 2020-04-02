@@ -1,8 +1,6 @@
 <div>
   <div class="color-picker-wrapper">
-    <input
-      type="text"
-      [value]="
+    <input type="text" [value]="
         'rgba(' +
         color?.red +
         ', ' +
@@ -10,10 +8,9 @@
         ', ' +
         color?.blue +
         ', ' +
-        color?.alpha +
+        (color?.alpha ? color.alpha : 1) +
         ')'
-      "
-      [ngStyle]="{
+      " [ngStyle]="{
         'background-color':
           'rgba(' +
           color?.red +
@@ -22,7 +19,7 @@
           ', ' +
           color?.blue +
           ', ' +
-          color?.alpha +
+          (color?.alpha ? color.alpha : 1) +
           ')',
         color:
           'rgba(' +
@@ -34,55 +31,27 @@
           ', ' +
           1 +
           ')'
-      }"
-      readonly="readonly"
-      (click)="colorModal.hidden = !colorModal.hidden"
-      class="form-control"
-    />
+      }" readonly="readonly" (click)="colorModal.hidden = !colorModal.hidden" class="form-control" />
   </div>
   <div #colorModal hidden="hidden">
     <fieldset>
       <legend>Channels</legend>
       <label>
         <span>Red</span>
-        <input
-          type="number"
-          value="{{ color?.red }}"
-          min="0"
-          max="255"
-          (blur)="color.red = $event.target.value"
-        />
+        <input type="number" value="{{ color?.red }}" min="0" max="255" (blur)="color.red = $event.target.value" />
       </label>
       <label>
         <span>Green</span>
-        <input
-          type="number"
-          value="{{ color?.green }}"
-          min="0"
-          max="255"
-          (blur)="color.green = $event.target.value"
-        />
+        <input type="number" value="{{ color?.green }}" min="0" max="255" (blur)="color.green = $event.target.value" />
       </label>
       <label>
         <span>Blue</span>
-        <input
-          type="number"
-          value="{{ color?.blue }}"
-          min="0"
-          max="255"
-          (blur)="color.blue = $event.target.value"
-        />
+        <input type="number" value="{{ color?.blue }}" min="0" max="255" (blur)="color.blue = $event.target.value" />
       </label>
       <label>
         <span>Alpha</span>
-        <input
-          type="number"
-          value="{{ color?.alpha }}"
-          min="0"
-          max="1"
-          step=".01"
-          (blur)="color.alpha = $event.target.value"
-        />
+        <input type="number" value="{{ color?.alpha }}" min="0" max="1" step=".01"
+          (blur)="color.alpha = $event.target.value" />
       </label>
     </fieldset>
   </div>
