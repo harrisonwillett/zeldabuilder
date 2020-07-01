@@ -3,41 +3,107 @@ import {
   OnInit,
   ElementRef,
   ViewChild,
-  NgZone
+  AfterViewInit
 } from "@angular/core";
-import { Controller } from "src/app/model/game/controller/controller";
-import { LoadRoom } from "src/app/model/game/game-display/load-room";
-import { TopdownAction8bit } from "src/app/model/game/game-display/topdown-action-8bit";
-import { EightBitSheetAryToCanvas } from "src/app/model/game/sprites/eight-bit-sheet-ary-to-canvas";
-import { CanvasSheetToSprite } from "src/app/model/game/sprites/canvas-sheet-to-sprite";
+// import "./tslib/hud";
+
+
+import { Spritesheet } from "../../model/spritesheet";
+import { SpriteService } from "../../service/sprite.service";
+import { Controller } from "./tslib/controller";
+import { Room } from "./tslib/room";
+import { TopdownEightBitDisplay } from "./tslib/eight-bit-display";
+import { of, Observable } from "rxjs";
+import { RgbaStringPipe } from "src/app/pipe/rgba-string.pipe";
 
 @Component({
   selector: "app-game",
   templateUrl: "./game.component.html",
   styleUrls: ["./game.component.scss"]
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, AfterViewInit {
   @ViewChild("gamewrapper", { static: true }) wrapper: ElementRef;
   @ViewChild("gamescreen", { static: true }) canvas: ElementRef<
     HTMLCanvasElement
   >;
-  gamescreenCnxt;
-  controller1 = new Controller();
+  gamescreenCnxt: CanvasRenderingContext2D;
+  controllers: Controller[] = [];
   bindingClientRect: DOMRect;
-  topdownAction8Bit = new TopdownAction8bit();
+  topdownEightBitDisplay = new TopdownEightBitDisplay();
+  spriteScale: number;
   pixelScale: number;
-  scaledGameWidth: number;
-  scaledGameHeight: number;
   canvasRefresh;
-  currentRoom: LoadRoom;
-  imageData;
+  imageData: ImageData;
+  gameScaled;
+  spriteSheets: Observable<Spritesheet[]> = of([]);
+  currentRoom: Observable<Room>;
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private spriteService: SpriteService) {}
 
   ngOnInit(): void {
-    this.currentRoom = new LoadRoom(1);
+    this.getControllers();
+    this.getSpriteSheets();
+    this.getCurrentRoom();
     this.gamescreenCnxt = this.canvas.nativeElement.getContext("2d");
-    this.resizeCanvas();
+  }
+
+  ngAfterViewInit() {
+    // Create an observer instance linked to the callback function
+    this.gameScaled = new MutationObserver((mutationsList) => {
+      // Use traditional 'for loops' for IE 11
+      for (const mutation of mutationsList) {
+          if (mutation.type === "attributes") {
+            if (mutation.attributeName === "height" || mutation.attributeName === "width") {
+              this.resizeSprites();
+              Promise.resolve(
+                this.getControllers &&
+                this.getSpriteSheets &&
+                this.getCurrentRoom &&
+                this.resizeSprites
+              ).then(() => {
+                this.drawRoomToCanvas();
+              });
+            }
+          }
+      }
+    });
+
+    // Start observing the target node for configured mutations
+    this.gameScaled.observe(this.canvas.nativeElement, { attributes: true, childList: false, subtree: false });
+
+    Promise.resolve(
+      this.gamescreenCnxt &&
+      this.getControllers &&
+      this.getSpriteSheets &&
+      this.getCurrentRoom &&
+      this.resizeSprites
+    ).then(() => {
+      this.resizeCanvas();
+    });
+  }
+
+  getControllers(): void {
+    this.controllers.push(new Controller());
+    console.log({
+      controllers: this.controllers
+    });
+  }
+
+  getSpriteSheets(): void {
+    this.spriteService.getSheets().subscribe(obj => {
+      // console.log({ galleryGetSheets: obj });
+      obj.forEach((spriteSheet) => {
+        this.sheetDataToCanvas(spriteSheet);
+      });
+      this.spriteSheets = of(obj);
+
+    });
+  }
+
+  getCurrentRoom(): void {
+    Promise.resolve(this.getControllers).then(() => {
+      this.currentRoom = of( new Room(1, this.controllers) );
+    });
   }
 
   onScroll() {
@@ -45,189 +111,173 @@ export class GameComponent implements OnInit {
   }
 
   drawActorsToCanvas() {
-    this.gamescreenCnxt.putImageData(this.imageData, 0, 0);
-
-    //Get Actors
-    for (let i = 0; i < this.currentRoom.roomItems.itemsSet.length; i++) {
-      if (typeof this.currentRoom.roomItems.itemsSet[i].design === "string") {
-        this.gamescreenCnxt.fillStyle = this.currentRoom.roomItems.itemsSet[
-          i
-        ].design;
-        this.gamescreenCnxt.fillRect(
-          Math.floor(
-            this.currentRoom.roomItems.itemsSet[i].positionX *
-              this.topdownAction8Bit.sprite.natural.width +
-              this.topdownAction8Bit.room.natural.left
-          ),
-          Math.floor(
-            this.currentRoom.roomItems.itemsSet[i].positionY *
-              this.topdownAction8Bit.sprite.natural.height +
-              this.topdownAction8Bit.room.natural.top
-          ),
-          Math.ceil(this.topdownAction8Bit.sprite.natural.width),
-          Math.ceil(this.topdownAction8Bit.sprite.natural.height)
-        );
-        this.gamescreenCnxt.fill();
-      } else {
-        this.gamescreenCnxt.drawImage(
-          CanvasSheetToSprite(
-            this.currentRoom.roomItems.itemsSet[i].sprite,
-            this.topdownAction8Bit.sprite.natural,
-            this.currentRoom.roomItems.itemsSet[i].spriteNumber
-          ),
-          //this.currentRoom.roomItems.itemsSet[i].getDesign(),
-          Math.floor(
-            this.currentRoom.roomItems.itemsSet[i].positionX *
-              Math.floor(this.topdownAction8Bit.sprite.natural.width) +
-              Math.floor(this.topdownAction8Bit.room.natural.left)
-          ),
-          Math.floor(
-            this.currentRoom.roomItems.itemsSet[i].positionY *
-              Math.floor(this.topdownAction8Bit.sprite.natural.height) +
-              Math.floor(this.topdownAction8Bit.room.natural.top)
-          ),
-          Math.floor(this.topdownAction8Bit.sprite.natural.width),
-          Math.floor(this.topdownAction8Bit.sprite.natural.height)
-        );
-      }
+    if (this.imageData !== undefined) {
+      this.gamescreenCnxt.putImageData(this.imageData, 0, 0);
     }
-  }
 
-  resizeCanvas() {
-    this.pixelScale = Math.min(
-      this.wrapper.nativeElement.offsetHeight /
-        this.topdownAction8Bit.game.native.height,
-      this.wrapper.nativeElement.offsetWidth /
-        this.topdownAction8Bit.game.native.width
-    );
-    this.scaledGameWidth =
-      this.pixelScale * this.topdownAction8Bit.game.native.width;
-    this.scaledGameHeight =
-      this.pixelScale * this.topdownAction8Bit.game.native.height;
-    this.topdownAction8Bit.scaleRect(this.pixelScale);
-    this.resizeSprites();
-    /***
-     *
-     *
-     * ***/
-    this.ngZone.runOutsideAngular(() => this.drawRoomToCanvas());
-    this.ngZone.runOutsideAngular(() => this.drawActorsToCanvas());
-    this.drawRoomToCanvas();
-    clearInterval(this.canvasRefresh);
-    this.canvasRefresh = setInterval(function() {
-      if (this.currentRoom !== undefined) {
-        if (this.currentRoom.roomItems !== undefined) {
-          this.currentRoom.roomItems.updateItems();
-        }
-      }
-      // this.drawActorsToCanvas();
-    }, 120);
-  }
-
-  resizeSprites() {
-    // console.log("resize the sprites");
-    this.currentRoom.roomItems.decorationSet.forEach((decoration: any) => {
-      decoration.sprite = EightBitSheetAryToCanvas(
-        decoration.spriteSheet,
-        this.pixelScale
-      );
+    // Get Actors
+    this.currentRoom.subscribe(room => {
+      room.roomItems.getItems().forEach(currentItem => {
+        let decSprite: HTMLCanvasElement;
+        this.spriteSheets.subscribe(sheets => {
+          sheets.forEach(sheet => {
+            if ( sheet.id === currentItem.spriteSheetId ) {
+              sheet.sprites.forEach(sprite => {
+                if ( sprite.id === currentItem.spriteNumber ) {
+                  decSprite = sprite.canvas;
+                }
+              });
+            }
+          });
+        });
+        Promise.resolve(decSprite).then(() => {
+          if (decSprite !== undefined ) {
+            this.gamescreenCnxt.drawImage(
+              decSprite,
+              Math.floor(
+                currentItem.positionX *
+                Math.floor(this.topdownEightBitDisplay.boundingRects.sprite.natural.width) +
+                this.topdownEightBitDisplay.boundingRects.room.natural.left
+              ),
+              Math.floor(
+                currentItem.positionY *
+                Math.floor(this.topdownEightBitDisplay.boundingRects.sprite.natural.height) +
+                this.topdownEightBitDisplay.boundingRects.room.natural.top
+              ),
+              Math.ceil(decSprite.width),
+              Math.ceil(decSprite.height)
+            );
+          }
+        });
+      });
     });
-    // console.log(this.currentRoom.roomItems.decorationSet);
+  }
+  resizeCanvas() {
+    Promise.resolve(this.gamescreenCnxt).then(() => {
+      this.spriteScale = Math.min(
+        this.wrapper.nativeElement.offsetHeight /
+          this.topdownEightBitDisplay.boundingRects.screen.native.height,
+        this.wrapper.nativeElement.offsetWidth /
+        this.topdownEightBitDisplay.boundingRects.screen.native.width
+      );
+      Promise.resolve(
+          this.spriteScale &&
+          this.canvas.nativeElement.width === this.topdownEightBitDisplay.boundingRects.screen.natural.width &&
+          this.canvas.nativeElement.height === this.topdownEightBitDisplay.boundingRects.screen.natural.height
+        ).then(() => {
+        this.topdownEightBitDisplay.setNaturalSize(this.spriteScale);
+      });
+    });
+
+    clearInterval(this.canvasRefresh);
+    this.canvasRefresh = setInterval(() => {
+        this.currentRoom.subscribe(room => {
+          room.roomItems.updateItems();
+        });
+        this.drawActorsToCanvas();
+      }, 120);
+  }
+  sheetDataToCanvas(data: Spritesheet) {
+    const pipe = new RgbaStringPipe();
+    data.sprites.forEach((sprite) => {
+      sprite.canvas = document.createElement("canvas");
+      sprite.canvas.height = data.options.height * this.topdownEightBitDisplay.boundingRects.pixel.natural.height;
+      sprite.canvas.width = data.options.width * this.topdownEightBitDisplay.boundingRects.pixel.natural.width;
+      const spriteContext: CanvasRenderingContext2D = sprite.canvas.getContext("2d");
+      Promise.resolve( spriteContext ).then(() => {
+        if (spriteContext != null) {
+          spriteContext.clearRect(0, 0, sprite.canvas.width, sprite.canvas.height);
+          sprite.array.forEach((row, rowIndex) => {
+            row.forEach((cell, columnIndex) => {
+              spriteContext.fillStyle = pipe.transform( data.colors[cell] );
+              spriteContext.fillRect(
+                Math.floor((this.topdownEightBitDisplay.boundingRects.pixel.natural.width * columnIndex)),
+                Math.floor((this.topdownEightBitDisplay.boundingRects.pixel.natural.height) * rowIndex),
+                Math.ceil(this.topdownEightBitDisplay.boundingRects.pixel.natural.width),
+                Math.ceil(this.topdownEightBitDisplay.boundingRects.pixel.natural.height)
+              );
+              spriteContext.fill();
+            });
+          });
+        }
+      });
+    });
+  }
+  resizeSprites() {
+    console.log("resize the sprites");
+    Promise.resolve(this.gamescreenCnxt && this.spriteSheets).then(() => {
+      this.spriteScale = Math.min(
+        this.wrapper.nativeElement.offsetHeight /
+          this.topdownEightBitDisplay.boundingRects.screen.native.height,
+        this.wrapper.nativeElement.offsetWidth /
+        this.topdownEightBitDisplay.boundingRects.screen.native.width
+      );
+      this.spriteSheets.subscribe((spritesheets: Spritesheet[]) => {
+        spritesheets.forEach(spriteSheet => {
+          this.sheetDataToCanvas(spriteSheet);
+        });
+      });
+    });
   }
 
   drawRoomToCanvas() {
-    console.log("Start Drawing the room");
-    this.gamescreenCnxt.clearRect(
-      0,
-      0,
-      this.canvas.nativeElement.width,
-      this.canvas.nativeElement.height
-    );
-    this.gamescreenCnxt.fillStyle = "#000000";
-    this.gamescreenCnxt.fillRect(
-      this.topdownAction8Bit.room.natural.left,
-      this.topdownAction8Bit.room.natural.top,
-      this.topdownAction8Bit.room.natural.width,
-      this.topdownAction8Bit.room.natural.height
-    );
-    this.gamescreenCnxt.fill();
-
-    //Get Decorations
-    for (let i = 0; i < this.currentRoom.roomItems.decorationSet.length; i++) {
-      /*
-      console.log({
-        type: typeof this.currentRoom.roomItems.decorationSet[i],
-        spriteNumber: this.currentRoom.roomItems.decorationSet[i].spriteNumber
+    // console.log("Start Drawing the room");
+    if (this.gamescreenCnxt !== undefined) {
+      this.gamescreenCnxt.clearRect(
+        0,
+        0,
+        this.canvas.nativeElement.width,
+        this.canvas.nativeElement.height
+      );
+      Promise.resolve(
+        this.getSpriteSheets &&
+        this.getCurrentRoom &&
+        this.resizeSprites
+      ).then(() => {
+        // Get Decorations
+        this.currentRoom.subscribe(room => {
+          room.roomItems.getDecoration().forEach(decoration => {
+            let decSprite: HTMLCanvasElement;
+            this.spriteSheets.subscribe(sheets => {
+              sheets.forEach(sheet => {
+                if ( sheet.id === decoration.spriteSheetId ) {
+                  sheet.sprites.forEach(sprite => {
+                    if ( sprite.id === decoration.spriteNumber ) {
+                      decSprite = sprite.canvas;
+                    }
+                  });
+                }
+              });
+            });
+            Promise.resolve(decSprite).then(() => {
+              if (decSprite !== undefined ) {
+                this.gamescreenCnxt.drawImage(
+                  decSprite,
+                  Math.floor(
+                    decoration.positionX *
+                    Math.floor(this.topdownEightBitDisplay.boundingRects.sprite.natural.width) +
+                    this.topdownEightBitDisplay.boundingRects.room.natural.left
+                  ),
+                  Math.floor(
+                    decoration.positionY *
+                    Math.floor(this.topdownEightBitDisplay.boundingRects.sprite.natural.height) +
+                    this.topdownEightBitDisplay.boundingRects.room.natural.top
+                  ),
+                  Math.ceil(decSprite.width),
+                  Math.ceil(decSprite.height)
+                );
+              }
+              // Save
+              this.imageData = this.gamescreenCnxt.getImageData(
+                0,
+                0,
+                this.topdownEightBitDisplay.boundingRects.screen.natural.width,
+                this.topdownEightBitDisplay.boundingRects.screen.natural.height
+              );
+            });
+          });
+        });
       });
-      console.log(
-        this.currentRoom.roomItems.decorationSet[i].sprite.toDataURL()
-      );
-      */
-      /*
-      if (
-        typeof this.currentRoom.roomItems.decorationSet[i].design === "string"
-      ) {
-        this.gamescreenCnxt.fillStyle = this.currentRoom.roomItems.decorationSet[
-          i
-        ].design;
-        this.gamescreenCnxt.fillRect(
-          Math.floor(
-            this.currentRoom.roomItems.decorationSet[i].positionX *
-              this.topdownAction8Bit.sprite.natural.width +
-              this.topdownAction8Bit.room.natural.left
-          ),
-          Math.floor(
-            this.currentRoom.roomItems.decorationSet[i].positionY *
-              this.topdownAction8Bit.sprite.natural.height +
-              this.topdownAction8Bit.room.natural.top
-          ),
-          Math.ceil(this.topdownAction8Bit.sprite.natural.width),
-          Math.ceil(this.topdownAction8Bit.sprite.natural.height)
-        );
-        this.gamescreenCnxt.fill();
-      } else {
-        */
-      this.gamescreenCnxt.drawImage(
-        this.currentRoom.roomItems.decorationSet[i].sprite,
-        Math.floor(
-          this.currentRoom.roomItems.decorationSet[i].positionX *
-            Math.floor(this.topdownAction8Bit.sprite.natural.width) +
-            Math.floor(this.topdownAction8Bit.room.natural.left)
-        ),
-        Math.floor(
-          this.currentRoom.roomItems.decorationSet[i].positionY *
-            this.topdownAction8Bit.sprite.natural.height +
-            this.topdownAction8Bit.room.natural.top
-        ),
-        Math.ceil(this.topdownAction8Bit.sprite.natural.width),
-        Math.ceil(this.topdownAction8Bit.sprite.natural.height)
-      );
-      console.log("Line 205");
-      console.log(
-        this.currentRoom.roomItems.decorationSet[i].sprite,
-        Math.floor(
-          this.currentRoom.roomItems.decorationSet[i].positionX *
-            Math.floor(this.topdownAction8Bit.sprite.natural.width) +
-            Math.floor(this.topdownAction8Bit.room.natural.left)
-        ),
-        Math.floor(
-          this.currentRoom.roomItems.decorationSet[i].positionY *
-            this.topdownAction8Bit.sprite.natural.height +
-            this.topdownAction8Bit.room.natural.top
-        ),
-        Math.ceil(this.topdownAction8Bit.sprite.natural.width),
-        Math.ceil(this.topdownAction8Bit.sprite.natural.height)
-      );
-      console.log("Line 221");
-      // }
     }
-
-    //Save
-    this.imageData = this.gamescreenCnxt.getImageData(
-      0,
-      0,
-      this.topdownAction8Bit.game.natural.width,
-      this.topdownAction8Bit.game.natural.height
-    );
   }
 }

@@ -3,6 +3,7 @@
   "rules": {
     "array-type": false,
     "arrow-parens": false,
+    "indent": [true],
     "deprecation": {
       "severity": "warning"
     },
@@ -67,10 +68,6 @@
     ],
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "quotemark": [
-      true,
-      "single"
-    ],
     "trailing-comma": false,
     "no-conflicting-lifecycle": true,
     "no-host-metadata-property": true,
@@ -84,8 +81,5 @@
     "template-no-negated-async": true,
     "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true
-  },
-  "rulesDirectory": [
-    "codelyzer"
-  ]
+  }
 }

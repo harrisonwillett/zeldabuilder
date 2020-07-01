@@ -4,4 +4,5 @@ export class Sprite {
   id: number;
   name: string;
   array?: colorIndex[][];
+  canvas?: HTMLCanvasElement;
 }

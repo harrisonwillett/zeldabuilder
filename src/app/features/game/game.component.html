@@ -3,15 +3,23 @@
   class="game-wrapper"
   (window:resize)="resizeCanvas()"
   (window:scroll)="onScroll()"
-  (window:keydown)="controller1.onKeyDown($event)"
-  (window:keyup)="controller1.onKeyUp($event)"
 >
+<!--
+  <div
+  #gamewrapper
+  class="game-wrapper"
+  (window:resize)="resizeCanvas()"
+  (window:scroll)="onScroll()"
+  (window:keydown)="controllers[0].onKeyDown($event)"
+  (window:keyup)="controllers[0].onKeyUp($event)"
+>
+-->
   <canvas
     #gamescreen
-    width="{{ scaledGameWidth }}"
-    height="{{ scaledGameHeight }}"
+    width="{{ this.topdownEightBitDisplay.boundingRects.screen.natural.width }}"
+    height="{{ this.topdownEightBitDisplay.boundingRects.screen.natural.height }}"
   ></canvas>
-  <!--
+    <!--
     (touchstart)="onTouchStart($event)"
     (touchmove)="onTouchMove($event)"
     (touchend)="onTouchEnd($event)"
