@@ -1,9 +1,9 @@
 import { InMemoryDbService } from "angular-in-memory-web-api";
 import { Injectable } from "@angular/core";
 
-import { Spritesheet } from "../model/spritesheet";
-import { EightBit } from "./sprite-modes";
-import { RgbaColor } from "../model/rgba-color";
+import { Spritesheet } from "../../model/spritesheet";
+import { EightBit } from "../sprite-modes";
+import { RgbaColor } from "../../model/rgba-color";
 
 import {
   spriteStairArray,

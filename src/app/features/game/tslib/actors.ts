@@ -21,15 +21,13 @@ export class Item {
 		this.passable = true;
 		this.collitionMap = null;
 		this.owner = null;
-		this.spriteSheetId = 1; // new Sprites.OverWorldSprite();
+		this.spriteSheetId = 1;
 		this.spriteNumber = 2;
-		// this.spirte = document.createElement("canvas");
-		// this.spirteContext = null; // this.spirte.getContext("2d");
-		// this.spirte.width = 16 * world.ratio;
-		// this.spirte.height = 16 * world.ratio;
 		this.facing = 1;
-		// this.design = this.spirte;
-		this.state = "active"; // active, inactive
+		this.state = "active";
+		this.name = name;
+		this.positionX = positionX;
+		this.positionY = positionY;
 	}
 
 

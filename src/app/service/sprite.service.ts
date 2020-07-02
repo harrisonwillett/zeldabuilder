@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, of } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 
+import { MessageService } from "./message.service";
 import { Spritesheet } from "../model/spritesheet";
 
 @Injectable({
@@ -16,10 +17,11 @@ export class SpriteService {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private messageService: MessageService) {}
 
   /** GET heroes from the server */
   getSheets(): Observable<Spritesheet[]> {
+    this.messageService.add("Sprite Service: Loaded Sprites");
     return this.http.get<Spritesheet[]>(this.sheetUrl).pipe(
       tap(_ => this.log("fetched sheets")),
       catchError(this.handleError<Spritesheet[]>("getSheets", []))
@@ -30,7 +32,7 @@ export class SpriteService {
   deleteSheet(sheet: Spritesheet | number): Observable<Spritesheet> {
     const id = typeof sheet === "number" ? sheet : sheet.id;
     const url = `${this.sheetUrl}/${id}`;
-
+    this.messageService.add(`Sprite Service: Deleted a sheet of sprites with the id="${id}".`);
     return this.http.delete<Spritesheet>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted sheet id=${id}`)),
       catchError(this.handleError<Spritesheet>("deleteSheet"))
@@ -39,6 +41,7 @@ export class SpriteService {
 
   /** POST: add a new Spritesheet to the server */
   addSheet(sheet: Spritesheet): Observable<Spritesheet> {
+    this.messageService.add(`Sprite Service: Added a sheet of sprites.`);
     return this.http
       .post<Spritesheet>(this.sheetUrl, sheet, this.httpOptions)
       .pipe(
@@ -51,6 +54,7 @@ export class SpriteService {
 
   /** PUT: update the Spritesheet on the server */
   updateSheet(sheet: Spritesheet): Observable<any> {
+    this.messageService.add(`Sprite Service: Updated a sheet of sprites with the id="${sheet.id}".`);
     return this.http.put(this.sheetUrl, sheet, this.httpOptions).pipe(
       tap(_ => this.log(`updated sheet id=${sheet.id}`)),
       catchError(this.handleError<any>("updateSheet"))

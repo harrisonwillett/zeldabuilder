@@ -7,15 +7,14 @@ import { HttpClientInMemoryWebApiModule } from "angular-in-memory-web-api";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
-import { DxButtonModule } from "devextreme-angular";
-
 import { RgbaStringPipe } from "./pipe/rgba-string.pipe";
 
-import { SpriteDataInMemoryService } from "./data/sprite-data-in-memory.service";
+import { SpriteDataInMemoryService } from "./data/sprite-arrays/sprite-data-in-memory.service";
 
 import { LogoComponent } from "./features/shared/logo/logo.component";
 import { TabNavigationComponent } from "./features/shared/tab-navigation/tab-navigation.component";
 import { TabNavigationItemComponent } from "./features/shared/tab-navigation-item/tab-navigation-item.component";
+import { MessagesComponent } from "./features/shared/messages/messages.component";
 
 import { GameComponent } from "./features/game/game.component";
 
@@ -40,15 +39,13 @@ import { EditableCanvasComponent } from "./features/sprite-feature/editable-canv
     SpriteSheetDetailComponent,
     SpriteSheetCreateComponent,
     ColorPalettePickerComponent,
-    SpriteDetailComponent
+    SpriteDetailComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-
-    //DevExterme Imports
-    DxButtonModule,
 
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.

@@ -1,4 +1,4 @@
-import { sixteenBitSpriteAry } from "../model/sprite-array";
+import { sixteenBitSpriteAry } from "../../model/sprite-array";
 
 /* bottom1 */
 

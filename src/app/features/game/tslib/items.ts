@@ -1,10 +1,10 @@
-import { Item, Bot, Player } from "./actors";
+import { Item, Bot, Player, Wall, Door, Decoration, AI } from "./actors";
 
 /*Holds all items*/
 export class Items {
-	private itemsSet: Item[] = [];
-	private newItemsSet: Item[] = [];
-	private decorationSet: Item[] = [];
+	private itemsSet: (Wall | Door | Player | Decoration | AI | Item)[] = [];
+	private newItemsSet: (Wall | Door | Player | Decoration | AI | Item)[] = [];
+	private decorationSet: (Wall | Door | Player | Decoration | AI | Item)[] = [];
 
 	/*Set All Items*/
 	setItems = ( newItem: Item ) => {
@@ -108,20 +108,16 @@ export class Items {
 					const direction = Math.floor( (Math.random() * 4) + 1 );
 					switch (direction) {
 						case 1:
-							(this.itemsSet[i] as Bot).moveRequest("x", .5);
-							// this.itemsSet[i].positionX += .5;
+							(this.itemsSet[i] as Bot).moveRequest("x", 1);
 							break;
 						case 2:
-							(this.itemsSet[i] as Bot).moveRequest("y", .5);
-							// this.itemsSet[i].positionY += .5;
+							(this.itemsSet[i] as Bot).moveRequest("y", 1);
 							break;
 						case 3:
-							(this.itemsSet[i] as Bot).moveRequest("x", -.5);
-							// this.itemsSet[i].positionX -= .5;
+							(this.itemsSet[i] as Bot).moveRequest("x", -1);
 							break;
 						case 4:
-							(this.itemsSet[i] as Bot).moveRequest("y", -.5);
-							// this.itemsSet[i].positionY -= .5;
+							(this.itemsSet[i] as Bot).moveRequest("y", -1);
 							break;
 						default: break;
 					}

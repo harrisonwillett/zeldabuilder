@@ -5,11 +5,9 @@ import { Controller } from "./controller";
 export class Room {
 
     roomItems = new Items();
-    players: Controller[];
 
-    constructor(roomNumber: number, players: Controller[]) {
+    constructor(roomNumber: number) {
         this.getRoom(roomNumber);
-        this.players = players;
     }
     /*Request Room*/
     getRoom = (roomNumber: number) => {
@@ -114,26 +112,16 @@ export class Room {
 
 
             // // Create Player
-            /*
-            console.log({
-                players: this.players
-            });
-            if (this.players.length > 0) {
-                if (this.players[0] !== undefined) {
-                    const tempPlayer = new Player(this.players[0], "Link", (7.5 * 2), (5 * 2));
-                    this.roomItems.setItems(tempPlayer);
-                }
-            }
-            */
+            const tempPlayer = new AI("Link", (7.5 * 2), (5 * 2)); // Player(this.players[0], "Link", (7.5 * 2), (5 * 2));
+            this.roomItems.setItems(tempPlayer);
 
             // Create the AI on the page
             const aiArray = [[3, 5], [10, 5], [8, 3]];
             if (aiArray.length > 0) {
                 for (const aiData of aiArray) {
-                    const tempAi = new AI();
+                    const tempAi = new AI("Monster Type 1", (aiData[0] * 2), (aiData[1] * 2));
                     tempAi.spriteSheetId = 2;
                     tempAi.spriteNumber = 6;
-                    tempAi.setPossition((aiData[0] * 2), (aiData[1] * 2));
                     this.roomItems.setItems(tempAi);
                 }
             }
@@ -142,22 +130,15 @@ export class Room {
             const aiArray2 = [[5, 5], [10, 8]];
             if (aiArray2.length > 0) {
                 for (const aiData of aiArray2) {
-                    const tempAi = new AI();
+                    const tempAi = new AI("Monster Type 2", (aiData[0] * 2), (aiData[1] * 2));
                     tempAi.spriteSheetId = 4;
                     tempAi.spriteNumber = 13;
                     tempAi.passable = false;
-                    tempAi.setPossition((aiData[0] * 2), (aiData[1] * 2));
                     this.roomItems.setItems(tempAi);
                 }
             }
 
-            (this.roomItems.getItems() as Item[]).forEach((item, itemIndex) => {
-                console.log({
-                    itemIndex,
-                    item
-                });
-            });
-
         }
+
     }
 }
