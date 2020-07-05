@@ -27,7 +27,7 @@ export class GameComponent implements OnInit, AfterViewInit {
     HTMLCanvasElement
   >;
   gamescreenCnxt: CanvasRenderingContext2D;
-  controllers: Controller[] = [];
+  controller: Controller;
   bindingClientRect: DOMRect;
   topdownEightBitDisplay = new TopdownEightBitDisplay();
   spriteScale: number;
@@ -36,12 +36,14 @@ export class GameComponent implements OnInit, AfterViewInit {
   backgroundCache: ImageData = undefined;
   gameScaled;
   spriteSheets: Observable<Spritesheet[]> = of([]);
+  playerButtons: Observable<string[]> = of([]);
   currentRoom: Observable<Room>;
 
-  constructor(private spriteService: SpriteService) {}
+  constructor(private spriteService: SpriteService) {
+    this.controller = new Controller();
+  }
 
   ngOnInit(): void {
-    this.getControllers();
     this.getSpriteSheets();
     this.getCurrentRoom();
     this.gamescreenCnxt = this.canvas.nativeElement.getContext("2d");
@@ -70,7 +72,6 @@ export class GameComponent implements OnInit, AfterViewInit {
   requestResizeCanvas() {
     Promise.resolve(
       this.gamescreenCnxt &&
-      this.getControllers &&
       this.getSpriteSheets &&
       this.getCurrentRoom
     ).then(() => {
@@ -78,16 +79,8 @@ export class GameComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getControllers(): void {
-    this.controllers.push(new Controller());
-    console.log({
-      controllers: this.controllers
-    });
-  }
-
   getSpriteSheets(): void {
     this.spriteService.getSheets().subscribe(obj => {
-      // console.log({ galleryGetSheets: obj });
       obj.forEach((spriteSheet) => {
         this.sheetDataToCanvas(spriteSheet);
       });
@@ -97,8 +90,8 @@ export class GameComponent implements OnInit, AfterViewInit {
   }
 
   getCurrentRoom(): void {
-    Promise.resolve(this.getControllers).then(() => {
-      this.currentRoom = of( new Room(1) );
+    Promise.resolve(this.controller).then(() => {
+      this.currentRoom = of( new Room(1));
     });
   }
 
@@ -171,7 +164,7 @@ export class GameComponent implements OnInit, AfterViewInit {
     clearInterval(this.canvasRefresh);
     this.canvasRefresh = setInterval(() => {
         this.currentRoom.subscribe(room => {
-          room.roomItems.updateItems();
+          room.roomItems.updateItems(this.controller.activeMap);
         });
         this.drawActorsToCanvas();
       }, 120);
@@ -204,7 +197,6 @@ export class GameComponent implements OnInit, AfterViewInit {
     });
     Promise.resolve(
       this.gamescreenCnxt &&
-      this.getControllers &&
       this.getSpriteSheets &&
       this.getCurrentRoom &&
       this.resizeCanvas &&
@@ -214,7 +206,6 @@ export class GameComponent implements OnInit, AfterViewInit {
     });
   }
   resizeSprites() {
-    console.log("resize the sprites");
     Promise.resolve(this.gamescreenCnxt && this.spriteSheets).then(() => {
       this.spriteScale = Math.min(
         this.wrapper.nativeElement.offsetHeight /
@@ -233,7 +224,7 @@ export class GameComponent implements OnInit, AfterViewInit {
 
   drawRoomToCanvas() {
     // Get Decorations
-    console.log("Get Decorations");
+    // ("Get Decorations");
     this.currentRoom.subscribe(room => {
       if (this.backgroundCache !== undefined) {
         this.gamescreenCnxt.putImageData(this.backgroundCache, 0, 0);

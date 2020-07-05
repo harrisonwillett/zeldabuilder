@@ -1,9 +1,11 @@
+import { ControllerService } from "src/app/service/controller.service";
+
 /*controller for binding moments to sets of actions*/
 export class Controller {
 
-	activeKeys = [];
-	mapSet = [];
-	activeMap = [];
+	activeKeys: number[] = [];
+	mapSet: Array<[number, string]> = [];
+	activeMap: string[] = [];
 
 	constructor() {
 		this.mapSet.push(
@@ -15,9 +17,31 @@ export class Controller {
 			[88, "dash"]
 		);
 	}
+	// keyboard events start
+	onKeyDown(e) {
+		let isKeyInArray = false;
+		for (const activeKey of this.activeKeys) {
+			if ( activeKey === e.keyCode ) {
+				isKeyInArray = true;
+			}
+		}
+		if ( isKeyInArray ) {
+		} else {
+			this.activeKeys.push(e.keyCode);
+		}
+		this.setControllerByKeyboard();
+	}
 
+	onKeyUp(e) {
+		for ( let i = 0; i < this.activeKeys.length; i++ ) {
+			if ( this.activeKeys[i] === e.keyCode ) {
+				this.activeKeys.splice(i, 1);
+			}
+		}
+		this.setControllerByKeyboard();
+	}
 
-	setActiveMap = function() {
+	setControllerByKeyboard() {
 		this.activeMap = [];
 		for (const activeKey of this.activeKeys) {
 			for ( const mapSubSet of this.mapSet) {
@@ -26,36 +50,6 @@ export class Controller {
 				}
 			}
 		}
-
-	};
-
-	press = function( button ) {
-		let isKeyInArray = false;
-		for (const activeKey of this.activeKeys) {
-			if ( activeKey === button ) {
-				isKeyInArray = true;
-			}
-		}
-		if ( isKeyInArray ) {
-		} else {
-			this.activeKeys.push(button);
-		}
-		this.setActiveMap();
-		// console.log( this.activeMap );
-
-	};
-
-	release = function( button ) {
-		for ( let i = 0; i < this.activeKeys.length; i++ ) {
-			if ( this.activeKeys[i] === button ) {
-				this.activeKeys.splice(i, 1);
-			}
-		}
-		this.setActiveMap();
-		// console.log( this.activeMap );
-
-	};
-
-
-
+	}
+	// keyboard events end
 }

@@ -1,16 +1,28 @@
 import { Injectable } from "@angular/core";
 
+export class Notification {
+  id: string;
+  message: string;
+}
+
 @Injectable({
   providedIn: "root",
 })
 export class MessageService {
-  messages: string[] = [];
+  notifications: Notification[] = [];
 
-  add(message: string) {
-    this.messages.push(message);
+  add(txt: string) {
+    this.notifications.push({
+      id: Date.now().toString(16),
+      message: txt
+    });
   }
 
-  clear() {
-    this.messages = [];
+  clear(id: string) {
+    this.notifications.forEach((notification, notificationIndex) => {
+      if (notification.id === id) {
+        this.notifications.splice(notificationIndex, 1);
+      }
+    });
   }
 }

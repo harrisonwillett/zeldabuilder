@@ -1,12 +1,12 @@
 import { Wall, Door, Player, Decoration, AI, Item } from "./actors";
 import { Items } from "./items";
-import { Controller } from "./controller";
 
 export class Room {
 
-    roomItems = new Items();
+    roomItems: Items;
 
     constructor(roomNumber: number) {
+        this.roomItems = new Items();
         this.getRoom(roomNumber);
     }
     /*Request Room*/
@@ -112,7 +112,7 @@ export class Room {
 
 
             // // Create Player
-            const tempPlayer = new AI("Link", (7.5 * 2), (5 * 2)); // Player(this.players[0], "Link", (7.5 * 2), (5 * 2));
+            const tempPlayer = new Player("Link", (7.5 * 2), (5 * 2));
             this.roomItems.setItems(tempPlayer);
 
             // Create the AI on the page

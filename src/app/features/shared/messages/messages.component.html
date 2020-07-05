@@ -1,8 +1,17 @@
-<div *ngIf="messageService.messages.length">
-
-    <h2>Messages</h2>
-    <button class="clear"
-            (click)="messageService.clear()">clear</button>
-    <div *ngFor='let message of messageService.messages'> {{message}} </div>
-  
-  </div>
+<!-- Position it -->
+<div aria-live="polite" aria-atomic="true" style="position: absolute; top: 0; right: 0;" *ngIf="messageService.notifications.length" >
+    <div *ngFor='let notification of messageService.notifications'>
+        <!-- Then put toasts within -->
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="mr-auto">Zelda Maker</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" (click)="messageService.clear(notification.id)" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                {{notification.message}}
+            </div>
+        </div>
+    </div>
+</div>

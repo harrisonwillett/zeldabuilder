@@ -88,18 +88,6 @@ export class Item {
 		this.spriteNumber = x;
 	}
 
-	/*
-	getDesign =  () => {
-		// this.spirte.width = Math.floor(16 * world.ratio) - 1;
-		// this.spirte.height = Math.floor(16 * world.ratio) - 1;
-		// this.spirteContext.clearRect(0, 0, 16 * world.ratio, 16 * world.ratio);
-		// this.spirteContext.drawImage( this.spriteSheet.getSpriteImg(), Math.floor(-1 * this.spriteNumber * (16 * world.ratio)), 0 );
-		this.design = this.spirte;
-		return this.design;
-	}
-	*/
-
-
 }
 
 // FLOORING ETC
@@ -282,46 +270,42 @@ export class Player extends Bot {
 
 	controller: Controller;
 
-	constructor( contollingParty: Controller, name: string = "Link", positionX: number = 0, positionY: number = 0 ) {
+	constructor( name: string = "Link", positionX: number = 0, positionY: number = 0 ) {
 		super(name, positionX, positionY);
-		this.spriteSheetId = 4; // new Sprites.LinkSprite();
+		this.spriteSheetId = 4;
 		this.spriteNumber = 2;
-		// this.design = this.spirte;
-
-		// setDecoration
 		this.team = "green";
 		this.owner = "controller";
 		this.canLeave = true;
-		this.controller = contollingParty;
 	}
 
 	updateSpriteNumber = function() {
 		if ( this.direction === "bottom" ) {
-			if ( this.spriteNumber === 0 ) {
-				this.spriteNumber = 1;
+			if ( this.spriteNumber === 1 ) {
+				this.spriteNumber = 2;
 			} else {
-				this.spriteNumber = 0;
+				this.spriteNumber = 1;
 			}
 		}
 		if ( this.direction === "top" ) {
-			if ( this.spriteNumber === 2 ) {
-				this.spriteNumber = 3;
+			if ( this.spriteNumber === 3 ) {
+				this.spriteNumber = 4;
 			} else {
-				this.spriteNumber = 2;
+				this.spriteNumber = 3;
 			}
 		}
 		if ( this.direction === "left" ) {
-			if ( this.spriteNumber === 4 ) {
-				this.spriteNumber = 5;
+			if ( this.spriteNumber === 5 ) {
+				this.spriteNumber = 6;
 			} else {
-				this.spriteNumber = 4;
+				this.spriteNumber = 5;
 			}
 		}
 		if ( this.direction === "right" ) {
-			if ( this.spriteNumber === 6 ) {
-				this.spriteNumber = 7;
+			if ( this.spriteNumber === 7 ) {
+				this.spriteNumber = 8;
 			} else {
-				this.spriteNumber = 6;
+				this.spriteNumber = 7;
 			}
 		}
 
@@ -335,8 +319,7 @@ export class Projectile extends Bot {
 		super(val, parent.positionX, parent.positionY);
 		this.team = undefined;
 		this.owner = parent;
-		this.spriteSheetId = 7; // new Sprites.ItemSprite();
+		this.spriteSheetId = 7;
 		this.spriteNumber = 0;
-		// this.design = this.spirte;
 	}
 }
