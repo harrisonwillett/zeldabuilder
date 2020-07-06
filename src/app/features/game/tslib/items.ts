@@ -42,10 +42,10 @@ export class Items {
 				jHit = (decoration as Bot).getHitbox();
 				// ix1 and ix2
 				if ( !decoration.passable || decoration.name === "door" ) {
-					for (let k = 0; k < jHit.length; k++) {
-						if ( (iHit[0] >= jHit[k][0] && iHit[0] < jHit[k][1]) || (iHit[1] > jHit[k][0] && iHit[1] <= jHit[k][1])  ) {
+					for (const kHit of jHit) {
+						if ( (iHit[0] >= kHit[0] && iHit[0] < kHit[1]) || (iHit[1] > kHit[0] && iHit[1] <= kHit[1])  ) {
 							// iy1 and iy2
-							if ( (iHit[2] >= jHit[k][2] && iHit[2] < jHit[k][3]) || ( iHit[3] > jHit[k][2] && iHit[3] <= jHit[k][3])  ) {
+							if ( (iHit[2] >= kHit[2] && iHit[2] < kHit[3]) || ( iHit[3] > kHit[2] && iHit[3] <= kHit[3])  ) {
 								// if "i" is passable or "j" is passable
 								if ( !decoration.passable ) {
 									hasCollided = true;
@@ -74,10 +74,10 @@ export class Items {
 					jHit = this.itemsSet[j].getHitbox();
 					// ix1 and ix2
 					if ( !this.itemsSet[j].passable ) {
-						for (let k = 0; k < jHit.length; k++) {
-							if ( (iHit[0] >= jHit[k][0] && iHit[0] < jHit[k][1]) || (iHit[1] > jHit[k][0] && iHit[1] <= jHit[k][1])  ) {
+						for (const kHit of  jHit) {
+							if ( (iHit[0] >= kHit[0] && iHit[0] < kHit[1]) || (iHit[1] > kHit[0] && iHit[1] <= kHit[1])  ) {
 								// iy1 and iy2
-								if ( (iHit[2] >= jHit[k][2] && iHit[2] < jHit[k][3]) || ( iHit[3] > jHit[k][2] && iHit[3] <= jHit[k][3])  ) {
+								if ( (iHit[2] >= kHit[2] && iHit[2] < kHit[3]) || ( iHit[3] > kHit[2] && iHit[3] <= kHit[3])  ) {
 									// if "i" is passable or "j" is passable
 									hasCollided = true;
 								}

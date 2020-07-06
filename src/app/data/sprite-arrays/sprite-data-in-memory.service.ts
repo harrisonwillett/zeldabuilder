@@ -2,7 +2,7 @@ import { InMemoryDbService } from "angular-in-memory-web-api";
 import { Injectable } from "@angular/core";
 
 import { Spritesheet } from "../../model/spritesheet";
-import { EightBit } from "../sprite-modes";
+import { EightBitX2 } from "../sprite-modes";
 import { RgbaColor } from "../../model/rgba-color";
 
 import {
@@ -431,7 +431,7 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
             array: spriteLakeInvertRightBottomArray
           }
         ],
-        options: EightBit
+        options: EightBitX2
       },
       {
         id: 2,
@@ -690,7 +690,7 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
             array: spriteLakeInvertRightBottomArray
           }
         ],
-        options: EightBit
+        options: EightBitX2
       },
       {
         id: 3,
@@ -949,7 +949,7 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
             array: spriteLakeInvertRightBottomArray
           }
         ],
-        options: EightBit
+        options: EightBitX2
       },
       {
         id: 4,
@@ -1027,13 +1027,13 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
             array: spriteLinkFanfare2Array
           }
         ],
-        options: EightBit
+        options: EightBitX2
       },
       {
         id: 7,
         name: "Items",
         sprites: [],
-        options: EightBit
+        options: EightBitX2
       }
     ];
     return { sheets };

@@ -7,6 +7,12 @@ export const EmptyOptions: SpriteOptions = {
 };
 
 export const EightBit: SpriteOptions = {
+  height: 8,
+  width: 8,
+  colorChannels: 4
+};
+
+export const EightBitX2: SpriteOptions = {
   height: 16,
   width: 16,
   colorChannels: 4
@@ -46,6 +52,13 @@ export const BitPresets = [
     disabled: false
   },
   {
+    name: "8-Bit - 16x16 Tiles",
+    class: EightBitX2,
+    selectEval: sheetsOptions =>
+      JSON.stringify(sheetsOptions) === JSON.stringify(EightBitX2),
+    disabled: false
+  },
+  {
     name: "16-Bit",
     class: SixteenBit,
     selectEval: sheetsOptions =>
@@ -72,6 +85,7 @@ export const BitPresets = [
       return (
         JSON.stringify(sheetsOptions) !== JSON.stringify(EmptyOptions) &&
         JSON.stringify(sheetsOptions) !== JSON.stringify(EightBit) &&
+        JSON.stringify(sheetsOptions) !== JSON.stringify(EightBitX2) &&
         JSON.stringify(sheetsOptions) !== JSON.stringify(SixteenBit) &&
         JSON.stringify(sheetsOptions) !== JSON.stringify(ThirtytwoBit) &&
         JSON.stringify(sheetsOptions) !== JSON.stringify(SixtyfourBit)
