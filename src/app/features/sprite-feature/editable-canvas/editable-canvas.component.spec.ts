@@ -10,38 +10,38 @@ describe("EditableCanvasComponent", () => {
   let component: EditableCanvasComponent;
   let fixture: ComponentFixture<EditableCanvasComponent>;
 
-  let colffc07a: RgbaColor = {
+  const colffc07a: RgbaColor = {
     red: parseInt("ff", 16),
     green: parseInt("C0", 16),
     blue: parseInt("7a", 16),
     alpha: 1
   };
-  let colc03800: RgbaColor = {
+  const colc03800: RgbaColor = {
     red: parseInt("c0", 16),
     green: parseInt("38", 16),
     blue: parseInt("00", 16),
     alpha: 1
   };
-  let col001aff: RgbaColor = {
+  const col001aff: RgbaColor = {
     red: parseInt("00", 16),
     green: parseInt("1a", 16),
     blue: parseInt("ff", 16),
     alpha: 0.4
   };
-  let col000000: RgbaColor = {
+  const col000000: RgbaColor = {
     red: parseInt("00", 16),
     green: parseInt("00", 16),
     blue: parseInt("00", 16)
   };
 
-  let overWorldColors1: RgbaColor[] = [
+  const overWorldColors1: RgbaColor[] = [
     colffc07a,
     colc03800,
     col001aff,
     col000000
   ];
 
-  let spriteStairArray: sixteenBitSpriteAry = [
+  const spriteStairArray: sixteenBitSpriteAry = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1],
     [1, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1],
@@ -67,15 +67,16 @@ describe("EditableCanvasComponent", () => {
     fixture = TestBed.createComponent(EditableCanvasComponent);
     component = fixture.componentInstance;
     // component.selectedColor = 8;
-    let sprite: Sprite = {
+    const sprite: Sprite = {
       id: 1,
       name: "Stairs - Brown",
-      colors: overWorldColors1,
-      array: spriteStairArray.map(function(arr) {
+      array: spriteStairArray.map((arr) => {
         return arr.slice();
       })
     };
     component.sprite = { ...sprite };
+    component.spriteColors = overWorldColors1;
+
   });
 
   it("should create", () => {
@@ -107,7 +108,7 @@ describe("EditableCanvasComponent", () => {
   // It should start with an undefined color palette
   it("should start with an undefined color palette", () => {
     expect(component.spriteColorPalette).toBeUndefined();
-    component.sprite.colors = undefined;
+    component.spriteColors = undefined;
     component.setSpriteColorPalette();
     expect(component.spriteColorPalette).toEqual([]);
   });
@@ -131,7 +132,7 @@ describe("EditableCanvasComponent", () => {
     component.spriteHeight = 16;
     fixture.detectChanges();
     component.drawSprite();
-    const arrangeArray = component.sprite.array.map(function(arr) {
+    const arrangeArray = component.sprite.array.map((arr) => {
       return arr.slice();
     });
 
@@ -154,19 +155,19 @@ describe("EditableCanvasComponent", () => {
     fixture.detectChanges();
     component.cntxt = undefined;
     component.drawSprite();
-    const arrangeArray = component.sprite.array.map(function(arr) {
+    const arrangeArray = component.sprite.array.map((arr) => {
       return arr.slice();
     });
 
     // component.colorPixel([5, 9]);
-    const actArray = component.sprite.array.map(function(arr) {
+    const actArray = component.sprite.array.map((arr) => {
       return arr.slice();
     });
 
     expect(arrangeArray).toEqual(actArray);
   });
 
-  /* 
+  /*
   // It Should NOT draw when pointer is out of canvas
   it("should NOT draw when pointer is out of canvas", () => {
     component.editable = true;
@@ -216,7 +217,7 @@ describe("EditableCanvasComponent", () => {
 
     expect(true).toBeTrue();
   });
-  
+
   // It should remove duplicates
   it("should remove duplicates", () => {
     component.editable = true;

@@ -6,7 +6,12 @@ import {
   ViewChild,
   ElementRef,
   Output,
-  EventEmitter
+  EventEmitter,
+  SimpleChanges,
+  OnChanges,
+  ChangeDetectionStrategy,
+  DoCheck,
+  KeyValueDiffers
 } from "@angular/core";
 
 import { fromEvent, merge } from "rxjs";
@@ -17,10 +22,11 @@ import { RgbaColor } from "src/app/model/rgba-color";
 
 @Component({
   selector: "app-editable-canvas",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./editable-canvas.component.html",
   styleUrls: ["./editable-canvas.component.scss"]
 })
-export class EditableCanvasComponent implements OnInit, AfterViewInit {
+export class EditableCanvasComponent implements OnInit, OnChanges, AfterViewInit, DoCheck {
   @ViewChild("cwrapper", { static: true }) wrapper: ElementRef;
   @ViewChild("canvas", { static: true }) canvas: ElementRef<HTMLCanvasElement>;
   @Input() spriteWidth = 1;
@@ -35,8 +41,11 @@ export class EditableCanvasComponent implements OnInit, AfterViewInit {
   spriteColorPalette: Array<string | CanvasGradient | CanvasPattern>;
   bindingClientRect: DOMRect;
   @Output() newPixel = new EventEmitter<number[]>();
+  differ: any;
 
-  constructor() {}
+  constructor(private differs: KeyValueDiffers) {
+    this.differ = differs.find({}).create();
+  }
 
   ngOnInit() {
     this.cntxt = this.canvas.nativeElement.getContext("2d");
@@ -47,6 +56,19 @@ export class EditableCanvasComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.drawSprite();
     this.editSprite();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.spriteWidth || changes.spriteHeight) {
+      this.resizeCanvas();
+    }
+  }
+
+  ngDoCheck() {
+    const changes = this.differ.diff(this.spriteColors);
+    if (changes) {
+      this.drawSprite();
+    }
   }
 
   onScroll() {
@@ -99,7 +121,9 @@ export class EditableCanvasComponent implements OnInit, AfterViewInit {
 
   drawSprite() {
     this.setSpriteColorPalette();
-    this.cntxt.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    if (this.cntxt !== undefined) {
+      this.cntxt.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    }
     this.sprite.array.forEach((row, i) => {
       row.forEach((cell, j) => {
         if (this.cntxt !== undefined) {

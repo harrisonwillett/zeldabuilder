@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
 
 import { Spritesheet } from "../../../model/spritesheet";
 import { BitPresets } from "../../../data/sprite-modes";
@@ -22,6 +22,7 @@ export class SpriteSheetCreateComponent implements OnInit {
     }
   };
   @Input() funcType = "create";
+  @Output() updateSheet = new EventEmitter<Spritesheet>();
   presetOptions = BitPresets;
   sheets: Spritesheet[] = [];
   colorRemoval = false;
@@ -42,9 +43,7 @@ export class SpriteSheetCreateComponent implements OnInit {
   update(sheet: Spritesheet) {
     console.log({ update: sheet });
     console.log("Update sheet " + sheet.name);
-    this.spriteService.updateSheet(sheet as Spritesheet).subscribe(s => {
-      this.sheets.push(s);
-    });
+    this.updateSheet.emit(sheet);
   }
 
   setOptKey(key: string, value: string): void {

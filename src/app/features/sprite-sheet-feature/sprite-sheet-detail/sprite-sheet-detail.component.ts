@@ -11,6 +11,7 @@ import { Sprite } from "../../../model/sprite";
   styleUrls: ["./sprite-sheet-detail.component.scss"]
 })
 export class SpriteSheetDetailComponent implements OnInit {
+  sheets: Spritesheet[];
   sheet: Spritesheet;
   id: number;
 
@@ -25,9 +26,8 @@ export class SpriteSheetDetailComponent implements OnInit {
 
   getSpriteSheet(): void {
     this.spriteService.getSheets().subscribe(obj => {
-      console.log({ sheetDetailGetSheet: obj });
-      const sheets = obj;
-      for (const sheet of sheets) {
+      this.sheets = obj;
+      for (const sheet of this.sheets) {
         if (sheet.id === this.id) {
           this.sheet = sheet;
         }
@@ -36,8 +36,13 @@ export class SpriteSheetDetailComponent implements OnInit {
     this.id = +this.route.snapshot.paramMap.get("sheetId");
   }
 
+  getUpdatedSheet(updatedSheet: Spritesheet) {
+    this.spriteService.updateSheet(updatedSheet as Spritesheet).subscribe(s => {
+      this.sheets.push(s);
+    });
+  }
+
   delete(sprite: Sprite): void {
-    console.log("Delete sprite " + sprite.name);
     this.sheet.sprites = this.sheet.sprites.filter(h => h !== sprite); // delete locally
     this.spriteService.updateSheet(this.sheet).subscribe(); // delete from the service
   }
@@ -49,7 +54,6 @@ export class SpriteSheetDetailComponent implements OnInit {
       this.sheet.sprites.length > 0
         ? Math.max(...this.sheet.sprites.map(s => s.id)) + 1
         : 1;
-    console.log("Duplicate sprite " + dupSprite.name);
     this.sheet.sprites.push(dupSprite);
     this.spriteService.updateSheet(this.sheet).subscribe(); // delete from the service
   }

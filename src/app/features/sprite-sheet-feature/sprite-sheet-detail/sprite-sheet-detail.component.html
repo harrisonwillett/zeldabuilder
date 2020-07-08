@@ -3,6 +3,7 @@
     [submit]="'Update Sprite Sheet'"
     [sheet]="sheet"
     [funcType]="'update'"
+    (updateSheet)="getUpdatedSheet($event)"
   ></app-sprite-sheet-create>
   <div class="row p-2">
     <a
