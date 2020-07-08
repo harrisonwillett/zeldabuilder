@@ -22,11 +22,9 @@ export class SpriteSheetCreateComponent implements OnInit {
     }
   };
   @Input() funcType = "create";
-
   presetOptions = BitPresets;
-  // sheetHasClass: boolean;
-
   sheets: Spritesheet[] = [];
+  colorRemoval = false;
 
   constructor(private spriteService: SpriteService) {}
 
@@ -72,10 +70,35 @@ export class SpriteSheetCreateComponent implements OnInit {
     }
   }
 
+  checkColors(): void {
+    console.log({
+      colorChannels: this.sheet.options.colorChannels,
+      colors: this.sheet.colors.length
+    });
+    if (this.sheet.options.colorChannels > this.sheet.colors.length ) {
+      const colorDelta = this.sheet.options.colorChannels - this.sheet.colors.length;
+      for (let i = 0; i < colorDelta; i++) {
+        this.sheet.colors.push({
+          red: Math.floor(Math.random() * 256),
+          green: Math.floor(Math.random() * 256),
+          blue: Math.floor(Math.random() * 256),
+          alpha: Math.random()
+        });
+      }
+    }
+    if (this.sheet.options.colorChannels < this.sheet.colors.length ) {
+      this.colorRemoval = true;
+    } else {
+      this.colorRemoval = false;
+    }
+  }
+
+  removeColorChannel(index: number) {
+    this.sheet.colors.splice(index, 1);
+    this.checkColors();
+  }
+
   ngOnInit() {
-    /*
-    this.setMode();
-    */
     this.getSheets();
   }
 

@@ -64,7 +64,7 @@
         name="sprite-color-channels"
         id="sprite-color-channels"
         [value]="sheet?.options.colorChannels"
-        (keyup)="setOptKey('colorChannels', $event.target.value)"
+        (keyup)="setOptKey('colorChannels', $event.target.value); checkColors();"
       />
     </div>
   </div>
@@ -73,6 +73,9 @@
       *ngFor="let color of sheet?.colors; index as i"
       class="col-4 p-2 d-flex flex-column"
     >
+    <ng-template [ngIf]="colorRemoval">
+      <button class="btn btn-primary btn-sm btn-light mr-2 btn-close-color-picker" (click)="removeColorChannel(i)" type="button" >&times;</button>
+    </ng-template>
       <app-color-palette-picker
         [color]="color"
         [index]="i"
