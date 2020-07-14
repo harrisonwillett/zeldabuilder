@@ -105,7 +105,9 @@
           aria-orientation="vertical"
           aria-label="Alpha"
           [ngStyle]="{
-            'top': alphaToSliderPosition(), 
+            'top': alphaToSliderPosition()
+          }" >
+          <div [ngStyle]="{
             'background-color':
               'rgba(' +
               color?.red +
@@ -117,6 +119,7 @@
               (color?.alpha ? color.alpha : 1) +
               ')'
           }" ></div>
+        </div>
       </div>
       
     </div>
