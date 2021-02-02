@@ -1,5 +1,5 @@
 import { ElementRef } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { EditableCanvasComponent } from "./editable-canvas.component";
 import { RgbaColor } from "../../../model/rgba-color";

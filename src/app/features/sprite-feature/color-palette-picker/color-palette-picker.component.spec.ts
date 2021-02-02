@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, tick, fakeAsync, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { ColorPalettePickerComponent } from './color-palette-picker.component';
@@ -32,7 +32,7 @@ describe('ColorPalettePickerComponent', () => {
   let component: ColorPalettePickerComponent;
   let fixture: ComponentFixture<ColorPalettePickerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ColorPalettePickerComponent]
     })
