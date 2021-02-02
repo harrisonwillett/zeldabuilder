@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { TabNavigationComponent } from "./tab-navigation.component";
 
@@ -6,7 +6,7 @@ describe("TabNavigationComponent", () => {
   let component: TabNavigationComponent;
   let fixture: ComponentFixture<TabNavigationComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [TabNavigationComponent]
     }).compileComponents();
