@@ -1,5 +1,8 @@
-import { ElementRef, EventEmitter, Output } from "@angular/core";
+import { Directive, ElementRef, EventEmitter, Output } from "@angular/core";
 
+@Directive({
+  selector: '[Slider]'
+})
 export class Slider {
 
   domNode: ElementRef<HTMLElement>;
