@@ -79,6 +79,7 @@
       <app-color-palette-picker
         [color]="color"
         [index]="i"
+        (newColor)="updateColor($event)"
       ></app-color-palette-picker>
     </div>
   </div>

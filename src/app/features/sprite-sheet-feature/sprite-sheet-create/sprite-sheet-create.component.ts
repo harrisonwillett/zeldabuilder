@@ -81,7 +81,7 @@ export class SpriteSheetCreateComponent implements OnInit {
           red: Math.floor(Math.random() * 256),
           green: Math.floor(Math.random() * 256),
           blue: Math.floor(Math.random() * 256),
-          alpha: Math.random()
+          alpha: Math.floor(Math.random() * 100) / 100
         });
       }
     }
@@ -90,6 +90,11 @@ export class SpriteSheetCreateComponent implements OnInit {
     } else {
       this.colorRemoval = false;
     }
+  }
+
+  updateColor(event) {
+    console.log({"create sheet update color": event});
+    this.sheet.colors[event[0]] = event[1];
   }
 
   removeColorChannel(index: number) {

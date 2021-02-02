@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, ElementRef, ViewChild, AfterViewInit } from "@angular/core";
+import { Component, OnInit, Input, ElementRef, ViewChild, AfterViewInit, Output, EventEmitter } from "@angular/core";
 import { RgbaColor } from "src/app/model/rgba-color";
 import { rgbToHsv, hsvToRgb } from "./colorFormulas";
+import { Slider } from "./slider";
 
 @Component({
   selector: "app-color-palette-picker",
@@ -23,6 +24,16 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
     a: undefined
   };
 
+  // Twin Axix Sliders
+  @ViewChild("canvasLightenPickerValue", { static: true }) canvasLightenPickerValue: ElementRef<HTMLDivElement>;
+  @ViewChild("canvasDarkenPickerValue", { static: true }) canvasDarkenPickerValue: ElementRef<HTMLDivElement>;
+  // Single Axix Sliders
+  @ViewChild("canvasAlphaPickerValue", { static: true }) canvasAlphaPickerValue: ElementRef<HTMLDivElement>;
+  @ViewChild("canvasHuePickerValue", { static: true }) canvasHuePickerValue: ElementRef<HTMLDivElement>;
+  alphaSlider: Slider;
+  hueSlider: Slider;
+  @Output() newColor = new EventEmitter<[number, RgbaColor]>();
+
   constructor() {}
 
   ngOnInit() {
@@ -34,6 +45,37 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.drawColorPickers();
+    this.initSliders();
+  }
+
+  initSliders() {
+    this.alphaSlider = new Slider(this.canvasAlphaPickerValue);
+    this.hueSlider = new Slider(this.canvasHuePickerValue);
+    this.alphaSlider.valueNowOut.subscribe(obj => {
+      console.log({alphaNow: obj});
+      this.newColor.emit([this.index, {
+        red: this.color.red,
+        green: this.color.green,
+        blue: this.color.blue,
+        alpha: (obj / 100)
+      }]);
+    });
+    this.hueSlider.valueNowOut.subscribe(obj => {
+      console.log({"hueSlider hueNow": obj});
+      let hsv = [0, 0, 0];
+      hsv = rgbToHsv(this.color.red, this.color.green, this.color.blue);
+      console.log({"hueSlider OLD Color": this.color});
+      console.log({"old hsv": hsv});
+      hsv[0] = obj / 100;
+      const newRBG = hsvToRgb(hsv[0], hsv[1], hsv[2]);
+      console.log({"hueSlider NEW Color": newRBG});
+      this.newColor.emit([this.index, {
+        red: newRBG[0],
+        green: newRBG[1],
+        blue: newRBG[2],
+        alpha: this.color.alpha
+      }]);
+    });
   }
 
   drawColorPickers() {
@@ -88,7 +130,14 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
     return hsvToRgb(h, s, v);
   }
 
+  hueValueNow() {
+    const hsv = rgbToHsv(this.color.red, this.color.green, this.color.blue);
+    console.log({hueValueNow: hsv[0]});
+    return (hsv[0] * 100);
+  }
+
   hueToSliderPosition() {
+    console.log({huePosition: this.hsva.h});
     return (this.hsva.h * 300) + "px";
   }
 
