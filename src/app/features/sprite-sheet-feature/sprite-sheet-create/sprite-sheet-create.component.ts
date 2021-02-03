@@ -35,14 +35,14 @@ export class SpriteSheetCreateComponent implements OnInit {
         if (pO.class !== undefined) {
           this.sheet.options = { ...pO.class };
         }
-        console.log({ pO });
+        // console.log({ pO });
       }
     }
   }
 
   update(sheet: Spritesheet) {
-    console.log({ update: sheet });
-    console.log("Update sheet " + sheet.name);
+    // console.log({ update: sheet });
+    // console.log("Update sheet " + sheet.name);
     this.updateSheet.emit(sheet);
   }
 
@@ -51,10 +51,10 @@ export class SpriteSheetCreateComponent implements OnInit {
   }
 
   create(sheet: Spritesheet) {
-    console.log({ create: sheet });
+    // console.log({ create: sheet });
     sheet.id =
       this.sheets.length > 0 ? Math.max(...this.sheets.map(s => s.id)) + 1 : 1;
-    console.log("Create sheet " + sheet.name);
+    // console.log("Create sheet " + sheet.name);
     this.spriteService.addSheet(sheet as Spritesheet).subscribe(s => {
       this.sheets.push(s);
     });
@@ -70,10 +70,10 @@ export class SpriteSheetCreateComponent implements OnInit {
   }
 
   checkColors(): void {
-    console.log({
-      colorChannels: this.sheet.options.colorChannels,
-      colors: this.sheet.colors.length
-    });
+    // console.log({
+    //   colorChannels: this.sheet.options.colorChannels,
+    //   colors: this.sheet.colors.length
+    // });
     if (this.sheet.options.colorChannels > this.sheet.colors.length ) {
       const colorDelta = this.sheet.options.colorChannels - this.sheet.colors.length;
       for (let i = 0; i < colorDelta; i++) {
@@ -93,7 +93,7 @@ export class SpriteSheetCreateComponent implements OnInit {
   }
 
   updateColor(event) {
-    console.log({"create sheet update color": event});
+    // console.log({"create sheet update color": event});
     this.sheet.colors[event[0]] = event[1];
   }
 
@@ -108,7 +108,7 @@ export class SpriteSheetCreateComponent implements OnInit {
 
   getSheets(): void {
     this.spriteService.getSheets().subscribe(obj => {
-      console.log({ galleryGetSheets: obj });
+      // console.log({ galleryGetSheets: obj });
       this.sheets = obj;
     });
   }

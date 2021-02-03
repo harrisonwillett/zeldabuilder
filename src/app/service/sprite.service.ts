@@ -76,8 +76,8 @@ export class SpriteService {
 
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
-    console.log({
-      SpriteServiceMessage: message
-    });
+    // console.log({
+    //   SpriteServiceMessage: message
+    // });
   }
 }

@@ -11,6 +11,7 @@ import { Slider } from "./slider";
 export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
   @Input() color: RgbaColor;
   @Input() index: number;
+  isModalVisable: boolean = false;
   @ViewChild("canvasHuePicker", { static: true }) canvasHuePicker: ElementRef<HTMLCanvasElement>;
   @ViewChild("canvasColorPicker", { static: true }) canvasColorPicker: ElementRef<HTMLCanvasElement>;
   @ViewChild("canvasAlphaPicker", { static: true }) canvasAlphaPicker: ElementRef<HTMLCanvasElement>;
@@ -52,7 +53,7 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
     this.alphaSlider = new Slider(this.canvasAlphaPickerValue);
     this.hueSlider = new Slider(this.canvasHuePickerValue);
     this.alphaSlider.valueNowOut.subscribe(obj => {
-      console.log({alphaNow: obj});
+      // console.log({alphaNow: obj});
       this.newColor.emit([this.index, {
         red: this.color.red,
         green: this.color.green,
@@ -61,14 +62,14 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
       }]);
     });
     this.hueSlider.valueNowOut.subscribe(obj => {
-      console.log({"hueSlider hueNow": obj});
+      // console.log({"hueSlider hueNow": obj});
       let hsv = [0, 0, 0];
       hsv = rgbToHsv(this.color.red, this.color.green, this.color.blue);
-      console.log({"hueSlider OLD Color": this.color});
+      // console.log({"hueSlider OLD Color": this.color});
       console.log({"old hsv": hsv});
       hsv[0] = obj / 100;
       const newRBG = hsvToRgb(hsv[0], hsv[1], hsv[2]);
-      console.log({"hueSlider NEW Color": newRBG});
+      // console.log({"hueSlider NEW Color": newRBG});
       this.newColor.emit([this.index, {
         red: newRBG[0],
         green: newRBG[1],
@@ -123,7 +124,7 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
     this.hsva.s = hsv[1];
     this.hsva.v = hsv[2];
     this.hsva.a = this.color.alpha ? this.color.alpha : 1;
-    console.log( this.rawHueAsHex() );
+    // console.log( this.rawHueAsHex() );
   }
 
   hsvToRgb(h, s, v) {
@@ -132,12 +133,12 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
 
   hueValueNow() {
     const hsv = rgbToHsv(this.color.red, this.color.green, this.color.blue);
-    console.log({hueValueNow: hsv[0]});
+    // console.log({hueValueNow: hsv[0]});
     return (hsv[0] * 100);
   }
 
   hueToSliderPosition() {
-    console.log({huePosition: this.hsva.h});
+    // console.log({huePosition: this.hsva.h});
     return (this.hsva.h * 300) + "px";
   }
 

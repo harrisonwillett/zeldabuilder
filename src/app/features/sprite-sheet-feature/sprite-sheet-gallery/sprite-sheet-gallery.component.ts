@@ -19,7 +19,7 @@ export class SpriteSheetGalleryComponent implements OnInit {
 
   getSheets(): void {
     this.spriteService.getSheets().subscribe(obj => {
-      console.log({ galleryGetSheets: obj });
+      // console.log({ galleryGetSheets: obj });
       this.sheets = obj;
     });
   }
@@ -27,7 +27,7 @@ export class SpriteSheetGalleryComponent implements OnInit {
   delete(id: number): void {
     this.sheets = this.sheets.filter(sheet => {
       if (sheet.id !== id) {
-        console.log("Delete sheet " + sheet.name);
+        // console.log("Delete sheet " + sheet.name);
         this.spriteService.deleteSheet(sheet).subscribe();
       }
       return sheet.id !== id;
@@ -43,8 +43,8 @@ export class SpriteSheetGalleryComponent implements OnInit {
           this.sheets.length > 0
             ? Math.max(...this.sheets.map(s => s.id)) + 1
             : 1;
-        console.log({ duplicate: dupSheet });
-        console.log("Duplicate sheet " + dupSheet.name);
+        // console.log({ duplicate: dupSheet });
+        // console.log("Duplicate sheet " + dupSheet.name);
         this.spriteService.addSheet(dupSheet as Spritesheet).subscribe(s => {
           this.sheets.push(s);
         });

@@ -28,19 +28,19 @@ export class Slider {
   });
 
   constructor( nativeElement: ElementRef<HTMLElement> ) {
-    console.log({"Bound Slider Class to": nativeElement});
+    // console.log({"Bound Slider Class to": nativeElement});
     this.domNode = nativeElement;
     if (this.domNode.nativeElement.getAttribute("aria-valuemin")) {
         this.valueMin = parseInt(this.domNode.nativeElement.getAttribute("aria-valuemin"), 10);
-        console.log({valueMin: this.valueMin});
+        // console.log({valueMin: this.valueMin});
     }
     if (this.domNode.nativeElement.getAttribute("aria-valuemax")) {
         this.valueMax = parseInt(this.domNode.nativeElement.getAttribute("aria-valuemax"), 10);
-        console.log({valueMax: this.valueMax});
+        // console.log({valueMax: this.valueMax});
     }
     if (this.domNode.nativeElement.getAttribute("aria-valuenow")) {
         this.valueNow = parseInt(this.domNode.nativeElement.getAttribute("aria-valuenow"), 10);
-        console.log({valueNow: this.valueNow});
+        // console.log({valueNow: this.valueNow});
     }
     if (this.domNode.nativeElement.getAttribute("aria-orientation")) {
       this.orientation = this.domNode.nativeElement.getAttribute("aria-orientation");
