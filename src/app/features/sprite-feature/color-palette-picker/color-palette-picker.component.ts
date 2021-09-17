@@ -1,8 +1,7 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, AfterViewInit, Output, EventEmitter } from "@angular/core";
 import { RgbaColor } from "src/app/model/rgba-color";
+import { SliderDirective } from "../slider/slider.directive";
 import { rgbToHsv, hsvToRgb } from "./colorFormulas";
-import { Slider } from "./slider";
-
 @Component({
   selector: "app-color-palette-picker",
   templateUrl: "./color-palette-picker.component.html",
@@ -10,14 +9,19 @@ import { Slider } from "./slider";
 })
 export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
   @Input() color: RgbaColor;
+  @Output() newColor = new EventEmitter<[number, RgbaColor]>();
+
   @Input() index: number;
+
   isModalVisable: boolean = false;
+
   @ViewChild("canvasHuePicker", { static: true }) canvasHuePicker: ElementRef<HTMLCanvasElement>;
   @ViewChild("canvasColorPicker", { static: true }) canvasColorPicker: ElementRef<HTMLCanvasElement>;
   @ViewChild("canvasAlphaPicker", { static: true }) canvasAlphaPicker: ElementRef<HTMLCanvasElement>;
   cntxtColorPicker: CanvasRenderingContext2D;
   cntxtHuePicker: CanvasRenderingContext2D;
   cntxtAlphaPicker: CanvasRenderingContext2D;
+
   public hsva = {
     h: undefined,
     s: undefined,
@@ -26,14 +30,12 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
   };
 
   // Twin Axix Sliders
-  @ViewChild("canvasLightenPickerValue", { static: true }) canvasLightenPickerValue: ElementRef<HTMLDivElement>;
-  @ViewChild("canvasDarkenPickerValue", { static: true }) canvasDarkenPickerValue: ElementRef<HTMLDivElement>;
+  @ViewChild("canvasLightenPickerValue", { static: true }) canvasLightenPickerValue: SliderDirective;
+  @ViewChild("canvasDarkenPickerValue", { static: true }) canvasDarkenPickerValue: SliderDirective;
   // Single Axix Sliders
-  @ViewChild("canvasAlphaPickerValue", { static: true }) canvasAlphaPickerValue: ElementRef<HTMLDivElement>;
-  @ViewChild("canvasHuePickerValue", { static: true }) canvasHuePickerValue: ElementRef<HTMLDivElement>;
-  alphaSlider: Slider;
-  hueSlider: Slider;
-  @Output() newColor = new EventEmitter<[number, RgbaColor]>();
+  @ViewChild("canvasAlphaPickerValue", { static: true }) canvasAlphaPickerValue: SliderDirective;
+  @ViewChild("canvasHuePickerValue", { static: true }) canvasHuePickerValue: SliderDirective;
+  
 
   constructor() {}
 
@@ -46,37 +48,77 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.drawColorPickers();
-    this.initSliders();
   }
 
-  initSliders() {
-    this.alphaSlider = new Slider(this.canvasAlphaPickerValue);
-    this.hueSlider = new Slider(this.canvasHuePickerValue);
-    this.alphaSlider.valueNowOut.subscribe(obj => {
-      // console.log({alphaNow: obj});
-      this.newColor.emit([this.index, {
+  closeModal() {
+    this.isModalVisable = false;
+    this.newColor.emit([this.index, this.color]);
+  }
+
+  updateAlpha($event) {
+    if($event !== undefined) {
+      this.color = {
         red: this.color.red,
         green: this.color.green,
         blue: this.color.blue,
-        alpha: (obj / 100)
-      }]);
-    });
-    this.hueSlider.valueNowOut.subscribe(obj => {
-      // console.log({"hueSlider hueNow": obj});
-      let hsv = [0, 0, 0];
-      hsv = rgbToHsv(this.color.red, this.color.green, this.color.blue);
-      // console.log({"hueSlider OLD Color": this.color});
-      console.log({"old hsv": hsv});
-      hsv[0] = obj / 100;
-      const newRBG = hsvToRgb(hsv[0], hsv[1], hsv[2]);
-      // console.log({"hueSlider NEW Color": newRBG});
-      this.newColor.emit([this.index, {
+        alpha: ($event / 100)
+      };
+    }
+  }
+
+  updateHue($event) {
+    let hsv = [0, 0, 0];
+    hsv = rgbToHsv(this.color.red, this.color.green, this.color.blue);
+    hsv[0] = $event / 100;
+    const newRBG = hsvToRgb(hsv[0], hsv[1], hsv[2]);
+    if($event !== undefined) {
+      this.color = {
         red: newRBG[0],
         green: newRBG[1],
         blue: newRBG[2],
         alpha: this.color.alpha
-      }]);
+      };
+    }
+  }
+
+  updateDarken($event) {
+    let hsv = [0, 0, 0];
+    hsv = rgbToHsv(this.color.red, this.color.green, this.color.blue);
+    console.log({
+      func: "updateDareken",
+      event: $event,
+      hsv: hsv
     });
+    hsv[2] = $event / 100;
+    const newRBG = hsvToRgb(hsv[0], hsv[1], hsv[2]);
+    if($event !== undefined) {
+      this.color = {
+        red: newRBG[0],
+        green: newRBG[1],
+        blue: newRBG[2],
+        alpha: this.color.alpha
+      };
+    }
+  }
+
+  updateLighten($event) {
+    let hsv = [0, 0, 0];
+    hsv = rgbToHsv(this.color.red, this.color.green, this.color.blue);
+    console.log({
+      func: "updateLighten",
+      event: $event,
+      hsv: hsv
+    });
+    hsv[1] = $event / 100;
+    const newRBG = hsvToRgb(hsv[0], hsv[1], hsv[2]);
+    if($event !== undefined) {
+      this.color = {
+        red: newRBG[0],
+        green: newRBG[1],
+        blue: newRBG[2],
+        alpha: this.color.alpha
+      };
+    }
   }
 
   drawColorPickers() {

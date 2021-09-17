@@ -52,19 +52,21 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Color Channel {{index +1}}</h5>
-          <button type="button" class="btn-close" aria-label="Close" (click)="isModalVisable = false" ><i class="fas fa-times"></i></button>
+          <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()" ><i class="fas fa-times"></i></button>
         </div>
         <div class="d-flex flex-row mt-3 mb-3">
           <div class="slider">
             <canvas width="300" height="300" class="border m-2" #canvasColorPicker style="background-image: none;" [ngStyle]="{'backgroundColor': rawHueAsHex()}" ></canvas>
             <div #canvasLightenPickerValue
+              appSlider
               tabindex="0"
               role="slider"
               class="sr-only-thumb-v m-2"
               aria-valuemin="0"
               attr.aria-valuenow="{{hsva.s * 100}}"
+              (valueNowOut)="updateLighten($event)"
               aria-valuemax="100"
-              aria-orientation="vertical"
+              aria-orientation="horizontal"
               aria-label="Lighten Color"
               [ngStyle]="{'right': luminosityToSliderPosition(), 'border-color':
               'rgb(' +
@@ -75,13 +77,15 @@
               (color?.blue !== undefined ? (color?.blue > 127 ? 0 : 255) : 0) +
               ')'}" ></div>
             <div #canvasDarkenPickerValue
+              appSlider
               tabindex="0"
               role="slider"
               class="sr-only-thumb-h m-2"
               aria-valuemin="0"
               attr.aria-valuenow="{{hsva.v * 100}}"
+              (valueNowOut)="updateDarken($event)"
               aria-valuemax="100"
-              aria-orientation="horizontal"
+              aria-orientation="vertical"
               aria-label="Darken Color"
               [ngStyle]="{'top': saturationToSliderPosition(), 'border-color':
               'rgb(' +
@@ -107,15 +111,16 @@
           <div class="slider mt-2 mb-2" >
             <canvas width="10" height="300" class="border rounded-pill ml-3 mr-2" #canvasAlphaPicker ></canvas>
             <div #canvasAlphaPickerValue
+              appSlider
               tabindex="0"
               role="slider"
               class="thumb-v rounded-pill"
               aria-valuemin="0"
               attr.aria-valuenow="{{hsva.a * 100}}"
+              (valueNowOut)="updateAlpha($event)"
               aria-valuemax="100"
               aria-orientation="vertical"
               aria-label="Alpha"
-              (keydown)="alphaSlider.handleKeyDown($event)"
               [ngStyle]="{
                 'top': alphaToSliderPosition()
               }" >
@@ -139,18 +144,18 @@
           <div class="slider ml-2">
             <canvas width="300" height="10" class="border rounded-pill mt-2 mb-2" #canvasHuePicker ></canvas>
             <div #canvasHuePickerValue
+              appSlider
               tabindex="0"
               role="slider"
               class="thumb-h rounded-pill"
               aria-valuemin="0"
               attr.aria-valuenow="{{hueValueNow()}}"
+              (valueNowOut)="updateHue($event)"
               aria-valuemax="255"
               aria-orientation="horizontal"
               aria-label="Hue"
-              (keydown)="hueSlider.handleKeyDown($event)"
               [ngStyle]="{'left': hueToSliderPosition(), 'backgroundColor': rawHueAsHex()}"></div>
           </div>
-
       </div>
     </div>
   </div>

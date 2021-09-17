@@ -41,7 +41,24 @@
           value="RGBA color {{ (sheet?.colors)[i] | rgbaString }}"
           class="sr-only"
         />
-        <div class="palette-wrapper rounded-circle">
+        <div 
+          class="palette-wrapper rounded-circle"
+          [style.border-color]="
+          'rgba(' +
+          (color?.red !== undefined ? (color?.red > 127 ? 0 : 255) : 0) +
+          ', ' +
+          (color?.green !== undefined
+            ? color?.green > 127
+              ? 0
+              : 255
+            : 0) +
+          ', ' +
+          (color?.blue !== undefined ? (color?.blue > 127 ? 0 : 255) : 0) +
+          ', ' +
+          1 +
+          ')'
+        "
+        >
           <label
             class="rounded-circle p-5 m-0"
             for="select-color-{{ i }}"

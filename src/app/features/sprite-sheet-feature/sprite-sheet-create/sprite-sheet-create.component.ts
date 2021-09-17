@@ -108,7 +108,6 @@ export class SpriteSheetCreateComponent implements OnInit {
 
   getSheets(): void {
     this.spriteService.getSheets().subscribe(obj => {
-      // console.log({ galleryGetSheets: obj });
       this.sheets = obj;
     });
   }

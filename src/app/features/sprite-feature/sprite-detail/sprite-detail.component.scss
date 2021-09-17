@@ -14,6 +14,11 @@ input[type="radio"]:checked ~ .palette-wrapper label::before {
   content: "\f576";
 }
 
+input[type=radio]:focus + div {
+  border-width: 5px;
+  border-style: solid;
+}
+
 $color1: #dadada;
 .palette-wrapper {
   background-image: linear-gradient(45deg, $color1 25%, transparent 25%),
