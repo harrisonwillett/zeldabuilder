@@ -1,9 +1,9 @@
-import { Directive, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
 @Directive({
   selector: '[appSlider]'
 })
-export class SliderDirective {
+export class SliderDirective implements AfterViewInit {
   railDomNode;
   valueDomNode = false;
   valueMin = 0;
@@ -11,10 +11,12 @@ export class SliderDirective {
   valueNow: number;
   @Output() valueNowOut = new EventEmitter<string>();
   orientation: string;
-  railLength = 0;
-  thumbLength  = 10;
+  @Input() railLength;
+  @Input() thumbLength;
 
-  constructor(public el: ElementRef) {
+  constructor(public el: ElementRef) {}
+
+  ngAfterViewInit() {
     if(this.el.nativeElement) {
       if (this.el.nativeElement.ariaValueMin) {
           this.valueMin = parseInt(this.el.nativeElement.ariaValueMin, 10);
@@ -28,8 +30,10 @@ export class SliderDirective {
       if (this.el.nativeElement.ariaOrientation) {
         this.orientation = this.el.nativeElement.ariaOrientation;
       }
+      if(this.valueNow) {
+        this.moveSliderTo(this.valueNow);
+      }
     }
-    this.railLength = 300;
   }
 
   @HostListener('keydown', ['$event'])
@@ -93,13 +97,9 @@ export class SliderDirective {
     }
 
     this.valueNow = value;
-    this.valueNowOut.emit(value.toString());
     this.el.nativeElement.ariaValueNow = value.toString();
-    // console.log({value: value});
 
-    const pos = Math.round(
-      (this.valueNow * (this.railLength - this.thumbLength)) / (this.valueMax - this.valueMin)
-    ); // - (this.thumbWidth / 2);
+    const pos = (this.valueNow / (this.valueMax - this.valueMin)) * (this.railLength - (this.thumbLength / 2));
 
     if ( this.orientation === "horizontal" ) {
       this.el.nativeElement.style.left = pos + "px";
@@ -107,14 +107,15 @@ export class SliderDirective {
     if ( this.orientation === "vertical" ) {
       this.el.nativeElement.style.top = (this.railLength - this.thumbLength - pos) + "px";
     }
+    this.valueNowOut.emit(value.toString());
   }
 
   @HostListener('mousedown', ['$event']) handleMouseDown(event: MouseEvent) {
-    // console.log({handleMouseDown: event});
+    // 
   };
 
   @HostListener('click', ['$event']) handleClick(event: MouseEvent) {
-    // console.log({handleClick: event});
+    // 
   };
 
 }

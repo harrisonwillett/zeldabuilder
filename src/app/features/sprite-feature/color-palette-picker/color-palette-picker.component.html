@@ -4,38 +4,10 @@
     <div class="input-group">
       <input type="text"
         id="color-picker-{{index +1}}"
-        [value]="
-          'rgba(' +
-          color?.red +
-          ', ' +
-          color?.green +
-          ', ' +
-          color?.blue +
-          ', ' +
-          (color?.alpha ? color.alpha : 1) +
-          ')'
-        "
+        [value]="rgbaCssSafe()"
         [ngStyle]="{
-          'background-color':
-            'rgba(' +
-            color?.red +
-            ', ' +
-            color?.green +
-            ', ' +
-            color?.blue +
-            ', ' +
-            (color?.alpha ? color.alpha : 1) +
-            ')',
-          color:
-            'rgba(' +
-            (color?.red !== undefined ? (color?.red > 127 ? 0 : 255) : 0) +
-            ', ' +
-            (color?.green !== undefined ? (color?.green > 127 ? 0 : 255) : 0) +
-            ', ' +
-            (color?.blue !== undefined ? (color?.blue > 127 ? 0 : 255) : 0) +
-            ', ' +
-            1 +
-            ')'
+          'background-color': rgbaCssSafe(),
+          color: rgbCssSafeAlt()
         }" readonly="readonly" class="form-control" />
       <div class="input-group-append">
         <button class="btn btn-secondary" type="button" (click)="isModalVisable = !isModalVisable">Change Color</button>
@@ -56,86 +28,59 @@
         </div>
         <div class="d-flex flex-row mt-3 mb-3">
           <div class="slider">
-            <canvas width="300" height="300" class="border m-2" #canvasColorPicker style="background-image: none;" [ngStyle]="{'backgroundColor': rawHueAsHex()}" ></canvas>
+            <canvas width="300" height="300" class="border m-2" #canvasColorPicker style="background-image: none;" [ngStyle]="{'backgroundColor': hueCssSafe()}" ></canvas>
             <div #canvasLightenPickerValue
               appSlider
+              [railLength]="300"
+              [thumbLength]="4"
               tabindex="0"
               role="slider"
               class="sr-only-thumb-v m-2"
               aria-valuemin="0"
-              attr.aria-valuenow="{{hsva.s * 100}}"
+              attr.aria-valuenow="{{hsva.saturation * 100}}"
               (valueNowOut)="updateLighten($event)"
               aria-valuemax="100"
               aria-orientation="horizontal"
               aria-label="Lighten Color"
-              [ngStyle]="{'right': luminosityToSliderPosition(), 'border-color':
-              'rgb(' +
-              (color?.red !== undefined ? (color?.red > 127 ? 0 : 255) : 0) +
-              ', ' +
-              (color?.green !== undefined ? (color?.green > 127 ? 0 : 255) : 0) +
-              ', ' +
-              (color?.blue !== undefined ? (color?.blue > 127 ? 0 : 255) : 0) +
-              ')'}" ></div>
+              [ngStyle]="{'border-color': rgbCssSafeAlt()}" ></div>
             <div #canvasDarkenPickerValue
               appSlider
+              [railLength]="300"
+              [thumbLength]="4"
               tabindex="0"
               role="slider"
               class="sr-only-thumb-h m-2"
               aria-valuemin="0"
-              attr.aria-valuenow="{{hsva.v * 100}}"
+              attr.aria-valuenow="{{hsva.value * 100}}"
               (valueNowOut)="updateDarken($event)"
               aria-valuemax="100"
               aria-orientation="vertical"
               aria-label="Darken Color"
-              [ngStyle]="{'top': saturationToSliderPosition(), 'border-color':
-              'rgb(' +
-              (color?.red !== undefined ? (color?.red > 127 ? 0 : 255) : 0) +
-              ', ' +
-              (color?.green !== undefined ? (color?.green > 127 ? 0 : 255) : 0) +
-              ', ' +
-              (color?.blue !== undefined ? (color?.blue > 127 ? 0 : 255) : 0) +
-              ')'}" ></div>
+              [ngStyle]="{'border-color': rgbCssSafeAlt()}" ></div>
             <div #canvasColorPickerValue
               class="thumb-multi rounded-circle"
               aria-label="Color Chroma"
-              [ngStyle]="{'right': luminosityToSliderPosition(), 'top': saturationToSliderPosition(),
-                'background-color':
-                  'rgb(' +
-                  color?.red +
-                  ', ' +
-                  color?.green +
-                  ', ' +
-                  color?.blue +
-                  ')'}" ></div>
+              [ngStyle]="{
+                'background-color': rgbCssSafe(),
+                  'border-color': rgbCssSafeAlt()
+                }" ></div>
           </div>
           <div class="slider mt-2 mb-2" >
             <canvas width="10" height="300" class="border rounded-pill ml-3 mr-2" #canvasAlphaPicker ></canvas>
             <div #canvasAlphaPickerValue
               appSlider
+              [railLength]="300"
+              [thumbLength]="10"
               tabindex="0"
               role="slider"
               class="thumb-v rounded-pill"
               aria-valuemin="0"
-              attr.aria-valuenow="{{hsva.a * 100}}"
+              attr.aria-valuenow="{{(this.hsva.alpha ? this.hsva.alpha : 1) * 100}}"
               (valueNowOut)="updateAlpha($event)"
               aria-valuemax="100"
               aria-orientation="vertical"
-              aria-label="Alpha"
-              [ngStyle]="{
-                'top': alphaToSliderPosition()
-              }" >
-              <div [ngStyle]="{
-                'background-color':
-                  'rgba(' +
-                  color?.red +
-                  ', ' +
-                  color?.green +
-                  ', ' +
-                  color?.blue +
-                  ', ' +
-                  (color?.alpha ? color.alpha : 1) +
-                  ')'
-              }" ></div>
+              aria-label="Alpha" >
+              <div [ngStyle]="{'backgroundColor': rgbaCssSafe()}" ></div>
             </div>
           </div>
           
@@ -145,16 +90,18 @@
             <canvas width="300" height="10" class="border rounded-pill mt-2 mb-2" #canvasHuePicker ></canvas>
             <div #canvasHuePickerValue
               appSlider
+              [railLength]="300"
+              [thumbLength]="10"
               tabindex="0"
               role="slider"
               class="thumb-h rounded-pill"
               aria-valuemin="0"
-              attr.aria-valuenow="{{hueValueNow()}}"
+              attr.aria-valuenow="{{rgbToHsv(this.color).hue * 255}}"
               (valueNowOut)="updateHue($event)"
               aria-valuemax="255"
               aria-orientation="horizontal"
               aria-label="Hue"
-              [ngStyle]="{'left': hueToSliderPosition(), 'backgroundColor': rawHueAsHex()}"></div>
+              [ngStyle]="{'backgroundColor': hueCssSafe()}"></div>
           </div>
       </div>
     </div>

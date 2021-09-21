@@ -6,16 +6,20 @@ import { RgbaColor } from "../model/rgba-color";
 })
 export class RgbaStringPipe implements PipeTransform {
   transform(rgbaObj: RgbaColor): string {
-    return (
-      "rgba(" +
-      rgbaObj.red +
-      ", " +
-      rgbaObj.green +
-      ", " +
-      rgbaObj.blue +
-      ", " +
-      (rgbaObj.alpha !== undefined ? rgbaObj.alpha : 1) +
-      ")"
-    );
+    if (rgbaObj !== undefined) {
+      return (
+        "rgba(" +
+        Math.round(rgbaObj.red) +
+        ", " +
+        Math.round(rgbaObj.green) +
+        ", " +
+        Math.round(rgbaObj.blue) +
+        ", " +
+        (rgbaObj.alpha !== undefined ? rgbaObj.alpha : 1) +
+        ")"
+      );
+    } else {
+      return "";
+    }
   }
 }

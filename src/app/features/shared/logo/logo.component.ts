@@ -9,21 +9,21 @@ import { RgbaColor } from "../../../model/rgba-color";
 })
 export class LogoComponent implements OnInit {
   colorPalette: RgbaColor[] = [
-    {
-      red: parseInt("ef", 16),
-      green: parseInt("9f", 16),
-      blue: parseInt("a1", 16)
-    },
-    {
-      red: parseInt("ca", 16),
-      green: parseInt("01", 16),
-      blue: parseInt("0c", 16)
-    },
-    {
-      red: parseInt("7d", 16),
-      green: parseInt("06", 16),
-      blue: parseInt("09", 16)
-    }
+    new RgbaColor(
+      parseInt("ef", 16),
+      parseInt("9f", 16),
+      parseInt("a1", 16)
+    ),
+    new RgbaColor(
+      parseInt("ca", 16),
+      parseInt("01", 16),
+      parseInt("0c", 16)
+    ),
+    new RgbaColor(
+      parseInt("7d", 16),
+      parseInt("06", 16),
+      parseInt("09", 16)
+    )
   ];
 
   constructor() { }

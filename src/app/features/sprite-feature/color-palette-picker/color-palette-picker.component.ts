@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, AfterViewInit, Output, EventEmitter } from "@angular/core";
+import { HsvaColor } from "src/app/model/hsva-color";
 import { RgbaColor } from "src/app/model/rgba-color";
 import { SliderDirective } from "../slider/slider.directive";
-import { rgbToHsv, hsvToRgb } from "./colorFormulas";
+import { rgbaToHsva, hsvaToRgba } from "./colorFormulas";
 @Component({
   selector: "app-color-palette-picker",
   templateUrl: "./color-palette-picker.component.html",
@@ -22,25 +23,13 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
   cntxtHuePicker: CanvasRenderingContext2D;
   cntxtAlphaPicker: CanvasRenderingContext2D;
 
-  public hsva = {
-    h: undefined,
-    s: undefined,
-    v: undefined,
-    a: undefined
-  };
-
-  // Twin Axix Sliders
-  @ViewChild("canvasLightenPickerValue", { static: true }) canvasLightenPickerValue: SliderDirective;
-  @ViewChild("canvasDarkenPickerValue", { static: true }) canvasDarkenPickerValue: SliderDirective;
-  // Single Axix Sliders
-  @ViewChild("canvasAlphaPickerValue", { static: true }) canvasAlphaPickerValue: SliderDirective;
-  @ViewChild("canvasHuePickerValue", { static: true }) canvasHuePickerValue: SliderDirective;
+  public hsva: HsvaColor;
   
-
   constructor() {}
 
   ngOnInit() {
-    this.initPicker();
+    this.hsva = rgbaToHsva(this.color);
+    console.log({hsva: this.hsva});
     this.cntxtColorPicker = this.canvasColorPicker.nativeElement.getContext("2d");
     this.cntxtHuePicker = this.canvasHuePicker.nativeElement.getContext("2d");
     this.cntxtAlphaPicker = this.canvasAlphaPicker.nativeElement.getContext("2d");
@@ -52,76 +41,47 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
 
   closeModal() {
     this.isModalVisable = false;
-    this.newColor.emit([this.index, this.color]);
+    const rgba = hsvaToRgba(this.hsva);
+    this.newColor.emit([this.index, rgba]);
   }
 
   updateAlpha($event) {
     if($event !== undefined) {
-      this.color = {
-        red: this.color.red,
-        green: this.color.green,
-        blue: this.color.blue,
-        alpha: ($event / 100)
-      };
-    }
+      this.hsva.alpha = parseFloat($event)/100;
+      console.log({alpha: this.hsva.alpha});
+    };
   }
 
   updateHue($event) {
-    let hsv = [0, 0, 0];
-    hsv = rgbToHsv(this.color.red, this.color.green, this.color.blue);
-    hsv[0] = $event / 100;
-    const newRBG = hsvToRgb(hsv[0], hsv[1], hsv[2]);
     if($event !== undefined) {
-      this.color = {
-        red: newRBG[0],
-        green: newRBG[1],
-        blue: newRBG[2],
-        alpha: this.color.alpha
-      };
+      this.hsva.hue = parseFloat($event)/255;
+      this.drawAlphaPicker();
     }
   }
 
-  updateDarken($event) {
-    let hsv = [0, 0, 0];
-    hsv = rgbToHsv(this.color.red, this.color.green, this.color.blue);
+  updateChroma() {
     console.log({
-      func: "updateDareken",
-      event: $event,
-      hsv: hsv
+      canvasDarkenPickerValue: "update this thing"
     });
-    hsv[2] = $event / 100;
-    const newRBG = hsvToRgb(hsv[0], hsv[1], hsv[2]);
+  }
+
+  updateDarken($event) {
     if($event !== undefined) {
-      this.color = {
-        red: newRBG[0],
-        green: newRBG[1],
-        blue: newRBG[2],
-        alpha: this.color.alpha
-      };
+      this.hsva.value = $event / 100;
+      this.updateChroma();
+      this.drawAlphaPicker();
     }
   }
 
   updateLighten($event) {
-    let hsv = [0, 0, 0];
-    hsv = rgbToHsv(this.color.red, this.color.green, this.color.blue);
-    console.log({
-      func: "updateLighten",
-      event: $event,
-      hsv: hsv
-    });
-    hsv[1] = $event / 100;
-    const newRBG = hsvToRgb(hsv[0], hsv[1], hsv[2]);
     if($event !== undefined) {
-      this.color = {
-        red: newRBG[0],
-        green: newRBG[1],
-        blue: newRBG[2],
-        alpha: this.color.alpha
-      };
+      this.hsva.saturation = $event / 100;
+      this.updateChroma();
+      this.drawAlphaPicker();
     }
   }
 
-  drawColorPickers() {
+  drawHuePicker() {
     // Hue Gradient
     const hueGradient = this.cntxtHuePicker.createLinearGradient(0, 0, this.canvasHuePicker.nativeElement.width, 0);
     hueGradient.addColorStop(0, "#FF0000");
@@ -134,7 +94,9 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
     this.cntxtHuePicker.fillStyle = hueGradient;
     this.cntxtHuePicker.fillRect(0, 0, this.canvasHuePicker.nativeElement.width, this.canvasHuePicker.nativeElement.height);
     this.cntxtHuePicker.fill();
+  };
 
+  drawDarkLightPicker() {
     // Dark and Light Gradient
     const lightGradient = this.cntxtColorPicker.createLinearGradient(0, 0, this.canvasColorPicker.nativeElement.width, 0);
     lightGradient.addColorStop(0, "rgba(255, 255, 255, 1)");
@@ -148,60 +110,69 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
     this.cntxtColorPicker.fillStyle = darkGradient;
     this.cntxtColorPicker.fillRect(0, 0, this.canvasColorPicker.nativeElement.width, this.canvasColorPicker.nativeElement.height);
     this.cntxtColorPicker.fill();
+  };
 
+  drawAlphaPicker() {
+    const rgba:RgbaColor = hsvaToRgba(this.hsva);
     // Alpha Gradient
+    this.cntxtAlphaPicker.clearRect(0, 0, this.canvasAlphaPicker.nativeElement.width, this.canvasAlphaPicker.nativeElement.height)
     const alphaGradient = this.cntxtAlphaPicker.createLinearGradient(0, 0, 0, this.canvasAlphaPicker.nativeElement.height);
-    const alphaStop0 = ("rgba(" + this.color.red + ", " + this.color.green + ", " + this.color.blue + ", 1)");
-    const alphaStop1 = ("rgba(" + this.color.red + ", " + this.color.green + ", " + this.color.blue + ", 0)");
+    const alphaStop0 = ("rgba(" + rgba.red + ", " + rgba.green + ", " + rgba.blue + ", 1)");
+    const alphaStop1 = ("rgba(" + rgba.red + ", " + rgba.green + ", " + rgba.blue + ", 0)");
     alphaGradient.addColorStop(0, alphaStop0);
     alphaGradient.addColorStop(1, alphaStop1);
     this.cntxtAlphaPicker.fillStyle = alphaGradient;
     this.cntxtAlphaPicker.fillRect(0, 0, this.canvasAlphaPicker.nativeElement.width, this.canvasAlphaPicker.nativeElement.height);
     this.cntxtAlphaPicker.fill();
+  };
+
+  drawColorPickers() {
+    this.drawHuePicker();
+    this.drawDarkLightPicker();
+    this.drawAlphaPicker();    
   }
 
-  initPicker() {
-    const hsv = rgbToHsv(this.color.red, this.color.green, this.color.blue);
-    this.hsva.h = hsv[0];
-    this.hsva.s = hsv[1];
-    this.hsva.v = hsv[2];
-    this.hsva.a = this.color.alpha ? this.color.alpha : 1;
-    // console.log( this.rawHueAsHex() );
+  hsvToRgb(hsva: HsvaColor): RgbaColor {
+    return hsvaToRgba(hsva);
   }
 
-  hsvToRgb(h, s, v) {
-    return hsvToRgb(h, s, v);
+  rgbToHsv(rgba: RgbaColor): HsvaColor {
+    return rgbaToHsva(rgba);
   }
 
-  hueValueNow() {
-    const hsv = rgbToHsv(this.color.red, this.color.green, this.color.blue);
-    // console.log({hueValueNow: hsv[0]});
-    return (hsv[0] * 100);
+  hueCssSafe(): string {
+    const rgba:RgbaColor = hsvaToRgba(new HsvaColor(this.hsva.hue, 1, 1, 1));
+    let cssString = "rgba(" + Math.round(rgba.red).toString() + ", ";
+    cssString += Math.round(rgba.green).toString() + ", ";
+    cssString += Math.round(rgba.blue).toString() + ", ";
+    cssString += rgba.alpha.toString() + ")";
+    return cssString;
   }
 
-  hueToSliderPosition() {
-    // console.log({huePosition: this.hsva.h});
-    return (this.hsva.h * 300) + "px";
+  rgbaCssSafe(): string {
+    const rgba:RgbaColor = hsvaToRgba(this.hsva);
+    let cssString = "rgba(" + Math.round(rgba.red).toString() + ", ";
+    cssString += Math.round(rgba.green).toString() + ", ";
+    cssString += Math.round(rgba.blue).toString() + ", ";
+    cssString += rgba.alpha.toString() + ")";
+    return cssString;
   }
 
-  saturationToSliderPosition() {
-    return ((1 - this.hsva.v) * 300) + "px";
+  rgbCssSafe(): string {
+    const rgba:RgbaColor = hsvaToRgba(this.hsva);
+    let cssString = "rgba(" + Math.round(rgba.red).toString() + ", ";
+    cssString += Math.round(rgba.green).toString() + ", ";
+    cssString += Math.round(rgba.blue).toString() + ", ";
+    cssString += "1)";
+    return cssString;
   }
 
-  luminosityToSliderPosition() {
-    return ((1 - this.hsva.s) * 300) + "px";
-  }
-
-  alphaToSliderPosition() {
-    return ((1 - this.hsva.a) * 300) + "px";
-  }
-
-  rawHueAsHex() {
-      const rgb = hsvToRgb( this.hsva.h, 1, 1);
-      let hexString = "#" + (Math.round(rgb[0]) > 16 ? "" : 0) + Math.round(rgb[0]).toString(16);
-      hexString += (Math.round(rgb[1]) > 16 ? "" : 0) + Math.round(rgb[1]).toString(16);
-      hexString += (Math.round(rgb[2]) > 16 ? "" : 0) + Math.round(rgb[2]).toString(16);
-      return hexString;
+  rgbCssSafeAlt(): string {
+    const rgba:RgbaColor = hsvaToRgba(this.hsva);
+    let cssString = "rgb(" + (rgba.red > 127 ? 0 : 255).toString() + ", ";
+    cssString += (rgba.green > 127 ? 0 : 255).toString() + ", ";
+    cssString += (rgba.blue > 127 ? 0 : 255).toString() + ")";
+    return cssString;
   }
 
 }

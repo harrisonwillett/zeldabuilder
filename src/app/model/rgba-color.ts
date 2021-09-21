@@ -1,6 +1,3 @@
 export class RgbaColor {
-  red: number;
-  green: number;
-  blue: number;
-  alpha?: number;
+  constructor(public red: number, public green: number, public blue: number, public alpha: number= 1){}
 }

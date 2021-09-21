@@ -1,18 +1,23 @@
+import { HsvaColor } from "src/app/model/hsva-color";
+import { RgbaColor } from "src/app/model/rgba-color";
+
 /**
  * Converts an RGB color value to HSV. Conversion formula
  * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
- * Assumes r, g, and b are contained in the set [0, 255] and
- * returns h, s, and v in the set [0, 1].
+ * Assumes r, g, and b are contained in the set [0, 255] and assumes a is contained in the set [0, 1]
+ * returns h, s, v and a in the set [0, 1].
  *
  * @ param   Number  r       The red color value
  * @ param   Number  g       The green color value
  * @ param   Number  b       The blue color value
  * @ return  Array           The HSV representation
  */
-export function rgbToHsv(r: number, g: number, b: number) {
-    r /= 255;
-    g /= 255;
-    b /= 255;
+export function rgbaToHsva(rgba: RgbaColor): HsvaColor {
+    const r = rgba.red / 255;
+    const g = rgba.green / 255;
+    const b = rgba.blue / 255;
+    const a = rgba.alpha;
+
 
     const max = Math.max(r, g, b);
     const min = Math.min(r, g, b);
@@ -38,7 +43,7 @@ export function rgbToHsv(r: number, g: number, b: number) {
       h /= 6;
     }
 
-    return [ h, s, v ];
+    return new HsvaColor(h, s, v, a);
 }
 
 /**
@@ -52,25 +57,25 @@ export function rgbToHsv(r: number, g: number, b: number) {
  * @ param   Number  v       The value
  * @ return  Array           The RGB representation
  */
-export function hsvToRgb(h: number, s: number, v: number) {
+export function hsvaToRgba(hsva: HsvaColor): RgbaColor {
     let r: number;
     let g: number;
     let b: number;
 
-    const i = Math.floor(h * 6);
-    const f = h * 6 - i;
-    const p = v * (1 - s);
-    const q = v * (1 - f * s);
-    const t = v * (1 - (1 - f) * s);
+    const i = Math.floor(hsva.hue * 6);
+    const f = hsva.hue * 6 - i;
+    const p = hsva.value * (1 - hsva.saturation);
+    const q = hsva.value * (1 - f * hsva.saturation);
+    const t = hsva.value * (1 - (1 - f) * hsva.saturation);
 
     switch (i % 6) {
-        case 0: r = v, g = t, b = p; break;
-        case 1: r = q, g = v, b = p; break;
-        case 2: r = p, g = v, b = t; break;
-        case 3: r = p, g = q, b = v; break;
-        case 4: r = t, g = p, b = v; break;
-        case 5: r = v, g = p, b = q; break;
+        case 0: r = hsva.value, g = t, b = p; break;
+        case 1: r = q, g = hsva.value, b = p; break;
+        case 2: r = p, g = hsva.value, b = t; break;
+        case 3: r = p, g = q, b = hsva.value; break;
+        case 4: r = t, g = p, b = hsva.value; break;
+        case 5: r = hsva.value, g = p, b = q; break;
     }
 
-    return [ r * 255, g * 255, b * 255 ];
+    return new RgbaColor( r * 255, g * 255, b * 255, hsva.alpha );
 }

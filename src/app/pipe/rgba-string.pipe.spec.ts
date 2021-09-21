@@ -3,29 +3,29 @@ import { RgbaColor } from "../model/rgba-color";
 
 describe("RgbaStringPipe", () => {
   let pipe;
-  const red: RgbaColor = {
-    red: 255,
-    green: 0,
-    blue: 0,
-    alpha: 1
-  };
-  const green: RgbaColor = {
-    red: 0,
-    green: 255,
-    blue: 0,
-    alpha: 1
-  };
-  const blue: RgbaColor = {
-    red: 0,
-    green: 0,
-    blue: 255
-  };
-  const gray40: RgbaColor = {
-    red: 128,
-    green: 128,
-    blue: 128,
-    alpha: 0.4
-  };
+  const red: RgbaColor = new RgbaColor(
+    255,
+    0,
+    0,
+    1
+  );
+  const green: RgbaColor = new RgbaColor(
+    0,
+    255,
+    0,
+    1
+  );
+  const blue: RgbaColor = new RgbaColor(
+    0,
+    0,
+    255
+  );
+  const gray40: RgbaColor = new RgbaColor(
+    128,
+    128,
+    128,
+    0.4
+  );
 
   beforeEach(() => {
     pipe = new RgbaStringPipe();
