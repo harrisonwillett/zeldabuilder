@@ -1,9 +1,10 @@
-import { Directive, ElementRef, EventEmitter, Output } from "@angular/core";
+import { Directive, ElementRef, HostListener } from "@angular/core";
+import { Subject } from "rxjs";
 
 @Directive({
-  selector: '[Slider]'
+  selector: 'div[slider]'
 })
-export class Slider {
+export class deleteSlider {
 
   domNode: ElementRef<HTMLElement>;
   railDomNode;
@@ -11,7 +12,7 @@ export class Slider {
   valueMin = 0;
   valueMax = 100;
   valueNow: number;
-  @Output() valueNowOut = new EventEmitter<number>();
+  public valueNowOut = new Subject<number>();
   orientation: string;
   railLength = 0;
   thumbLength  = 10;
@@ -27,9 +28,9 @@ export class Slider {
     home: 36
   });
 
-  constructor( nativeElement: ElementRef<HTMLElement> ) {
+  constructor(private el: ElementRef) {
     // console.log({"Bound Slider Class to": nativeElement});
-    this.domNode = nativeElement;
+    this.domNode = el;
     if (this.domNode.nativeElement.getAttribute("aria-valuemin")) {
         this.valueMin = parseInt(this.domNode.nativeElement.getAttribute("aria-valuemin"), 10);
         // console.log({valueMin: this.valueMin});
@@ -46,6 +47,11 @@ export class Slider {
       this.orientation = this.domNode.nativeElement.getAttribute("aria-orientation");
     }
     this.railLength = 300;
+  }
+
+    // (keydown)="handleKeyDown($event)"
+
+
         /*
         this.railDomNode = this.domNode.parentNode;
 
@@ -82,10 +88,14 @@ export class Slider {
         this.domNode.addEventListener("blur", this.handleBlur.bind(this));
         this.railDomNode.addEventListener("click", this.handleClick.bind(this));
         this.moveSliderTo(this.valueNow);
-        */
+        
   }
+  */
 
-  handleKeyDown = function(event) {
+  @HostListener('window:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    event.preventDefault();
+    console.log({event: event});
     let flag = false;
     switch (event.keyCode) {
       case this.keyCode.left:
@@ -142,7 +152,8 @@ export class Slider {
     }
 
     this.valueNow = value;
-    this.valueNowOut.emit(value);
+    console.log({value: value});
+    this.valueNowOut.next(value);
 
     const pos = Math.round(
       (this.valueNow * (this.railLength - this.thumbLength)) / (this.valueMax - this.valueMin)
@@ -155,6 +166,18 @@ export class Slider {
       this.domNode.nativeElement.style.top = (this.railLength - this.thumbLength - pos) + "px";
     }
   }
+
+  @HostListener('mouseDown', ['$event'])
+  handleMouseDown(event: MouseEvent) {
+    console.log({handleMouseDown: event});
+  };
+
+  @HostListener('click', ['$event'])
+  handleClick(event: MouseEvent) {
+    console.log({handleClick: event});
+  };
+
+}
 
     /*
     moveSliderTo( value ) {
@@ -299,8 +322,6 @@ export class Slider {
 
     };
     */
-
-}
 /*
   // Create Slider that contains value, valuemin, valuemax, and valuenow
   var Slider = function (domNode)  {

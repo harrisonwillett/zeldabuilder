@@ -31,7 +31,7 @@
             <canvas width="300" height="300" class="border m-2" #canvasColorPicker style="background-image: none;" [ngStyle]="{'backgroundColor': hueCssSafe()}" ></canvas>
             <div #canvasLightenPickerValue
               appSlider
-              [railLength]="300"
+              [rail]="canvasColorPicker"
               [thumbLength]="4"
               tabindex="0"
               role="slider"
@@ -45,7 +45,7 @@
               [ngStyle]="{'border-color': rgbCssSafeAlt()}" ></div>
             <div #canvasDarkenPickerValue
               appSlider
-              [railLength]="300"
+              [rail]="canvasColorPicker"
               [thumbLength]="4"
               tabindex="0"
               role="slider"
@@ -58,6 +58,9 @@
               aria-label="Darken Color"
               [ngStyle]="{'border-color': rgbCssSafeAlt()}" ></div>
             <div #canvasColorPickerValue
+              appTwinAxisSlider
+              [rail1]="canvasLightenPickerValue"
+              [rail2]="canvasDarkenPickerValue"
               class="thumb-multi rounded-circle"
               aria-label="Color Chroma"
               [ngStyle]="{
@@ -69,7 +72,7 @@
             <canvas width="10" height="300" class="border rounded-pill ml-3 mr-2" #canvasAlphaPicker ></canvas>
             <div #canvasAlphaPickerValue
               appSlider
-              [railLength]="300"
+              [rail]="canvasAlphaPicker"
               [thumbLength]="10"
               tabindex="0"
               role="slider"
@@ -90,7 +93,7 @@
             <canvas width="300" height="10" class="border rounded-pill mt-2 mb-2" #canvasHuePicker ></canvas>
             <div #canvasHuePickerValue
               appSlider
-              [railLength]="300"
+              [rail]="canvasHuePicker"
               [thumbLength]="10"
               tabindex="0"
               role="slider"

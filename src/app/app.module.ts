@@ -25,7 +25,8 @@ import { SpriteSheetCreateComponent } from "./features/sprite-sheet-feature/spri
 import { SpriteDetailComponent } from "./features/sprite-feature/sprite-detail/sprite-detail.component";
 import { ColorPalettePickerComponent } from "./features/sprite-feature/color-palette-picker/color-palette-picker.component";
 import { EditableCanvasComponent } from "./features/sprite-feature/editable-canvas/editable-canvas.component";
-import { SliderDirective } from "./features/sprite-feature/slider/slider.directive";
+import { SliderDirective } from "./directive/slider/slider.directive";
+import { TwinAxisSliderDirective } from "./directive/twin-axis-slider/twin-axis-slider.directive";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { SliderDirective } from "./features/sprite-feature/slider/slider.directi
     ColorPalettePickerComponent,
     SpriteDetailComponent,
     MessagesComponent,
-    SliderDirective
+    SliderDirective,
+    TwinAxisSliderDirective
   ],
   imports: [
     BrowserModule,

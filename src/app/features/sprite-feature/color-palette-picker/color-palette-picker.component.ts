@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, AfterViewInit, Output, EventEmitter } from "@angular/core";
 import { HsvaColor } from "src/app/model/hsva-color";
 import { RgbaColor } from "src/app/model/rgba-color";
-import { SliderDirective } from "../slider/slider.directive";
 import { rgbaToHsva, hsvaToRgba } from "./colorFormulas";
 @Component({
   selector: "app-color-palette-picker",
