@@ -21,11 +21,11 @@ describe('LogoComponent', () => {
     fixture.detectChanges();
   });
 
-  fit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('should have a color palette with three RGB colors', () => {
+  it('should have a color palette with three RGB colors', () => {
     expect(component.colorPalette.length).toBe(3);
     component.colorPalette.forEach((value: RgbaColor, index: number) => {
       expect(value.red).toBeLessThan(256);

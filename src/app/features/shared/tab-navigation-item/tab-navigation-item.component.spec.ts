@@ -55,15 +55,15 @@ describe('TabNavigationItemComponent', () => {
     fixture.detectChanges();
   }));
 
-  fit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('should have a "string" for a title', () => {
+  it('should have a "string" for a title', () => {
     expect(typeof component.tab.title).toBe('string');
   });
 
-  fit('should have active link styles when page matches tab', fakeAsync(() => {
+  it('should have active link styles when page matches tab', fakeAsync(() => {
     fixture.ngZone.run(() => {
       router.navigate(['sprites']);
       tick();
@@ -73,7 +73,7 @@ describe('TabNavigationItemComponent', () => {
     });
   }));
 
-  fit('should NOT have active link styles when page does NOT match tab', fakeAsync(() => {
+  it('should NOT have active link styles when page does NOT match tab', fakeAsync(() => {
     fixture.ngZone.run(() => {
       router.navigate(['game']);
       tick();

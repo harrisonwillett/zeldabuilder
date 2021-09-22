@@ -4,29 +4,29 @@ import { By } from '@angular/platform-browser';
 import { ColorPalettePickerComponent } from './color-palette-picker.component';
 import { RgbaColor } from 'src/app/model/rgba-color';
 
-const red: RgbaColor = {
-  red: 255,
-  green: 0,
-  blue: 0,
-  alpha: 1
-};
-const green: RgbaColor = {
-  red: 0,
-  green: 255,
-  blue: 0,
-  alpha: 1
-};
-const blue: RgbaColor = {
-  red: 0,
-  green: 0,
-  blue: 255
-};
-const gray40: RgbaColor = {
-  red: 128,
-  green: 128,
-  blue: 128,
-  alpha: 0.4
-};
+const red: RgbaColor = new RgbaColor(
+  255,
+  0,
+  0,
+  1
+);
+const green: RgbaColor = new RgbaColor(
+  0,
+  255,
+  0,
+  1
+);
+const blue: RgbaColor = new RgbaColor(
+  0,
+  0,
+  255
+);
+const gray40: RgbaColor = new RgbaColor(
+  128,
+  128,
+  128,
+  0.4
+);
 
 describe('ColorPalettePickerComponent', () => {
   let component: ColorPalettePickerComponent;
@@ -45,11 +45,11 @@ describe('ColorPalettePickerComponent', () => {
     fixture.detectChanges();
   });
 
-  fit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('should get a value from rgba', () => {
+  it('should get a value from rgba', () => {
     component.color = red;
     fixture.detectChanges();
 
@@ -57,7 +57,7 @@ describe('ColorPalettePickerComponent', () => {
     expect(input[0].nativeNode.value).toBe("rgba(255, 0, 0, 1)");
   });
 
-  fit('should get a value from rgb', () => {
+  it('should get a value from rgb', () => {
     component.color = blue;
     fixture.detectChanges();
 
@@ -65,7 +65,7 @@ describe('ColorPalettePickerComponent', () => {
     expect(input[0].nativeNode.value).toBe("rgba(0, 0, 255, 1)");
   });
 
-  fit('should create a valid style from rgba object', () => {
+  it('should create a valid style from rgba object', () => {
     component.color = blue;
     fixture.detectChanges();
 
@@ -84,7 +84,7 @@ describe('ColorPalettePickerComponent', () => {
     expect(input[0].nativeNode.style.backgroundColor).toBe("rgba(128, 128, 128, 0.4)");
   });
 
-  fit('should toggle fieldset on input click', () => {
+  it('should toggle fieldset on input click', () => {
     component.color = blue;
     fixture.detectChanges();
     let input = fixture.debugElement.queryAll(By.css('.color-picker-wrapper input'));
@@ -101,7 +101,7 @@ describe('ColorPalettePickerComponent', () => {
     expect(fieldsetWrapper[0].nativeElement.hidden).toBeTrue();
   });
 
-  fit('should update rgba object on blur of red channel input', fakeAsync(() => {
+  it('should update rgba object on blur of red channel input', fakeAsync(() => {
     fixture.ngZone.run(() => {
       component.color = { ...gray40 };
       fixture.detectChanges();
@@ -115,7 +115,7 @@ describe('ColorPalettePickerComponent', () => {
     });
   }));
 
-  fit('should update rgba object on blur of green channel input', fakeAsync(() => {
+  it('should update rgba object on blur of green channel input', fakeAsync(() => {
     fixture.ngZone.run(() => {
       component.color = { ...gray40 };
       fixture.detectChanges();
@@ -129,7 +129,7 @@ describe('ColorPalettePickerComponent', () => {
     });
   }));
 
-  fit('should update rgba object on blur of blue channel input', fakeAsync(() => {
+  it('should update rgba object on blur of blue channel input', fakeAsync(() => {
     fixture.ngZone.run(() => {
       component.color = { ...gray40 };
       fixture.detectChanges();
@@ -143,7 +143,7 @@ describe('ColorPalettePickerComponent', () => {
     });
   }));
 
-  fit('should update rgba object on blur of alpha channel input', fakeAsync(() => {
+  it('should update rgba object on blur of alpha channel input', fakeAsync(() => {
     fixture.ngZone.run(() => {
       component.color = { ...gray40 };
       fixture.detectChanges();

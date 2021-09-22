@@ -1,7 +1,7 @@
-import { Sprite } from './sprite';
+import { SpriteOptions } from './sprite-options';
 
-describe('Sprite', () => {
+describe('SpriteOptions', () => {
   it('should create an instance', () => {
-    expect(new Sprite()).toBeTruthy();
+    expect(new SpriteOptions()).toBeTruthy();
   });
 });

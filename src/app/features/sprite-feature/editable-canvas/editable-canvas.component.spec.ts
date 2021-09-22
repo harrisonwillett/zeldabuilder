@@ -10,29 +10,29 @@ describe("EditableCanvasComponent", () => {
   let component: EditableCanvasComponent;
   let fixture: ComponentFixture<EditableCanvasComponent>;
 
-  const colffc07a: RgbaColor = {
-    red: parseInt("ff", 16),
-    green: parseInt("C0", 16),
-    blue: parseInt("7a", 16),
-    alpha: 1
-  };
-  const colc03800: RgbaColor = {
-    red: parseInt("c0", 16),
-    green: parseInt("38", 16),
-    blue: parseInt("00", 16),
-    alpha: 1
-  };
-  const col001aff: RgbaColor = {
-    red: parseInt("00", 16),
-    green: parseInt("1a", 16),
-    blue: parseInt("ff", 16),
-    alpha: 0.4
-  };
-  const col000000: RgbaColor = {
-    red: parseInt("00", 16),
-    green: parseInt("00", 16),
-    blue: parseInt("00", 16)
-  };
+  const colffc07a: RgbaColor = new RgbaColor(
+    parseInt("ff", 16),
+    parseInt("C0", 16),
+    parseInt("7a", 16),
+    1
+  );
+  const colc03800: RgbaColor = new RgbaColor(
+    parseInt("c0", 16),
+    parseInt("38", 16),
+    parseInt("00", 16),
+    1
+  );
+  const col001aff: RgbaColor = new RgbaColor(
+    parseInt("00", 16),
+    parseInt("1a", 16),
+    parseInt("ff", 16),
+    0.4
+  );
+  const col000000: RgbaColor = new RgbaColor(
+    parseInt("00", 16),
+    parseInt("00", 16),
+    parseInt("00", 16)
+  );
 
   const overWorldColors1: RgbaColor[] = [
     colffc07a,
