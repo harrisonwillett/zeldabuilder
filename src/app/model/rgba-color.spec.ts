@@ -59,10 +59,10 @@ describe('RgbaColor', () => {
   });
   describe('Alpha', () => {
     it('is a value of 1 out of 1 from Red', () => {
-      expect(red.alpha).toEqual(0);
+      expect(red.alpha).toEqual(1);
     });
     it('is a value of 1 out of 1 from Blue', () => {
-      expect(blue.alpha).toEqual(255);
+      expect(blue.alpha).toEqual(1);
     });
     it('is a value of .4 out of 1 from Gray 40%', () => {
       expect(gray40.alpha).toEqual(.4);
