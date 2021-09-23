@@ -19,7 +19,6 @@ export class Room {
                 for (let j = 0; j < (32); j = j + 2) {
                     const tempfloor = new Decoration();
                     tempfloor.setPossition(j, i);
-                    // console.log({i, j});
                     this.roomItems.setDecoration(tempfloor);
                 }
 
@@ -99,11 +98,9 @@ export class Room {
                     tempdoors.setPossition((door[0] * 2), (door[1] * 2));
                     tempdoors.setSpriteNumber(door[2]);
                     if ( door[3] !== undefined ) {
-                        // console.log("door[" + i + "] was set to go to " + doors[i][3]);
                         tempdoors.setRoomRequest( door[3] );
                     }
                     if ( door[4] !== undefined ) {
-                        // console.log("door[" + i + "] was locked? " + doors[i][4]);
                         tempdoors.setLock( door[4] );
                     }
                     this.roomItems.setDecoration(tempdoors);

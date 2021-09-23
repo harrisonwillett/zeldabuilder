@@ -28,7 +28,6 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.hsva = rgbaToHsva(this.color);
-    console.log({hsva: this.hsva});
     this.cntxtColorPicker = this.canvasColorPicker.nativeElement.getContext("2d");
     this.cntxtHuePicker = this.canvasHuePicker.nativeElement.getContext("2d");
     this.cntxtAlphaPicker = this.canvasAlphaPicker.nativeElement.getContext("2d");
@@ -47,7 +46,6 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
   updateAlpha($event) {
     if($event !== undefined) {
       this.hsva.alpha = parseFloat($event)/100;
-      console.log({alpha: this.hsva.alpha});
     };
   }
 
@@ -58,16 +56,9 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
     }
   }
 
-  updateChroma() {
-    console.log({
-      canvasDarkenPickerValue: "update this thing"
-    });
-  }
-
   updateDarken($event) {
     if($event !== undefined) {
       this.hsva.value = $event / 100;
-      this.updateChroma();
       this.drawAlphaPicker();
     }
   }
@@ -75,7 +66,6 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
   updateLighten($event) {
     if($event !== undefined) {
       this.hsva.saturation = $event / 100;
-      this.updateChroma();
       this.drawAlphaPicker();
     }
   }

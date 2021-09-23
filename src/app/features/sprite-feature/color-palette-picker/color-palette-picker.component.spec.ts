@@ -79,7 +79,6 @@ describe('ColorPalettePickerComponent', () => {
 
     input = fixture.debugElement.queryAll(By.css('.color-picker-wrapper input'));
 
-    // console.log({ style: input[0].nativeNode.style });
     expect(input[0].nativeNode.style.color).toBe("rgb(0, 0, 0)");
     expect(input[0].nativeNode.style.backgroundColor).toBe("rgba(128, 128, 128, 0.4)");
   });

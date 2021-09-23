@@ -136,12 +136,6 @@ describe("EditableCanvasComponent", () => {
       return arr.slice();
     });
 
-    // component.colorPixel([4, 7]);
-    /* console.log({
-      arrangeArray,
-      assertArray: component.sprite.array
-    }); */
-
     expect(true).toBeTrue();
   });
 

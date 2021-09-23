@@ -69,7 +69,6 @@ export class SpriteDetailComponent implements OnInit {
   }
 
   activateTab(ev: Event): void {
-    // console.log({activateTab: ev});
     const thisTab = ev.target as HTMLButtonElement;
     const thisTabList = thisTab
       .closest('[role="tablist"]')

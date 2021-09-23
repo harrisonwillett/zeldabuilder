@@ -27,10 +27,6 @@ export class EightBitDisplay {
     }
     setNaturalSize = (scale: number) => {
         for (const [key, value] of Object.entries(this.boundingRects)) {
-            /* console.log({
-                key,
-                value
-            }); */
             this.boundingRects[key].natural = new DOMRect(
                 (this.boundingRects[key].native.x * scale),
                 (this.boundingRects[key].native.y * scale),
