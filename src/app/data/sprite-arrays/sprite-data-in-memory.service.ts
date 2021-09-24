@@ -73,6 +73,7 @@ import {
   spriteLinkFanfare1Array,
   spriteLinkFanfare2Array
 } from "./sprite-data-link.mock";
+import { spriteSwordDownArray, spriteSwordUpArray, spriteSwordLeftArray, spriteBombArray } from "./sprite-data-items.mock";
 
 @Injectable({
   providedIn: "root"
@@ -146,6 +147,36 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
       blue: parseInt("ff", 16),
       alpha: 0
     };
+    const col6888ff: RgbaColor = {
+      red: parseInt("68", 16),
+      green: parseInt("88", 16),
+      blue: parseInt("ff", 16),
+      alpha: 1
+    };
+    const col0000bc: RgbaColor = {
+      red: parseInt("00", 16),
+      green: parseInt("00", 16),
+      blue: parseInt("bc", 16),
+      alpha: 1
+    };
+    const cole45c0f: RgbaColor = {
+      red: parseInt("e4", 16),
+      green: parseInt("5c", 16),
+      blue: parseInt("0f", 16),
+      alpha: 1
+    };
+    const colb8f818: RgbaColor = {
+      red: parseInt("b8", 16),
+      green: parseInt("f8", 16),
+      blue: parseInt("18", 16),
+      alpha: 1
+    };
+    const colffa044: RgbaColor = {
+      red: parseInt("ff", 16),
+      green: parseInt("a0", 16),
+      blue: parseInt("44", 16),
+      alpha: 1
+    };
 
     const overWorldColors1: RgbaColor[] = [
       colffc07a,
@@ -170,6 +201,20 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
       colda8811,
       col703500,
       col7ac000,
+      coltransparent
+    ];
+
+    const itemsColors1: RgbaColor[] = [
+      cole45c0f,
+      colb8f818,
+      colffa044,
+      coltransparent
+    ];
+
+    const itemsColors2: RgbaColor[] = [
+      colffffff,
+      col6888ff,
+      col0000bc,
       coltransparent
     ];
 
@@ -1031,8 +1076,38 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
       },
       {
         id: 7,
-        name: "Items",
-        sprites: [],
+        name: "Items -  Green",
+        colors: itemsColors1,
+        sprites: [
+          {
+            id: 1,
+            name: "Sword Down",
+            array: spriteSwordDownArray
+          },
+          {
+            id: 2,
+            name: "Sword Up",
+            array: spriteSwordUpArray
+          },
+          {
+            id: 3,
+            name: "Sword Left",
+            array: spriteSwordLeftArray
+          }
+        ],
+        options: EightBitX2
+      },
+      {
+        id: 8,
+        name: "Items - Blue",
+        colors: itemsColors2,
+        sprites: [
+          {
+            id: 5,
+            name: "Bomb",
+            array: spriteBombArray
+          }
+        ],
         options: EightBitX2
       }
     ];
