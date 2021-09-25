@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, AfterViewInit, Output, EventEmitter } from "@angular/core";
+
 import { HsvaColor } from "src/app/model/hsva-color";
 import { RgbaColor } from "src/app/model/rgba-color";
 import { rgbaToHsva, hsvaToRgba } from "./colorFormulas";
@@ -18,13 +19,15 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
   @ViewChild("canvasHuePicker", { static: true }) canvasHuePicker: ElementRef<HTMLCanvasElement>;
   @ViewChild("canvasColorPicker", { static: true }) canvasColorPicker: ElementRef<HTMLCanvasElement>;
   @ViewChild("canvasAlphaPicker", { static: true }) canvasAlphaPicker: ElementRef<HTMLCanvasElement>;
+  @ViewChild("updateButton") updateButton: ElementRef<HTMLButtonElement>;
+  @ViewChild("closeButton") closeButton: ElementRef<HTMLButtonElement>;
   cntxtColorPicker: CanvasRenderingContext2D;
   cntxtHuePicker: CanvasRenderingContext2D;
   cntxtAlphaPicker: CanvasRenderingContext2D;
 
   public hsva: HsvaColor;
   
-  constructor() {}
+  constructor(public el: ElementRef) {}
 
   ngOnInit() {
     this.hsva = rgbaToHsva(this.color);
@@ -34,13 +37,17 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.drawColorPickers();
+      this.drawColorPickers();
   }
 
-  closeModal() {
+  closeModal(event: Event) {
+    event.preventDefault();
     this.isModalVisable = false;
     const rgba = hsvaToRgba(this.hsva);
     this.newColor.emit([this.index, rgba]);
+    setTimeout((elem) => {
+      elem.focus();
+    }, 700, this.updateButton.nativeElement);
   }
 
   updateAlpha($event) {
@@ -162,6 +169,54 @@ export class ColorPalettePickerComponent implements OnInit, AfterViewInit {
     cssString += (rgba.green > 127 ? 0 : 255).toString() + ", ";
     cssString += (rgba.blue > 127 ? 0 : 255).toString() + ")";
     return cssString;
+  }
+
+  changeColor() {
+    this.isModalVisable = !this.isModalVisable;
+    this.modalInit();
+    setTimeout((elem) => {
+      elem.focus();
+    }, 200, this.closeButton.nativeElement);
+  }
+
+  modalInit() {
+    const modals: NodeListOf<HTMLElement> = (this.el.nativeElement as HTMLElement).querySelectorAll("[aria-modal='true'][role='dialog']");
+    modals.forEach(modal => {
+      const potentialFocusableElements: NodeListOf<HTMLElement> = modal.querySelectorAll("button, input, select, textarea, a[href], [tabindex]");
+      let focusableElements: HTMLElement[] = [];
+      const modalBlur = function (event: FocusEvent) {
+        if (event.target === focusableElements[focusableElements.length -1]) {
+          if (event.relatedTarget !== null) {
+            if (!modal.contains(event.relatedTarget as Node) ) {
+              focusableElements[0].focus();
+            }
+          }
+        }
+        if (event.target === focusableElements[0]) {
+          if (event.relatedTarget !== null) {
+            if (!modal.contains(event.relatedTarget as Node) ) {
+              focusableElements[focusableElements.length -1].focus();
+            }
+          }
+        }
+      };
+      potentialFocusableElements.forEach((element) => {
+        let hasFocus = true;
+        if (element.hasAttribute("tabindex")) {
+          if (element.attributes["tabindex"].value === "-1") {
+            hasFocus = false;
+          }
+        }
+        if(element.hidden === true) {
+          hasFocus = false;
+        }
+        if(hasFocus) {
+          element.onblur = modalBlur;
+          focusableElements.push(element);
+        }
+      });
+    });
+    
   }
 
 }
