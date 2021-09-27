@@ -73,7 +73,14 @@ import {
   spriteLinkFanfare1Array,
   spriteLinkFanfare2Array
 } from "./sprite-data-link.mock";
-import { spriteSwordDownArray, spriteSwordUpArray, spriteSwordLeftArray, spriteBombArray } from "./sprite-data-items.mock";
+import {
+  spriteSwordDownArray,
+  spriteSwordUpArray,
+  spriteSwordLeftArray,
+  spriteBombArray,
+  spriteRupeeArray,
+  spritePotionArray
+} from "./sprite-data-items.mock";
 
 @Injectable({
   providedIn: "root"
@@ -1106,7 +1113,18 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
             id: 5,
             name: "Bomb",
             array: spriteBombArray
+          },
+          {
+            id: 6,
+            name: "Rupee",
+            array: spriteRupeeArray
+          },
+          {
+            id: 7,
+            name: "Potion",
+            array: spritePotionArray
           }
+
         ],
         options: EightBitX2
       }
