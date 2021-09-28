@@ -79,7 +79,9 @@ import {
   spriteSwordLeftArray,
   spriteBombArray,
   spriteRupeeArray,
-  spritePotionArray
+  spritePotionArray,
+  spriteFireArray,
+  spriteHeartContainerArray
 } from "./sprite-data-items.mock";
 
 @Injectable({
@@ -184,6 +186,19 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
       blue: parseInt("44", 16),
       alpha: 1
     };
+    const coleca01e: RgbaColor = {
+      red: parseInt("ec", 16),
+      green: parseInt("a0", 16),
+      blue: parseInt("1e", 16),
+      alpha: 1
+    };
+    const colb62e1a: RgbaColor = {
+      red: parseInt("b6", 16),
+      green: parseInt("2e", 16),
+      blue: parseInt("1a", 16),
+      alpha: 1
+    };
+
 
     const overWorldColors1: RgbaColor[] = [
       colffc07a,
@@ -222,6 +237,13 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
       colffffff,
       col6888ff,
       col0000bc,
+      coltransparent
+    ];
+
+    const itemsColors3: RgbaColor[] = [
+      colffffff,
+      coleca01e,
+      colb62e1a,
       coltransparent
     ];
 
@@ -1124,7 +1146,39 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
             name: "Potion",
             array: spritePotionArray
           }
-
+        ],
+        options: EightBitX2
+      },
+      {
+        id: 9,
+        name: "Items - Red",
+        colors: itemsColors3,
+        sprites: [
+          {
+            id: 8,
+            name: "Bomb",
+            array: spriteBombArray
+          },
+          {
+            id: 9,
+            name: "Rupee",
+            array: spriteRupeeArray
+          },
+          {
+            id: 10,
+            name: "Potion",
+            array: spritePotionArray
+          },
+          {
+            id: 11,
+            name: "Fire",
+            array: spriteFireArray
+          },
+          {
+            id: 12,
+            name: "Heart Container",
+            array: spriteHeartContainerArray
+          }
         ],
         options: EightBitX2
       }
