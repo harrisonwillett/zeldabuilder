@@ -249,258 +249,258 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
 
     const sheets: Spritesheet[] = [
       {
-        id: 1,
+        id: "0b9bcda2-c278-4539-83d0-7b92a413847d",
         name: "Over World - Brown",
         colors: overWorldColors1,
         sprites: [
           {
-            id: 1,
+            id: "9d24af31-a3c9-4a7c-9d5a-e37f2689d47d",
             name: "Stairs",
             array: spriteStairArray
           },
           {
-            id: 2,
+            id: "502d9d27-1cc9-4000-839a-6401a80c392d",
             name: "Bolder",
             array: spriteBolderArray
           },
           {
-            id: 3,
+            id: "3f5aa626-0b6b-49a3-b492-52a0b0bdbde0",
             name: "Floor",
             array: spriteFloorArray
           },
           {
-            id: 4,
+            id: "67f3b809-b39e-4dd8-a032-c664e0ae358b4",
             name: "Ladder",
             array: spriteLadderArray
           },
           {
-            id: 5,
+            id: "21e8dbc6-9c11-4817-b4f6-5f9fa667e9fc5",
             name: "Bush",
             array: spriteBushArray
           },
           {
-            id: 6,
+            id: "4e45e270-54f9-4319-92d9-b00a7e3641b0",
             name: "Statue",
             array: spriteStatueArray
           },
           {
-            id: 7,
+            id: "44ebe904-8ae7-4dc6-bcfa-a1d4480f1244",
             name: "Rock Top Left",
             array: spriteRockArrayTopLeft
           },
           {
-            id: 8,
+            id: "c0d8469c-b49c-4dde-b774-ca550845bc20",
             name: "Rock Top",
             array: spriteRockArrayTopMid
           },
           {
-            id: 9,
+            id: "05d4d9bb-1eff-4555-84c7-45ff19fba8e2",
             name: "Rock Top Right",
             array: spriteRockArrayTopRight
           },
           {
-            id: 10,
+            id: "2d5dada5-550a-4a93-9aad-f19ca5ccaade",
             name: "Rock Bottom Left",
             array: spriteRockArrayBottomLeft
           },
           {
-            id: 11,
+            id: "9db8c14b-fa65-4717-b50a-f002bf954fe9",
             name: "Rock Bottom",
             array: spriteRockArrayBottomMid
           },
           {
-            id: 12,
+            id: "994cccd7-f010-4ef0-bd25-7c1e466428ca",
             name: "Rock Bottom Right",
             array: spriteRockArrayBottomRight
           },
           {
-            id: 13,
+            id: "43983cdf-9e5c-4791-a9c3-a7be80193652",
             name: "Tree Top Left",
             array: spriteTreeArrayTopLeft
           },
           {
-            id: 14,
+            id: "703226d1-3483-43eb-88ec-a522fdc21115",
             name: "Tree Top",
             array: spriteTreeArrayTopMid
           },
           {
-            id: 15,
+            id: "d369710a-75d8-4c81-9b6e-a2ff78a50a99",
             name: "Tree Top Right",
             array: spriteTreeArrayTopRight
           },
           {
-            id: 16,
+            id: "cc1e56e9-d42b-4e75-b71e-c7db174d8bbc",
             name: "Tree Bottom Left",
             array: spriteTreeArrayBottomLeft
           },
           {
-            id: 17,
+            id: "c9245ced-6e62-4f6e-a158-12822d47b99e",
             name: "Tree Bottom",
             array: spriteTreeArrayBottomMid
           },
           {
-            id: 18,
+            id: "0e691655-72d4-415b-856e-3668a25d74fa",
             name: "Tree Bottom Right",
             array: spriteTreeArrayBottomRight
           },
 
           {
-            id: 19,
+            id: "3f0d0a4c-d531-41be-8fd0-f44b46a5dd3d",
             name: "Dungeon Top Left",
             array: spriteDungeonLeftTopArray
           },
           {
-            id: 20,
+            id: "e7184011-132a-4fdc-bda7-3185b14a0837",
             name: "Dungeon Top",
             array: spriteDungeonMiddleTopArray
           },
           {
-            id: 21,
+            id: "46019756-0cd3-420d-ba37-fca3d3e57e21",
             name: "Dungeon Top Right",
             array: spriteDungeonRightTopArray
           },
           {
-            id: 22,
+            id: "b8620c83-eea0-47f8-9be2-6c384cff0b43",
             name: "Dungeon Top Left - Alternate",
             array: spriteDungeon1LeftTopArray
           },
           {
-            id: 23,
+            id: "826ebba9-c786-42e4-8edf-456bcd4a5a6f",
             name: "Dungeon Top - Alternate",
             array: spriteDungeon1MiddleTopArray
           },
           {
-            id: 24,
+            id: "7d6b3d65-6b51-4861-8580-d766046fc39e",
             name: "Dungeon Bottom Left",
             array: spriteDungeonLeftBottomArray
           },
           {
-            id: 25,
+            id: "a2ad51ef-8906-4c3a-94e1-9f21122629f5",
             name: "Desert",
             array: spriteDesertArray
           },
           {
-            id: 26,
+            id: "46e19f90-2520-4f1f-9e68-fa5871c527ad",
             name: "Dungeon Bottom Right",
             array: spriteDungeonRightBottomArray
           },
           {
-            id: 27,
+            id: "734d55ef-49e1-4d33-ad07-0e4fa7bae580",
             name: "Deck",
             array: spriteDeckArray
           },
           {
-            id: 28,
+            id: "aee5a91e-195c-487b-9c88-166ad7a1c8dc",
             name: "Waterfall",
             array: spriteWaterfallArray
           },
           {
-            id: 29,
+            id: "754d3162-6a83-4509-83db-5639a8bb5e17",
             name: "Lake Top Left",
             array: spriteLakeLeftTopArray
           },
           {
-            id: 30,
+            id: "5e04fdc0-53e8-4049-90f5-d0cf11a09f23",
             name: "Lake Top",
             array: spriteLakeMiddleTopArray
           },
           {
-            id: 31,
+            id: "0203f49a-c40d-41ea-ac9e-f4e559c48cfb",
             name: "Lake Top Right",
             array: spriteLakeRightTopArray
           },
           {
-            id: 32,
+            id: "dd38ad99-2d01-44aa-a125-78da51dc7708",
             name: "Lake Left",
             array: spriteLakeLeftMiddleArray
           },
           {
-            id: 33,
+            id: "dc765edf-fa62-45b5-a34c-0fb1e3f56c7e",
             name: "Lake Center",
             array: spriteLakeMiddleMiddleArray
           },
           {
-            id: 34,
+            id: "91a9105c-53d4-4548-8a7f-0e373cd40241",
             name: "Lake Right",
             array: spriteLakeRightMiddleArray
           },
           {
-            id: 35,
+            id: "8d26ad47-ff6e-4020-a7ce-0ef1449fe46d",
             name: "Lake Bottom Left",
             array: spriteLakeLeftBottomArray
           },
           {
-            id: 36,
+            id: "e8b5edd4-a1cb-4bdd-83f6-35a2472e99d9",
             name: "Lake Bottom",
             array: spriteLakeMiddleBottomArray
           },
           {
-            id: 37,
+            id: "33a45395-3938-4965-8e1b-3cdf651b9bbf",
             name: "Lake Bottom Right",
             array: spriteLakeRightBottomArray
           },
           {
-            id: 38,
+            id: "5261f0c8-bdb8-4758-95cb-a5a5b760c7c6",
             name: "Dry Lake Top Left",
             array: spriteDryLakeLeftTopArray
           },
           {
-            id: 39,
+            id: "5e24fa7e-ecbd-47eb-b058-8408217b80a8",
             name: "Dry Lake Top",
             array: spriteDryLakeMiddleTopArray
           },
           {
-            id: 40,
+            id: "9bd58e1b-a050-4535-9713-8e4bb7537594",
             name: "Dry Lake Top Right",
             array: spriteDryLakeRightTopArray
           },
           {
-            id: 41,
+            id: "a5be4beb-d416-4b6e-979e-cba89135c7b9",
             name: "Dry Lake Left",
             array: spriteDryLakeLeftMiddleArray
           },
           {
-            id: 42,
+            id: "30b594e9-4c42-41fd-bd41-1cbe0bff8cc0",
             name: "Dry Lake Center",
             array: spriteDryLakeMiddleMiddleArray
           },
           {
-            id: 43,
+            id: "39c2ca60-9753-481c-ba32-412232d86fde",
             name: "Dry Lake Right",
             array: spriteDryLakeRightMiddleArray
           },
           {
-            id: 44,
+            id: "17504ede-cc2c-4fc2-b409-f47df4f90d1f",
             name: "Dry Lake Bottom Left",
             array: spriteDryLakeLeftBottomArray
           },
           {
-            id: 45,
+            id: "34a214be-e537-47e4-9c1a-dc6c55181787",
             name: "Dry Lake Bottom",
             array: spriteDryLakeMiddleBottomArray
           },
           {
-            id: 46,
+            id: "1cf08620-2104-4a52-9423-2f2def2d5024",
             name: "Dry Lake Bottom Right",
             array: spriteDryLakeRightBottomArray
           },
           {
-            id: 47,
+            id: "cff18f5a-3ff5-45d5-8a49-e6ea97751fad",
             name: "Lake Inverted Top Left",
             array: spriteLakeInvertLeftTopArray
           },
           {
-            id: 48,
+            id: "4aee4cc0-0d83-4d8e-8a58-fcbe96fe2233",
             name: "Lake Inverted Top Right",
             array: spriteLakeInvertRightTopArray
           },
           {
-            id: 49,
+            id: "06d602ee-cdc5-4e50-8f32-63f00c1f7c97",
             name: "Lake Inverted Bottom Left",
             array: spriteLakeInvertLeftBottomArray
           },
           {
-            id: 50,
+            id: "bcaf0d57-2bca-4fed-a981-0af72add50dc",
             name: "Lake Inverted Bottom Right",
             array: spriteLakeInvertRightBottomArray
           }
@@ -508,258 +508,258 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
         options: EightBitX2
       },
       {
-        id: 2,
+        id: "0b8edc27-79d6-4f10-8272-b09f339dc20f",
         name: "Over World - Green",
         colors: overWorldColors2,
         sprites: [
           {
-            id: 1,
+            id: "f8f314a7-92d2-4b48-bea9-5785570d6e29",
             name: "Stairs",
             array: spriteStairArray
           },
           {
-            id: 2,
+            id: "338b1d5f-4f2f-4e0f-9d75-f1369f2dd57d",
             name: "Bolder",
             array: spriteBolderArray
           },
           {
-            id: 3,
+            id: "5686112a-e447-4f21-96db-76b9f61f8934",
             name: "Floor",
             array: spriteFloorArray
           },
           {
-            id: 4,
+            id: "f7505e7c-7285-4ccc-8205-c0084f8933fa",
             name: "Ladder",
             array: spriteLadderArray
           },
           {
-            id: 5,
+            id: "5de261bd-798a-438d-ad46-602480873158",
             name: "Bush",
             array: spriteBushArray
           },
           {
-            id: 6,
+            id: "d4da32ea-10f2-460c-8723-45cfdace9e73",
             name: "Statue",
             array: spriteStatueArray
           },
           {
-            id: 7,
+            id: "adc71ed4-d2f2-4939-9ec1-0ad5ff7191a8",
             name: "Rock Top Left",
             array: spriteRockArrayTopLeft
           },
           {
-            id: 8,
+            id: "a3964e80-3d72-408e-9300-5ad9300e582b",
             name: "Rock Top",
             array: spriteRockArrayTopMid
           },
           {
-            id: 9,
+            id: "f8e2c2e2-db88-4920-8395-ca1c98509dee",
             name: "Rock Top Right",
             array: spriteRockArrayTopRight
           },
           {
-            id: 10,
+            id: "5c5e217f-bc27-4017-92e0-ee94f514b464",
             name: "Rock Bottom Left",
             array: spriteRockArrayBottomLeft
           },
           {
-            id: 11,
+            id: "cb5d0dc4-4e5c-45cc-bd5f-f7409f1365f6",
             name: "Rock Bottom",
             array: spriteRockArrayBottomMid
           },
           {
-            id: 12,
+            id: "7a0850c7-423b-443d-bfc8-e3996181d9bc",
             name: "Rock Bottom Right",
             array: spriteRockArrayBottomRight
           },
           {
-            id: 13,
+            id: "a51b67c5-4571-4b8b-9ca4-ca0101ad8b54",
             name: "Tree Top Left",
             array: spriteTreeArrayTopLeft
           },
           {
-            id: 14,
+            id: "83c18f7a-2c85-4be0-9bea-a5bd9d5fe212",
             name: "Tree Top",
             array: spriteTreeArrayTopMid
           },
           {
-            id: 15,
+            id: "12d6bf09-0a93-4927-a937-6868613a4613",
             name: "Tree Top Right",
             array: spriteTreeArrayTopRight
           },
           {
-            id: 16,
+            id: "80fcc3a3-0834-465b-9cb1-fe427a927524",
             name: "Tree Bottom Left",
             array: spriteTreeArrayBottomLeft
           },
           {
-            id: 17,
+            id: "1af32c5e-c458-4b06-a953-a758e8c8bf75",
             name: "Tree Bottom",
             array: spriteTreeArrayBottomMid
           },
           {
-            id: 18,
+            id: "94d7f1d8-400f-4856-b38b-fb720487206a",
             name: "Tree Bottom Right",
             array: spriteTreeArrayBottomRight
           },
 
           {
-            id: 19,
+            id: "29bb3cd4-68db-43ca-b87d-e03ca04320f1",
             name: "Dungeon Top Left",
             array: spriteDungeonLeftTopArray
           },
           {
-            id: 20,
+            id: "53796f1b-d3c3-47d1-902a-e78a6dedb601",
             name: "Dungeon Top",
             array: spriteDungeonMiddleTopArray
           },
           {
-            id: 21,
+            id: "09130a71-e665-45bf-b186-d02c4af1bcf7",
             name: "Dungeon Top Right",
             array: spriteDungeonRightTopArray
           },
           {
-            id: 22,
+            id: "bda82474-b691-4e4f-a5b5-358e05e59316",
             name: "Dungeon Top Left - Alternate",
             array: spriteDungeon1LeftTopArray
           },
           {
-            id: 23,
+            id: "d5dcdbbb-7ab9-4244-bb4a-64957148ba68",
             name: "Dungeon Top - Alternate",
             array: spriteDungeon1MiddleTopArray
           },
           {
-            id: 24,
+            id: "aaf58747-fa42-4b0d-a5d5-f499330c5095",
             name: "Dungeon Bottom Left",
             array: spriteDungeonLeftBottomArray
           },
           {
-            id: 25,
+            id: "432edd72-c502-43ee-b8e9-515cce3f93ea",
             name: "Desert",
             array: spriteDesertArray
           },
           {
-            id: 26,
+            id: "097ec1e0-2a7c-4ada-8cfb-3d7b7b144f83",
             name: "Dungeon Bottom Right",
             array: spriteDungeonRightBottomArray
           },
           {
-            id: 27,
+            id: "e01d52e4-aeba-4607-b1f4-3cdaab7971ed",
             name: "Deck",
             array: spriteDeckArray
           },
           {
-            id: 28,
+            id: "294a26d5-b932-4007-b19c-be2933149705",
             name: "Waterfall",
             array: spriteWaterfallArray
           },
           {
-            id: 29,
+            id: "532e35df-2f37-4aff-87dd-41bd20ab29c2",
             name: "Lake Top Left",
             array: spriteLakeLeftTopArray
           },
           {
-            id: 30,
+            id: "e7c8be2f-cde9-4c5c-8646-76df1000586a",
             name: "Lake Top",
             array: spriteLakeMiddleTopArray
           },
           {
-            id: 31,
+            id: "11b102f9-9cb1-4097-947c-dbcf5122c008",
             name: "Lake Top Right",
             array: spriteLakeRightTopArray
           },
           {
-            id: 32,
+            id: "e59ae953-069c-41cb-9bce-92a3de90d45e",
             name: "Lake Left",
             array: spriteLakeLeftMiddleArray
           },
           {
-            id: 33,
+            id: "2803d86f-18fb-433a-a3c6-5224a4bf0f62",
             name: "Lake Center",
             array: spriteLakeMiddleMiddleArray
           },
           {
-            id: 34,
+            id: "a990c32a-1e45-49c6-88e8-21f2c907b59e",
             name: "Lake Right",
             array: spriteLakeRightMiddleArray
           },
           {
-            id: 35,
+            id: "2e41b5d7-2580-4357-ba8f-fffa4e0628b6",
             name: "Lake Bottom Left",
             array: spriteLakeLeftBottomArray
           },
           {
-            id: 36,
+            id: "65ce4e02-dcbd-4467-af52-216b6552d831",
             name: "Lake Bottom",
             array: spriteLakeMiddleBottomArray
           },
           {
-            id: 37,
+            id: "ec160db4-838d-44fe-9348-d9f5f2aeaf08",
             name: "Lake Bottom Right",
             array: spriteLakeRightBottomArray
           },
           {
-            id: 38,
+            id: "ebf9b489-3645-47ff-9ae4-d8021f75165b",
             name: "Dry Lake Top Left",
             array: spriteDryLakeLeftTopArray
           },
           {
-            id: 39,
+            id: "05acf038-126c-42dc-af83-0244944884ab",
             name: "Dry Lake Top",
             array: spriteDryLakeMiddleTopArray
           },
           {
-            id: 40,
+            id: "f088b2b4-835c-44aa-8666-90381900effd",
             name: "Dry Lake Top Right",
             array: spriteDryLakeRightTopArray
           },
           {
-            id: 41,
+            id: "574ea6fc-200d-4f2b-a587-ba12a811c01e",
             name: "Dry Lake Left",
             array: spriteDryLakeLeftMiddleArray
           },
           {
-            id: 42,
+            id: "b59aeb74-7935-4a8b-bedf-c009b44a8e4a",
             name: "Dry Lake Center",
             array: spriteDryLakeMiddleMiddleArray
           },
           {
-            id: 43,
+            id: "36d63f7a-ce49-4103-b376-4f0449c17dd6",
             name: "Dry Lake Right",
             array: spriteDryLakeRightMiddleArray
           },
           {
-            id: 44,
+            id: "0880d034-ba25-4268-b6aa-5a5fb593388f",
             name: "Dry Lake Bottom Left",
             array: spriteDryLakeLeftBottomArray
           },
           {
-            id: 45,
+            id: "352a42d3-aacc-46b1-8b82-8acc26a30bd9",
             name: "Dry Lake Bottom",
             array: spriteDryLakeMiddleBottomArray
           },
           {
-            id: 46,
+            id: "26716b88-259f-42a8-b1a0-8aa15a039fb6",
             name: "Dry Lake Bottom Right",
             array: spriteDryLakeRightBottomArray
           },
           {
-            id: 47,
+            id: "c26a1a02-ed17-4964-8904-548791c2c5f6",
             name: "Lake Inverted Top Left",
             array: spriteLakeInvertLeftTopArray
           },
           {
-            id: 48,
+            id: "d6f0f46d-b979-473d-b208-74337d0b4176",
             name: "Lake Inverted Top Right",
             array: spriteLakeInvertRightTopArray
           },
           {
-            id: 49,
+            id: "94447287-2b9a-445c-ae5d-ca03ddd3eb8f",
             name: "Lake Inverted Bottom Left",
             array: spriteLakeInvertLeftBottomArray
           },
           {
-            id: 50,
+            id: "c2af9680-e152-4ff3-9619-f4d9b47aefce",
             name: "Lake Inverted Bottom Right",
             array: spriteLakeInvertRightBottomArray
           }
@@ -767,258 +767,258 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
         options: EightBitX2
       },
       {
-        id: 3,
+        id: "0c595db0-e6ab-4999-a3f3-a1a60b8cede5",
         name: "Over World - Gray",
         colors: overWorldColors3,
         sprites: [
           {
-            id: 1,
+            id: "560a03df-83e8-49b8-95be-e16e74586044",
             name: "Stairs",
             array: spriteStairArray
           },
           {
-            id: 2,
+            id: "2e8827de-d224-4642-949f-6dbd611413ef",
             name: "Bolder",
             array: spriteBolderArray
           },
           {
-            id: 3,
+            id: "f17b2c5a-2507-4143-ac23-2bc1aaa12ec8",
             name: "Floor",
             array: spriteFloorArray
           },
           {
-            id: 4,
+            id: "5dfdc10d-cdd2-437b-9dcd-771cd0cb35ac",
             name: "Ladder",
             array: spriteLadderArray
           },
           {
-            id: 5,
+            id: "6013ca12-2cb6-46a2-986e-ce35dc46c7e6",
             name: "Bush",
             array: spriteBushArray
           },
           {
-            id: 6,
+            id: "6c1d6ffd-3886-4c37-97db-50dd7ba5f9f1",
             name: "Statue",
             array: spriteStatueArray
           },
           {
-            id: 7,
+            id: "b243c9ea-9d85-42e9-b657-ac1362b260e0",
             name: "Rock Top Left",
             array: spriteRockArrayTopLeft
           },
           {
-            id: 8,
+            id: "31b0c62a-1ca7-4f98-beb2-00be67e5ceb1",
             name: "Rock Top",
             array: spriteRockArrayTopMid
           },
           {
-            id: 9,
+            id: "6727e07d-1450-4d28-a3bc-b4f11e17d642",
             name: "Rock Top Right",
             array: spriteRockArrayTopRight
           },
           {
-            id: 10,
+            id: "145e9b9e-82b8-4498-9a12-bc91aedc25f8",
             name: "Rock Bottom Left",
             array: spriteRockArrayBottomLeft
           },
           {
-            id: 11,
+            id: "ead6a468-2299-4c34-926e-4b744e6ec616",
             name: "Rock Bottom",
             array: spriteRockArrayBottomMid
           },
           {
-            id: 12,
+            id: "876658eb-d763-43b8-bb93-0b03c9d8d8dd",
             name: "Rock Bottom Right",
             array: spriteRockArrayBottomRight
           },
           {
-            id: 13,
+            id: "43d8e1c8-5f4c-4f92-9ca5-7db5387ef8ad",
             name: "Tree Top Left",
             array: spriteTreeArrayTopLeft
           },
           {
-            id: 14,
+            id: "cd824f91-03f5-4d7e-b484-15365c8402c9",
             name: "Tree Top",
             array: spriteTreeArrayTopMid
           },
           {
-            id: 15,
+            id: "06569cb0-b36e-4665-9264-b323e7880d65",
             name: "Tree Top Right",
             array: spriteTreeArrayTopRight
           },
           {
-            id: 16,
+            id: "0faa11bf-4aac-4151-9a64-0c362b2ed064",
             name: "Tree Bottom Left",
             array: spriteTreeArrayBottomLeft
           },
           {
-            id: 17,
+            id: "5eb9cc7e-31bd-447c-98a3-960a0d6fff23",
             name: "Tree Bottom",
             array: spriteTreeArrayBottomMid
           },
           {
-            id: 18,
+            id: "c55dfe4c-44a7-4eef-bde0-dcc330988ae0",
             name: "Tree Bottom Right",
             array: spriteTreeArrayBottomRight
           },
 
           {
-            id: 19,
+            id: "7ba08c24-8487-412c-a37c-689ce80fb747",
             name: "Dungeon Top Left",
             array: spriteDungeonLeftTopArray
           },
           {
-            id: 20,
+            id: "46a73fa2-731f-45e2-97ae-fc379de39417",
             name: "Dungeon Top",
             array: spriteDungeonMiddleTopArray
           },
           {
-            id: 21,
+            id: "23e55b10-9190-49d3-b0dc-756c41fa0e76",
             name: "Dungeon Top Right",
             array: spriteDungeonRightTopArray
           },
           {
-            id: 22,
+            id: "2bb17c73-9772-48ab-bd84-039b491917d8",
             name: "Dungeon Top Left - Alternate",
             array: spriteDungeon1LeftTopArray
           },
           {
-            id: 23,
+            id: "f5f72790-9e61-46f6-8f4d-622f7421db44",
             name: "Dungeon Top - Alternate",
             array: spriteDungeon1MiddleTopArray
           },
           {
-            id: 24,
+            id: "a8c79d4e-cc91-414e-9156-de7a7f7ee6dc",
             name: "Dungeon Bottom Left",
             array: spriteDungeonLeftBottomArray
           },
           {
-            id: 25,
+            id: "9dfe14be-30b2-4bfc-8804-a440db73da25",
             name: "Desert",
             array: spriteDesertArray
           },
           {
-            id: 26,
+            id: "28f655f1-5828-43c5-911a-7cf683cfd0e7",
             name: "Dungeon Bottom Right",
             array: spriteDungeonRightBottomArray
           },
           {
-            id: 27,
+            id: "e59b0320-ee5e-48f0-83ab-ec16d0a89260",
             name: "Deck",
             array: spriteDeckArray
           },
           {
-            id: 28,
+            id: "0681fa24-de3b-4341-b1e1-d01bf9728fe3",
             name: "Waterfall",
             array: spriteWaterfallArray
           },
           {
-            id: 29,
+            id: "55ca3a17-f19b-4975-b28a-44712cfe4a47",
             name: "Lake Top Left",
             array: spriteLakeLeftTopArray
           },
           {
-            id: 30,
+            id: "7b268647-4805-4fea-96d5-616a73e69fb8",
             name: "Lake Top",
             array: spriteLakeMiddleTopArray
           },
           {
-            id: 31,
+            id: "94f7820e-1ced-48e4-adb0-4026611cb4d3",
             name: "Lake Top Right",
             array: spriteLakeRightTopArray
           },
           {
-            id: 32,
+            id: "69a302b9-f603-4001-912d-2203f5d2088f",
             name: "Lake Left",
             array: spriteLakeLeftMiddleArray
           },
           {
-            id: 33,
+            id: "6d4109b0-6bb5-435c-828f-1b039d7eb5a1",
             name: "Lake Center",
             array: spriteLakeMiddleMiddleArray
           },
           {
-            id: 34,
+            id: "1f701b97-e108-470f-b6f3-f9acda70fc11",
             name: "Lake Right",
             array: spriteLakeRightMiddleArray
           },
           {
-            id: 35,
+            id: "7ae10372-e847-4ec0-a3b7-8819a53e37d5",
             name: "Lake Bottom Left",
             array: spriteLakeLeftBottomArray
           },
           {
-            id: 36,
+            id: "853830bc-518d-4d6e-92c5-9b8e962d1c65",
             name: "Lake Bottom",
             array: spriteLakeMiddleBottomArray
           },
           {
-            id: 37,
+            id: "5d7303d1-dd60-4ec7-a274-0a5d167aae7e",
             name: "Lake Bottom Right",
             array: spriteLakeRightBottomArray
           },
           {
-            id: 38,
+            id: "eb9c510e-a202-40c3-b7cf-d6990aa65b88",
             name: "Dry Lake Top Left",
             array: spriteDryLakeLeftTopArray
           },
           {
-            id: 39,
+            id: "10cc107f-4ca2-41b9-8c94-48aaac213892",
             name: "Dry Lake Top",
             array: spriteDryLakeMiddleTopArray
           },
           {
-            id: 40,
+            id: "dca2cce8-5413-4263-a2e9-438040105da9",
             name: "Dry Lake Top Right",
             array: spriteDryLakeRightTopArray
           },
           {
-            id: 41,
+            id: "658c786c-afd2-4ffb-b263-03f3dbfa63d6",
             name: "Dry Lake Left",
             array: spriteDryLakeLeftMiddleArray
           },
           {
-            id: 42,
+            id: "e18cb3ce-6a45-40bb-84d5-62163593cdc1",
             name: "Dry Lake Center",
             array: spriteDryLakeMiddleMiddleArray
           },
           {
-            id: 43,
+            id: "63507be9-af87-4fa1-b153-16040cf3397e",
             name: "Dry Lake Right",
             array: spriteDryLakeRightMiddleArray
           },
           {
-            id: 44,
+            id: "4920cbe3-13a6-485c-a88e-dd605c6c92f8",
             name: "Dry Lake Bottom Left",
             array: spriteDryLakeLeftBottomArray
           },
           {
-            id: 45,
+            id: "89e79820-5afe-43e5-ac1f-300cc73f926e",
             name: "Dry Lake Bottom",
             array: spriteDryLakeMiddleBottomArray
           },
           {
-            id: 46,
+            id: "36f41f95-78dc-4bef-9c9b-c74eec82565f",
             name: "Dry Lake Bottom Right",
             array: spriteDryLakeRightBottomArray
           },
           {
-            id: 47,
+            id: "ff54f0f3-774e-4902-92bf-d42ee4234eee",
             name: "Lake Inverted Top Left",
             array: spriteLakeInvertLeftTopArray
           },
           {
-            id: 48,
+            id: "f167e8a8-a1b8-420a-9e71-8a90978bea66",
             name: "Lake Inverted Top Right",
             array: spriteLakeInvertRightTopArray
           },
           {
-            id: 49,
+            id: "307270dc-c750-4083-a2e9-591e09568e85",
             name: "Lake Inverted Bottom Left",
             array: spriteLakeInvertLeftBottomArray
           },
           {
-            id: 50,
+            id: "6776e681-5b0e-457f-a29b-b3d3e27bb7a0",
             name: "Lake Inverted Bottom Right",
             array: spriteLakeInvertRightBottomArray
           }
@@ -1026,77 +1026,77 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
         options: EightBitX2
       },
       {
-        id: 4,
+        id: "5e24b4c7-eb38-4bb0-8fe4-3ae79cf91005",
         name: "Link - Green",
         colors: linkColors1,
         sprites: [
           {
-            id: 1,
+            id: "f0e03da5-f4cf-4ffe-9662-3c0e989686d3",
             name: "Link Bottom",
             array: spriteLinkBottom1Array
           },
           {
-            id: 2,
+            id: "c9781df1-56f7-476e-a17e-911862a1df90",
             name: "Link Bottom - Alternate",
             array: spriteLinkBottom2Array
           },
           {
-            id: 3,
+            id: "c13fa6a5-6894-42d6-ae52-46ca62c8ff4f",
             name: "Link Top",
             array: spriteLinkTop1Array
           },
           {
-            id: 4,
+            id: "69b48164-00c4-4f95-b1fe-b1d3758927fb",
             name: "Link Top - Alternate",
             array: spriteLinkTop2Array
           },
           {
-            id: 5,
+            id: "fc85babb-3665-4760-abca-53497c96a42d",
             name: "Link Left",
             array: spriteLinkLeft1Array
           },
           {
-            id: 6,
+            id: "24dc4df7-60bd-47ab-8627-1adc2df55535",
             name: "Link Left - Alternate",
             array: spriteLinkLeft2Array
           },
           {
-            id: 7,
+            id: "4e76f2e8-bf00-4a64-ad2a-9a213fc0f12b",
             name: "Link Right",
             array: spriteLinkRight1Array
           },
           {
-            id: 8,
+            id: "3b152b28-b99f-4f0a-8608-140187f7ff77",
             name: "Link Right - Alternate",
             array: spriteLinkRight2Array
           },
           {
-            id: 9,
+            id: "d80b2145-eb9e-4419-bca8-04181d3baa2b",
             name: "Link Bottom - Alternate",
             array: spriteLinkBottomAttackArray
           },
           {
-            id: 10,
+            id: "4e36a492-5d7e-4132-98cc-de4a6fdd1b6c",
             name: "Link Top",
             array: spriteLinkTopAttackArray
           },
           {
-            id: 11,
+            id: "73857caf-0dd4-4524-b6ae-edbc8fe5f95e",
             name: "Link Top - Alternate",
             array: spriteLinkLeftAttackArray
           },
           {
-            id: 12,
+            id: "48e34731-a0c4-46c4-ae3f-9a47c4671243",
             name: "Link Left",
             array: spriteLinkRightAttackArray
           },
           {
-            id: 13,
+            id: "2c05ef1d-cb9b-47e0-a170-96e86cb6bcab",
             name: "Link Left - Alternate",
             array: spriteLinkFanfare1Array
           },
           {
-            id: 14,
+            id: "c5f0806d-d428-456c-b36a-e821b06a24ef",
             name: "Link Right",
             array: spriteLinkFanfare2Array
           }
@@ -1104,22 +1104,22 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
         options: EightBitX2
       },
       {
-        id: 7,
+        id: "f475af10-d131-4490-a41c-1c9cd068e3e6",
         name: "Items -  Green",
         colors: itemsColors1,
         sprites: [
           {
-            id: 1,
+            id: "7eb68029-cfc3-42c0-84e8-8bcd2801a022",
             name: "Sword Down",
             array: spriteSwordDownArray
           },
           {
-            id: 2,
+            id: "7c77af69-3ff8-43b9-84a3-f67d4c63ea84",
             name: "Sword Up",
             array: spriteSwordUpArray
           },
           {
-            id: 3,
+            id: "197fd0af-fbd3-4654-b5b7-1ceb2a6f747f",
             name: "Sword Left",
             array: spriteSwordLeftArray
           }
@@ -1127,22 +1127,22 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
         options: EightBitX2
       },
       {
-        id: 8,
+        id: "973a6b3a-550f-463d-9951-89c4c3738c4b",
         name: "Items - Blue",
         colors: itemsColors2,
         sprites: [
           {
-            id: 5,
+            id: "b76b8d76-e9f9-4936-91f5-5e52f8bb9c4b",
             name: "Bomb",
             array: spriteBombArray
           },
           {
-            id: 6,
+            id: "b7bd6b98-16df-44c4-9c9b-05144c7a4c92",
             name: "Rupee",
             array: spriteRupeeArray
           },
           {
-            id: 7,
+            id: "9c4a053e-879e-4788-b662-96c1f1b267b5",
             name: "Potion",
             array: spritePotionArray
           }
@@ -1150,32 +1150,32 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
         options: EightBitX2
       },
       {
-        id: 9,
+        id: "517eefa1-9594-445e-9430-66ddf0a6ef28",
         name: "Items - Red",
         colors: itemsColors3,
         sprites: [
           {
-            id: 8,
+            id: "e4ebe490-dddc-451b-bf6f-1360d28c7abf",
             name: "Bomb",
             array: spriteBombArray
           },
           {
-            id: 9,
+            id: "3700d7c9-e69b-4267-b671-414f3f581217",
             name: "Rupee",
             array: spriteRupeeArray
           },
           {
-            id: 10,
+            id: "b586fb70-6464-483b-a149-7e2f71e65d2b",
             name: "Potion",
             array: spritePotionArray
           },
           {
-            id: 11,
+            id: "94ddc97a-57f9-434a-ba71-c1631c5b8816",
             name: "Fire",
             array: spriteFireArray
           },
           {
-            id: 12,
+            id: "aa344c37-569b-4edd-a5c3-2b73ff88414f",
             name: "Heart Container",
             array: spriteHeartContainerArray
           }
@@ -1184,11 +1184,5 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
       }
     ];
     return { sheets };
-  }
-
-  genId(sheets: Spritesheet[]): number {
-    return sheets.length > 0
-      ? Math.max(...sheets.map(sheet => sheet.id)) + 1
-      : 1;
   }
 }

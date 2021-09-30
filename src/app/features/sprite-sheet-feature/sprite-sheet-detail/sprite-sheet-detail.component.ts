@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import {v4 as uuidv4} from 'uuid';
 
 import { Spritesheet } from "../../../model/spritesheet";
 import { SpriteService } from "../../../service/sprite.service";
@@ -13,7 +14,7 @@ import { Sprite } from "../../../model/sprite";
 export class SpriteSheetDetailComponent implements OnInit {
   sheets: Spritesheet[];
   sheet: Spritesheet;
-  id: number;
+  id: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,7 +34,7 @@ export class SpriteSheetDetailComponent implements OnInit {
         }
       }
     });
-    this.id = +this.route.snapshot.paramMap.get("sheetId");
+    this.id = this.route.snapshot.paramMap.get("sheetId");
   }
 
   getUpdatedSheet(updatedSheet: Spritesheet) {
@@ -50,10 +51,7 @@ export class SpriteSheetDetailComponent implements OnInit {
   duplicate(sprite: Sprite): void {
     const dupSprite = { ...sprite };
     dupSprite.name = dupSprite.name + " - Copy";
-    dupSprite.id =
-      this.sheet.sprites.length > 0
-        ? Math.max(...this.sheet.sprites.map(s => s.id)) + 1
-        : 1;
+    dupSprite.id = uuidv4();
     this.sheet.sprites.push(dupSprite);
     this.spriteService.updateSheet(this.sheet).subscribe(); // delete from the service
   }

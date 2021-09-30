@@ -1,19 +1,23 @@
 import { Controller } from "./controller";
 
+export class spriteConfig {
+	constructor(public spriteSheetId: string, public spriteNumber: string, public collitionMap: null | [boolean, boolean, boolean, boolean]) {}
+}
+
 /*sets the location of an object in space*/
 export class Item {
-	name;
-	positionX;
-	positionY;
-	height;
-	width;
-	passable;
-	collitionMap;
+	name: string;
+	positionX: number;
+	positionY: number;
+	height: number;
+	width: number;
+	passable: boolean;
+	collitionMap: null | [boolean, boolean, boolean, boolean];
 	owner;
-	spriteSheetId: number;
-	spriteNumber: number;
-	facing;
-	state;
+	spriteSheetId: string;
+	spriteNumber: string;
+	facing: number;
+	state: string;
 
 	constructor(name = "item", positionX = 0, positionY = 0) {
 		this.height = 2;
@@ -21,8 +25,8 @@ export class Item {
 		this.passable = true;
 		this.collitionMap = null;
 		this.owner = null;
-		this.spriteSheetId = 1;
-		this.spriteNumber = 2;
+		this.spriteSheetId = "0b9bcda2-c278-4539-83d0-7b92a413847d";
+		this.spriteNumber = "2";
 		this.facing = 1;
 		this.state = "active";
 		this.name = name;
@@ -54,8 +58,10 @@ export class Item {
 		return this.collitionMap;
 	}
 
-	setCollitionMap = (x) => {
-		this.collitionMap = x;
+	setCollitionMap = (x: [boolean, boolean, boolean, boolean]) => {
+		if (x.length === 4) {
+			this.collitionMap = x;
+		}
 	}
 
 	getHitbox =  () => {
@@ -84,7 +90,7 @@ export class Item {
 
 	}
 
-	setSpriteNumber =  (x) => {
+	setSpriteNumber =  (x: string) => {
 		this.spriteNumber = x;
 	}
 
@@ -94,8 +100,8 @@ export class Item {
 export class Decoration extends Item {
 	constructor(name = "decoration", positionX = 0, positionY = 0) {
 		super(name, positionX, positionY);
-		this.spriteSheetId = 1;
-		this.spriteNumber = 3;
+		this.spriteSheetId = "0b9bcda2-c278-4539-83d0-7b92a413847d";
+		this.spriteNumber = "3f5aa626-0b6b-49a3-b492-52a0b0bdbde0";
 	}
 }
 
@@ -112,25 +118,25 @@ export class Wall extends Actor {
 	constructor(name = "wall", positionX = 0, positionY = 0) {
 		super(name, positionX, positionY);
 		this.passable = false;
-		this.spriteSheetId = 1;
-		this.spriteNumber = 11;
+		this.spriteSheetId = "0b9bcda2-c278-4539-83d0-7b92a413847d";
+		this.spriteNumber = "9db8c14b-fa65-4717-b50a-f002bf954fe9";
 	}
 
 }
 
 // DOOR ETC
 export class Door extends Actor {
-	lockedspriteNumber;
-	unlockedspriteNumber;
+	lockedspriteNumber: string;
+	unlockedspriteNumber: string;
 	roomRequest;
-	isLocked;
+	isLocked: boolean;
 
 	constructor(name = "door", positionX = 0, positionY = 0) {
 		super(name, positionX, positionY);
-		this.spriteSheetId = 1;
-		this.spriteNumber = 17;
-		this.lockedspriteNumber = 5;
-		this.unlockedspriteNumber = 17;
+		this.spriteSheetId = "0b9bcda2-c278-4539-83d0-7b92a413847d";
+		this.spriteNumber = "c9245ced-6e62-4f6e-a158-12822d47b99e";
+		this.lockedspriteNumber = "21e8dbc6-9c11-4817-b4f6-5f9fa667e9fc5";
+		this.unlockedspriteNumber = "c9245ced-6e62-4f6e-a158-12822d47b99e";
 		this.roomRequest = "http://google.com";
 		this.isLocked = false;
 		this.state = null;
@@ -184,7 +190,7 @@ export class Bot extends Actor {
 	constructor(name = "bot", positionX = 0, positionY = 0) {
 		super(name, positionX, positionY);
 		this.team = undefined;
-		this.spriteSheetId = 3;
+		this.spriteSheetId = "0c595db0-e6ab-4999-a3f3-a1a60b8cede5";
 		this.requestedPositionX = this.positionX;
 		this.requestedPositionY = this.positionY;
 		this.direction = "bottom";
@@ -272,8 +278,8 @@ export class Player extends Bot {
 
 	constructor( name: string = "Link", positionX: number = 0, positionY: number = 0 ) {
 		super(name, positionX, positionY);
-		this.spriteSheetId = 4;
-		this.spriteNumber = 2;
+		this.spriteSheetId = "5e24b4c7-eb38-4bb0-8fe4-3ae79cf91005";
+		this.spriteNumber = "c9781df1-56f7-476e-a17e-911862a1df90";
 		this.team = "green";
 		this.owner = "controller";
 		this.canLeave = true;
@@ -281,31 +287,31 @@ export class Player extends Bot {
 
 	updateSpriteNumber = function() {
 		if ( this.direction === "bottom" ) {
-			if ( this.spriteNumber === 1 ) {
-				this.spriteNumber = 2;
+			if ( this.spriteNumber === "f0e03da5-f4cf-4ffe-9662-3c0e989686d3" ) {
+				this.spriteNumber = "c9781df1-56f7-476e-a17e-911862a1df90";
 			} else {
-				this.spriteNumber = 1;
+				this.spriteNumber = "f0e03da5-f4cf-4ffe-9662-3c0e989686d3";
 			}
 		}
 		if ( this.direction === "top" ) {
-			if ( this.spriteNumber === 3 ) {
-				this.spriteNumber = 4;
+			if ( this.spriteNumber === "c13fa6a5-6894-42d6-ae52-46ca62c8ff4f" ) {
+				this.spriteNumber = "69b48164-00c4-4f95-b1fe-b1d3758927fb";
 			} else {
-				this.spriteNumber = 3;
+				this.spriteNumber = "c13fa6a5-6894-42d6-ae52-46ca62c8ff4f";
 			}
 		}
 		if ( this.direction === "left" ) {
-			if ( this.spriteNumber === 5 ) {
-				this.spriteNumber = 6;
+			if ( this.spriteNumber === "fc85babb-3665-4760-abca-53497c96a42d" ) {
+				this.spriteNumber = "24dc4df7-60bd-47ab-8627-1adc2df55535";
 			} else {
-				this.spriteNumber = 5;
+				this.spriteNumber = "fc85babb-3665-4760-abca-53497c96a42d";
 			}
 		}
 		if ( this.direction === "right" ) {
-			if ( this.spriteNumber === 7 ) {
-				this.spriteNumber = 8;
+			if ( this.spriteNumber === "4e76f2e8-bf00-4a64-ad2a-9a213fc0f12b" ) {
+				this.spriteNumber = "3b152b28-b99f-4f0a-8608-140187f7ff77";
 			} else {
-				this.spriteNumber = 7;
+				this.spriteNumber = "4e76f2e8-bf00-4a64-ad2a-9a213fc0f12b";
 			}
 		}
 
@@ -319,7 +325,7 @@ export class Projectile extends Bot {
 		super(val, parent.positionX, parent.positionY);
 		this.team = undefined;
 		this.owner = parent;
-		this.spriteSheetId = 7;
-		this.spriteNumber = 0;
+		this.spriteSheetId = "f475af10-d131-4490-a41c-1c9cd068e3e6";
+		this.spriteNumber = "7eb68029-cfc3-42c0-84e8-8bcd2801a022";
 	}
 }

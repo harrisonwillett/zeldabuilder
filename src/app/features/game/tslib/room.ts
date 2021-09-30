@@ -1,6 +1,5 @@
-import { Wall, Door, Player, Decoration, AI, Item } from "./actors";
+import { Wall, Door, Player, Decoration, AI, Item, spriteConfig } from "./actors";
 import { Items } from "./items";
-
 export class Room {
 
     roomItems: Items;
@@ -23,74 +22,81 @@ export class Room {
                 }
 
             }
+            
+            let greenRock = {
+                top: new spriteConfig("0b8edc27-79d6-4f10-8272-b09f339dc20f", "a3964e80-3d72-408e-9300-5ad9300e582b", [true, true, true, true]),
+                topRight: new spriteConfig("0b8edc27-79d6-4f10-8272-b09f339dc20f", "f8e2c2e2-db88-4920-8395-ca1c98509dee", [true, false, true, true]),
+                topLeft: new spriteConfig("0b8edc27-79d6-4f10-8272-b09f339dc20f", "adc71ed4-d2f2-4939-9ec1-0ad5ff7191a8", [false, true, true, true]),
+                bottom: new spriteConfig("0b8edc27-79d6-4f10-8272-b09f339dc20f", "cb5d0dc4-4e5c-45cc-bd5f-f7409f1365f6", [true, true, true, true]),
+                bottomRight: new spriteConfig("0b8edc27-79d6-4f10-8272-b09f339dc20f", "7a0850c7-423b-443d-bfc8-e3996181d9bc", [true, true, true, false]),
+                bottomLeft: new spriteConfig("0b8edc27-79d6-4f10-8272-b09f339dc20f", "5c5e217f-bc27-4017-92e0-ee94f514b464", [true, true, false, true]),
+            };
 
             // Create the Walls
-            let walls: [number, number, number, [number, number, number, number]?][] =  [
-                [0, 0, 11], [1, 0, 11], [2, 0, 11], [3, 0, 11],
-                [4, 0, 11], [5, 0, 11], [6, 0, 11], [9, 0, 11],
-                [10, 0, 11], [11, 0, 11], [12, 0, 11], [13, 0, 11],
-                [14, 0, 11], [15, 0, 11]
+            let walls: [number, number, spriteConfig][] =  [
+                [0, 0, greenRock.bottom], [1, 0, greenRock.bottom], [2, 0, greenRock.bottom], [3, 0, greenRock.bottom],
+                [4, 0, greenRock.bottom], [5, 0, greenRock.bottom], [6, 0, greenRock.bottom], [9, 0, greenRock.bottom],
+                [10, 0, greenRock.bottom], [11, 0, greenRock.bottom], [12, 0, greenRock.bottom], [13, 0, greenRock.bottom],
+                [14, 0, greenRock.bottom], [15, 0, greenRock.bottom]
             ];
             walls = walls.concat([
-                [0, 1, 11], [1, 1, 11], [2, 1, 11], [3, 1, 11],
-                [5, 1, 11], [6, 1, 12, [1, 1, 1, 0]], [9, 1, 11],
-                [10, 1, 11], [11, 1, 11], [12, 1, 11], [13, 1, 11],
-                [14, 1, 11], [15, 1, 11]
+                [0, 1, greenRock.bottom], [1, 1, greenRock.bottom], [2, 1, greenRock.bottom], [3, 1, greenRock.bottom],
+                [5, 1, greenRock.bottom], [6, 1, greenRock.bottomRight], [9, 1, greenRock.bottom],
+                [10, 1, greenRock.bottom], [11, 1, greenRock.bottom], [12, 1, greenRock.bottom], [13, 1, greenRock.bottom],
+                [14, 1, greenRock.bottom], [15, 1, greenRock.bottom]
             ]);
             walls = walls.concat([
-                [0, 2, 11], [1, 2, 11], [2, 2, 11], [3, 2, 12, [1, 1, 1, 0]],
-                [9, 2, 11], [10, 2, 11], [11, 2, 11], [12, 2, 11],
-                [13, 2, 11], [14, 2, 11], [15, 2, 11]
+                [0, 2, greenRock.bottom], [1, 2, greenRock.bottom], [2, 2, greenRock.bottom], [3, 2, greenRock.bottomRight],
+                [9, 2, greenRock.bottom], [10, 2, greenRock.bottom], [11, 2, greenRock.bottom], [12, 2, greenRock.bottom],
+                [13, 2, greenRock.bottom], [14, 2, greenRock.bottom], [15, 2, greenRock.bottom]
             ]);
             walls = walls.concat([
-                [0, 3, 11], [1, 3, 11], [2, 3, 12, [1, 1, 1, 0]], [9, 3, 11],
-                [10, 3, 11], [11, 3, 11], [12, 3, 11], [13, 3, 11],
-                [14, 3, 11], [15, 3, 11]
+                [0, 3, greenRock.bottom], [1, 3, greenRock.bottom], [2, 3, greenRock.bottomRight], [9, 3, greenRock.bottom],
+                [10, 3, greenRock.bottom], [11, 3, greenRock.bottom], [12, 3, greenRock.bottom], [13, 3, greenRock.bottom],
+                [14, 3, greenRock.bottom], [15, 3, greenRock.bottom]
             ]);
             walls = walls.concat([
-                [0, 4, 11], [1, 4, 12, [1, 1, 1, 0]], [9, 4, 10, [1, 1, 0, 1]], [10, 4, 11],
-                [11, 4, 11], [12, 4, 11], [13, 4, 11], [14, 4, 11],
-                [15, 4, 11]
+                [0, 4, greenRock.bottom], [1, 4, greenRock.bottomRight], [9, 4, greenRock.bottomLeft], [10, 4, greenRock.bottom],
+                [11, 4, greenRock.bottom], [12, 4, greenRock.bottom], [13, 4, greenRock.bottom], [14, 4, greenRock.bottom],
+                [15, 4, greenRock.bottom]
             ]);
             walls = walls.concat([
-                [0, 6, 8], [1, 6, 8], [14, 6, 8], [15, 6, 8]
+                [0, 6, greenRock.top], [1, 6, greenRock.top], [14, 6, greenRock.top], [15, 6, greenRock.top]
             ]);
             walls = walls.concat([
-                [0, 7, 11], [1, 7, 11], [14, 7, 11], [15, 7, 11]
+                [0, 7, greenRock.bottom], [1, 7, greenRock.bottom], [14, 7, greenRock.bottom], [15, 7, greenRock.bottom]
             ]);
             walls = walls.concat([
-                [0, 8, 11], [1, 8, 11], [14, 8, 11], [15, 8, 11]
+                [0, 8, greenRock.bottom], [1, 8, greenRock.bottom], [14, 8, greenRock.bottom], [15, 8, greenRock.bottom]
             ]);
             walls = walls.concat([
-                [0, 9, 11], [1, 9, 11], [2, 9, 8], [3, 9, 8],
-                [4, 9, 8], [5, 9, 8], [6, 9, 8], [7, 9, 8],
-                [8, 9, 8], [9, 9, 8], [10, 9, 8], [11, 9, 8],
-                [12, 9, 8], [13, 9, 8], [14, 9, 11], [15, 9, 11]
+                [0, 9, greenRock.bottom], [1, 9, greenRock.bottom], [2, 9, greenRock.top], [3, 9, greenRock.top],
+                [4, 9, greenRock.top], [5, 9, greenRock.top], [6, 9, greenRock.top], [7, 9, greenRock.top],
+                [8, 9, greenRock.top], [9, 9, greenRock.top], [10, 9, greenRock.top], [11, 9, greenRock.top],
+                [12, 9, greenRock.top], [13, 9, greenRock.top], [14, 9, greenRock.bottom], [15, 9, greenRock.bottom]
             ]);
             walls = walls.concat([
-                [0, 10, 11], [1, 10, 11], [2, 10, 11], [3, 10, 11],
-                [4, 10, 11], [5, 10, 11], [6, 10, 11], [7, 10, 11],
-                [8, 10, 11], [9, 10, 11], [10, 10, 11], [11, 10, 11],
-                [12, 10, 11], [13, 10, 11], [14, 10, 11], [15, 10, 11]
+                [0, 10, greenRock.bottom], [1, 10, greenRock.bottom], [2, 10, greenRock.bottom], [3, 10, greenRock.bottom],
+                [4, 10, greenRock.bottom], [5, 10, greenRock.bottom], [6, 10, greenRock.bottom], [7, 10, greenRock.bottom],
+                [8, 10, greenRock.bottom], [9, 10, greenRock.bottom], [10, 10, greenRock.bottom], [11, 10, greenRock.bottom],
+                [12, 10, greenRock.bottom], [13, 10, greenRock.bottom], [14, 10, greenRock.bottom], [15, 10, greenRock.bottom]
             ]);
             if (walls.length > 0) {
                 for (const wall of walls) {
                     const tempwall = new Wall();
 
                     tempwall.setPossition(wall[0] * 2, wall[1] * 2);
-                    tempwall.spriteSheetId = 2;
-                    tempwall.setSpriteNumber(wall[2]);
-                    if ( wall[3] !== undefined ) {
-                        tempwall.setCollitionMap( wall[3] );
+                    tempwall.spriteSheetId = wall[2].spriteSheetId;
+                    tempwall.setSpriteNumber(wall[2].spriteNumber);
+                    if ( wall[2].collitionMap !== undefined ) {
+                        tempwall.setCollitionMap( wall[2].collitionMap );
                     }
                     this.roomItems.setDecoration(tempwall);
-
-
                 }
             }
 
-            const doors: Array<[number, number, number, string?, boolean?]> = [
-                [7, 0, 3, "top", true], [8, 0, 3, "top"], [4, 1, 17, "to old man"], [0, 5, 3, "left"], [15, 5, 3, "right"]
+            const doors: Array<[number, number, string, string?, boolean?]> = [
+                [7, 0, "3f5aa626-0b6b-49a3-b492-52a0b0bdbde0", "top", true], [8, 0, "3f5aa626-0b6b-49a3-b492-52a0b0bdbde0", "top"], [4, 1, "c9245ced-6e62-4f6e-a158-12822d47b99e", "to old man"], [0, 5, "3f5aa626-0b6b-49a3-b492-52a0b0bdbde0", "left"], [15, 5, "3f5aa626-0b6b-49a3-b492-52a0b0bdbde0", "right"]
             ];
             if (doors.length > 0) {
                 for (const door of doors) {
@@ -117,8 +123,8 @@ export class Room {
             if (aiArray.length > 0) {
                 for (const aiData of aiArray) {
                     const tempAi = new AI("Monster Type 1", (aiData[0] * 2), (aiData[1] * 2));
-                    tempAi.spriteSheetId = 2;
-                    tempAi.spriteNumber = 6;
+                    tempAi.spriteSheetId = "0b8edc27-79d6-4f10-8272-b09f339dc20f";
+                    tempAi.spriteNumber = "d4da32ea-10f2-460c-8723-45cfdace9e73";
                     this.roomItems.setItems(tempAi);
                 }
             }
@@ -128,8 +134,8 @@ export class Room {
             if (aiArray2.length > 0) {
                 for (const aiData of aiArray2) {
                     const tempAi = new AI("Monster Type 2", (aiData[0] * 2), (aiData[1] * 2));
-                    tempAi.spriteSheetId = 4;
-                    tempAi.spriteNumber = 13;
+                    tempAi.spriteSheetId = "5e24b4c7-eb38-4bb0-8fe4-3ae79cf91005";
+                    tempAi.spriteNumber = "2c05ef1d-cb9b-47e0-a170-96e86cb6bcab";
                     tempAi.passable = false;
                     this.roomItems.setItems(tempAi);
                 }

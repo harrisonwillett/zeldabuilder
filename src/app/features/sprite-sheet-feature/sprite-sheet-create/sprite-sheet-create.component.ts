@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
+import {v4 as uuidv4} from 'uuid';
 
 import { Spritesheet } from "../../../model/spritesheet";
 import { BitPresets } from "../../../data/sprite-modes";
@@ -48,7 +49,7 @@ export class SpriteSheetCreateComponent implements OnInit {
   }
 
   create(sheet: Spritesheet) {
-    sheet.id = this.sheets.length > 0 ? Math.max(...this.sheets.map(s => s.id)) + 1 : 1;
+    sheet.id = uuidv4();
     this.spriteService.addSheet(sheet as Spritesheet).subscribe(s => {
       this.sheets.push(s);
     });

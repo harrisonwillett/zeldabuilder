@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import {v4 as uuidv4} from 'uuid';
 
 import { Spritesheet } from "../../../model/spritesheet";
 import { SpriteService } from "../../../service/sprite.service";
@@ -23,7 +24,7 @@ export class SpriteSheetGalleryComponent implements OnInit {
     });
   }
 
-  delete(id: number): void {
+  delete(id: string): void {
     this.sheets = this.sheets.filter(sheet => {
       if (sheet.id !== id) {
         this.spriteService.deleteSheet(sheet).subscribe();
@@ -32,13 +33,16 @@ export class SpriteSheetGalleryComponent implements OnInit {
     });
   }
 
-  duplicate(id: number): void {
+  duplicate(id: string): void {
     this.sheets.filter(sheet => {
       if (sheet.id !== id) {
         const dupSheet = { ...sheet };
         dupSheet.name = dupSheet.name + " - Copy";
-        dupSheet.id = this.sheets.length > 0 ? Math.max(...this.sheets.map(s => s.id)) + 1 : 1;
+        dupSheet.id = uuidv4();
         this.spriteService.addSheet(dupSheet as Spritesheet).subscribe(s => {
+          console.log({
+            dupSheet: s
+          });
           this.sheets.push(s);
         });
       }

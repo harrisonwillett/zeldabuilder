@@ -13,8 +13,8 @@ import { SpriteService } from "../../../service/sprite.service";
 export class SpriteDetailComponent implements OnInit {
   @Input() sheet: Spritesheet;
   @Input() sprite: Sprite;
-  sheetId: number;
-  spriteId: number;
+  sheetId: string;
+  spriteId: string;
   hasEditName = true;
   tabListSelected: boolean[];
   selectedColor: number;
@@ -32,18 +32,18 @@ export class SpriteDetailComponent implements OnInit {
 
   getSpriteSheet(): void {
     this.spriteService.getSheets().subscribe(sheets => {
-      for (let sheet of sheets) {
+      for (const sheet of sheets) {
         if (sheet.id === this.sheetId) {
           this.sheet = sheet;
           this.getSprite();
         }
       }
     });
-    this.sheetId = +this.route.snapshot.paramMap.get("sheetId");
+    this.sheetId = this.route.snapshot.paramMap.get("sheetId");
   }
 
   getSprite(): void {
-    this.spriteId = +this.route.snapshot.paramMap.get("spriteId");
+    this.spriteId = this.route.snapshot.paramMap.get("spriteId");
     if (this.sheet.sprites.length > 0) {
       for (const sprite of this.sheet.sprites) {
         if (sprite.id === this.spriteId) {
@@ -65,6 +65,9 @@ export class SpriteDetailComponent implements OnInit {
   }
 
   editName(): void {
+    if(this.hasEditName) {
+      this.spriteService.updateSheet(this.sheet).subscribe();
+    }
     this.hasEditName = !this.hasEditName;
   }
 

@@ -12,7 +12,7 @@ describe('SpriteDetailComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ SpriteDetailComponent ],
-      providers: [ 
+      providers: [
         SpriteService,
         { provide: ActivatedRoute, useValue: {
           params: of({sheetId: 1})

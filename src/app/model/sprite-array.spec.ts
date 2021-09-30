@@ -26,8 +26,8 @@ const spriteArray: sixteenBitSpriteAry = [
 describe("sprite-array", () => {
   describe("colorIndex", () => {
     it("should be a number", () => {
-      const colorIndex: colorIndex = Math.random() * 100;
-      expect(typeof colorIndex).toEqual("number");
+      const thisColorIndex: colorIndex = Math.random() * 100;
+      expect(typeof thisColorIndex).toEqual("number");
     });
   });
   describe("sixteenBitSpriteAry", () => {

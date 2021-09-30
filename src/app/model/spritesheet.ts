@@ -3,7 +3,7 @@ import { Sprite } from "./sprite";
 import { RgbaColor } from "./rgba-color";
 
 export class Spritesheet {
-  id: number;
+  id: string;
   name: string;
   options: SpriteOptions;
   sprites?: Sprite[];

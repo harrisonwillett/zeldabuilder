@@ -11,7 +11,7 @@ import { SharedModule } from "../shared/shared";
 import { SpriteDetailComponent } from "./sprite-detail/sprite-detail.component";
 
 @NgModule({
-	declarations: [ 
+	declarations: [
         SpriteDetailComponent
     ],
     imports: [

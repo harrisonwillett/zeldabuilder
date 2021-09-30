@@ -29,8 +29,8 @@ export class SpriteService {
   }
 
   /** DELETE: delete the Spritesheet from the server */
-  deleteSheet(sheet: Spritesheet | number): Observable<Spritesheet> {
-    const id = typeof sheet === "number" ? sheet : sheet.id;
+  deleteSheet(sheet: Spritesheet | string): Observable<Spritesheet> {
+    const id = typeof sheet === "string" ? sheet : sheet.id;
     const url = `${this.sheetUrl}/${id}`;
     this.messageService.add(`Sprite Service: Deleted a sheet of sprites with the id="${id}".`);
     return this.http.delete<Spritesheet>(url, this.httpOptions).pipe(
