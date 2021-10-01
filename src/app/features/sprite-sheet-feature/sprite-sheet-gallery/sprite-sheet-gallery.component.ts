@@ -35,10 +35,18 @@ export class SpriteSheetGalleryComponent implements OnInit {
 
   duplicate(id: string): void {
     this.sheets.filter(sheet => {
-      if (sheet.id !== id) {
+      if (sheet.id === id) {
         const dupSheet = { ...sheet };
         dupSheet.name = dupSheet.name + " - Copy";
+        dupSheet.access.read = true;
+        dupSheet.access.write = true;
         dupSheet.id = uuidv4();
+        dupSheet.sprites = [...dupSheet.sprites];
+        dupSheet.sprites.forEach((sprite, index) => {
+          const dupSprite = { ...sprite };
+          dupSprite.id = uuidv4();
+          dupSheet.sprites[index] = dupSprite;
+        });
         this.spriteService.addSheet(dupSheet as Spritesheet).subscribe(s => {
           console.log({
             dupSheet: s
