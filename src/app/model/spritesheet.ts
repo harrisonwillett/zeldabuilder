@@ -8,4 +8,8 @@ export class Spritesheet {
   options: SpriteOptions;
   sprites?: Sprite[];
   colors?: RgbaColor[];
+  access: {
+    read: boolean,
+    write: boolean
+  }
 }

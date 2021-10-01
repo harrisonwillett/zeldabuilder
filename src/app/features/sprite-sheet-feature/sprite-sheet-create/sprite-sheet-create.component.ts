@@ -16,6 +16,10 @@ export class SpriteSheetCreateComponent implements OnInit {
     id: null,
     name: null,
     sprites: [],
+    access: {
+      read: false,
+      write: false
+    },
     options: {
       height: null,
       width: null,
@@ -50,6 +54,8 @@ export class SpriteSheetCreateComponent implements OnInit {
 
   create(sheet: Spritesheet) {
     sheet.id = uuidv4();
+    sheet.access.read = true;
+    sheet.access.write = true;
     this.spriteService.addSheet(sheet as Spritesheet).subscribe(s => {
       this.sheets.push(s);
     });

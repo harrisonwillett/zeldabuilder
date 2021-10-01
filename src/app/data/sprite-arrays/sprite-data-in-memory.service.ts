@@ -247,10 +247,26 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
       coltransparent
     ];
 
+    const noReadOrWrite: Spritesheet["access"] = {
+      read: false,
+      write: false
+    }
+    
+    const readOnly: Spritesheet["access"] = {
+      read: true,
+      write: false
+    }
+
+    const readWrite = {
+      read: true,
+      write: true
+    }
+
     const sheets: Spritesheet[] = [
       {
         id: "0b9bcda2-c278-4539-83d0-7b92a413847d",
         name: "Over World - Brown",
+        access: readOnly,
         colors: overWorldColors1,
         sprites: [
           {
@@ -510,6 +526,7 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
       {
         id: "0b8edc27-79d6-4f10-8272-b09f339dc20f",
         name: "Over World - Green",
+        access: readOnly,
         colors: overWorldColors2,
         sprites: [
           {
@@ -769,6 +786,7 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
       {
         id: "0c595db0-e6ab-4999-a3f3-a1a60b8cede5",
         name: "Over World - Gray",
+        access: readOnly,
         colors: overWorldColors3,
         sprites: [
           {
@@ -1028,6 +1046,7 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
       {
         id: "5e24b4c7-eb38-4bb0-8fe4-3ae79cf91005",
         name: "Link - Green",
+        access: readOnly,
         colors: linkColors1,
         sprites: [
           {
@@ -1106,6 +1125,7 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
       {
         id: "f475af10-d131-4490-a41c-1c9cd068e3e6",
         name: "Items -  Green",
+        access: readWrite,
         colors: itemsColors1,
         sprites: [
           {
@@ -1129,6 +1149,7 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
       {
         id: "973a6b3a-550f-463d-9951-89c4c3738c4b",
         name: "Items - Blue",
+        access: noReadOrWrite,
         colors: itemsColors2,
         sprites: [
           {
@@ -1152,6 +1173,7 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
       {
         id: "517eefa1-9594-445e-9430-66ddf0a6ef28",
         name: "Items - Red",
+        access: readWrite,
         colors: itemsColors3,
         sprites: [
           {

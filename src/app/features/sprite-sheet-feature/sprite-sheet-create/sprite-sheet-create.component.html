@@ -3,7 +3,7 @@
     ><i class="fas fa-chevron-left"></i> Back to Gallary</a
   >
 </div>
-<form>
+<form *ngIf="funcType === 'create' || sheet?.access.read === true">
   <div class="row mb-2">
     <div class="col-4 p-2 d-flex flex-column">
       <label for="sheet-name">Name of Sprite Sheet</label>
@@ -17,6 +17,8 @@
     </div>
     <ng-template [ngIf]="sheet !== undefined">
       <input type="hidden" name="sheet-id" [value]="sheet?.id" />
+      <input type="hidden" name="sheet-access-read" [value]="sheet?.access.read" />
+      <input type="hidden" name="sheet-access-write" [value]="sheet?.access.write" />
     </ng-template>
     <div class="col-4 p-2 d-flex flex-column">
       <label>Sprite Mode</label>

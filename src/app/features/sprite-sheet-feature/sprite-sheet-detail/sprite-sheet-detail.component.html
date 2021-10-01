@@ -1,4 +1,13 @@
-<ng-template [ngIf]="sheet">
+<ng-template [ngIf]="sheet && sheet?.access.read === false">
+  <div class="alert alert-warning d-flex align-items-center" role="alert">
+    <i class="fas fa-exclamation-triangle" aria-label="Warning:" ></i>
+    <div class="mx-3">
+      Sorry this content is not available.
+    </div>
+  </div>
+  <p></p>
+</ng-template>
+<ng-template [ngIf]="sheet && sheet?.access.read === true">
   <app-sprite-sheet-create
     [submit]="'Update Sprite Sheet'"
     [sheet]="sheet"

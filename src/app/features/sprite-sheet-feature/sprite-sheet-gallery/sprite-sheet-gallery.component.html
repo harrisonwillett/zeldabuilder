@@ -3,68 +3,72 @@
     ><i class="fas fa-plus"></i> New Sheet</a
   >
 </div>
-<div class="row p-2" *ngFor="let sheet of sheets">
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <h2 class="card-title">{{ sheet.name }}</h2>
-      <div class="card-text" *ngIf="sheet.sprites.length > 0">
-        <strong>Sprites:</strong><br />
-        <div class="d-flex flex-wrap justify-content-center">
-          <figure
-            *ngFor="let sprite of sheet.sprites; index as i; last as isLast"
-            [style.width.px]="175 - (175 % sheet.options.width)"
-          >
-            <a routerLink="/sprites/{{ sheet.id }}/{{ sprite.id }}">
-              <span *ngIf="sprite.array?.length > 0">
-                <app-editable-canvas
-                  [sprite]="sprite"
-                  [spriteWidth]="sheet.options.width"
-                  [spriteHeight]="sheet.options.height"
-                  [spriteColors]="sheet.colors"
-                  [editable]="false"
-                >
-                </app-editable-canvas>
-              </span>
-              <figcaption class="figure-caption text-center">
-                {{ sprite.name }}
-              </figcaption>
-            </a>
-          </figure>
+<div *ngFor="let sheet of sheets">
+  <div class="row p-2" *ngIf="sheet.access.read">
+    <div class="card shadow-sm w-100">
+      <div class="card-body">
+        <h2 class="card-title">{{ sheet.name }}<i class="fas fa-lock-alt ml-3" *ngIf="!sheet.access.write"></i></h2>
+        <div class="card-text" *ngIf="sheet.sprites.length > 0">
+          <strong>Sprites:</strong><br />
+          <div class="d-flex flex-wrap justify-content-center">
+            <figure
+              *ngFor="let sprite of sheet.sprites; index as i; last as isLast"
+              [style.width.px]="175 - (175 % sheet.options.width)"
+            >
+              <a routerLink="/sprites/{{ sheet.id }}/{{ sprite.id }}">
+                <span *ngIf="sprite.array?.length > 0">
+                  <app-editable-canvas
+                    [sprite]="sprite"
+                    [spriteWidth]="sheet.options.width"
+                    [spriteHeight]="sheet.options.height"
+                    [spriteColors]="sheet.colors"
+                    [editable]="false"
+                  >
+                  </app-editable-canvas>
+                </span>
+                <figcaption class="figure-caption text-center">
+                  {{ sprite.name }}
+                </figcaption>
+              </a>
+            </figure>
+          </div>
         </div>
-      </div>
-      <dl class="d-flex flex-row">
-        <dt class="mr-2">Options:</dt>
-        <dd class="mr-2">Height: {{ sheet.options.height }}</dd>
-        <dd class="mr-2">Width: {{ sheet.options.width }}</dd>
-        <dd class="mr-2">
-          Channels for Color: {{ sheet.options.colorChannels }}
-        </dd>
-      </dl>
-      <div
-        class="btn-group"
-        role="group"
-        attr.aria-label="{{ sheet.name }} - Sprite Sheet Options"
-      >
-        <button
-          type="button"
-          class="btn btn-secondary"
-          (click)="delete(sheet.id)"
+        <dl class="d-flex flex-row">
+          <dt class="mr-2">Options:</dt>
+          <dd class="mr-2">Height: {{ sheet.options.height }}</dd>
+          <dd class="mr-2">Width: {{ sheet.options.width }}</dd>
+          <dd class="mr-2">
+            Channels for Color: {{ sheet.options.colorChannels }}
+          </dd>
+        </dl>
+        <div
+          class="btn-group"
+          role="group"
+          attr.aria-label="{{ sheet.name }} - Sprite Sheet Options"
         >
-          <i class="fas fa-trash"></i> Delete
-        </button>
-        <button
-          type="button"
-          class="btn btn-secondary"
-          (click)="duplicate(sheet.id)"
-        >
-          <i class="fas fa-copy"></i> Duplicate
-        </button>
-        <a
-          routerLink="/sprites/{{ sheet.id }}"
-          role="button"
-          class="btn btn-primary"
-          ><i class="fas fa-pencil-alt"></i> Edit</a
-        >
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="delete(sheet.id)"
+            *ngIf="sheet.access.write"
+          >
+            <i class="fas fa-trash"></i> Delete
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="duplicate(sheet.id)"
+          >
+            <i class="fas fa-copy"></i> Duplicate
+          </button>
+          <a
+            routerLink="/sprites/{{ sheet.id }}"
+            role="button"
+            class="btn btn-primary"
+            *ngIf="sheet.access.write"
+            ><i class="fas fa-pencil-alt"></i> Edit</a
+          >
+        </div>
       </div>
     </div>
   </div>

@@ -1,4 +1,5 @@
 $color1: #dadada;
+$colorblue: #00bbe5;
 .img-bg-transparent {
   background-image: linear-gradient(45deg, $color1 25%, transparent 25%),
     linear-gradient(-45deg, $color1 25%, transparent 25%),
@@ -14,4 +15,8 @@ $color1: #dadada;
 .card-img,
 .card-img-top {
   overflow: hidden;
+}
+
+h2 .fa-lock-alt {
+  color: $colorblue;
 }
