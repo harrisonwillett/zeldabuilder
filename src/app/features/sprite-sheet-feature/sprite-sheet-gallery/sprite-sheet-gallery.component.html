@@ -11,26 +11,42 @@
         <div class="card-text" *ngIf="sheet.sprites.length > 0">
           <strong>Sprites:</strong><br />
           <div class="d-flex flex-wrap justify-content-center">
-            <figure
-              *ngFor="let sprite of sheet.sprites; index as i; last as isLast"
+            <ng-template ngFor let-sprite [ngForOf]="sheet.sprites" let-i="i">
+              <figure *ngIf="sprite.access.read"
               [style.width.px]="175 - (175 % sheet.options.width)"
-            >
-              <a routerLink="/sprites/{{ sheet.id }}/{{ sprite.id }}">
-                <span *ngIf="sprite.array?.length > 0">
-                  <app-editable-canvas
-                    [sprite]="sprite"
-                    [spriteWidth]="sheet.options.width"
-                    [spriteHeight]="sheet.options.height"
-                    [spriteColors]="sheet.colors"
-                    [editable]="false"
-                  >
-                  </app-editable-canvas>
-                </span>
-                <figcaption class="figure-caption text-center">
-                  {{ sprite.name }}
-                </figcaption>
-              </a>
+              >
+                <a routerLink="/sprites/{{ sheet.id }}/{{ sprite.id }}" *ngIf="sprite.access.write">
+                  <span *ngIf="sprite.array?.length > 0">
+                    <app-editable-canvas
+                      [sprite]="sprite"
+                      [spriteWidth]="sheet.options.width"
+                      [spriteHeight]="sheet.options.height"
+                      [spriteColors]="sheet.colors"
+                      [editable]="false"
+                    >
+                    </app-editable-canvas>
+                  </span>
+                  <figcaption class="figure-caption text-center">
+                    {{ sprite.name }}
+                  </figcaption>
+                </a>
+                <ng-template [ngIf]="!(sprite.access.write)">
+                  <span *ngIf="sprite.array?.length > 0">
+                    <app-editable-canvas
+                      [sprite]="sprite"
+                      [spriteWidth]="sheet.options.width"
+                      [spriteHeight]="sheet.options.height"
+                      [spriteColors]="sheet.colors"
+                      [editable]="false"
+                    >
+                    </app-editable-canvas>
+                  </span>
+                  <figcaption class="figure-caption text-center">
+                    {{ sprite.name }}
+                  </figcaption>
+                </ng-template>
             </figure>
+            </ng-template>
           </div>
         </div>
         <dl class="d-flex flex-row">
