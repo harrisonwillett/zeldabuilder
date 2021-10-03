@@ -83,6 +83,7 @@ import {
   spriteFireArray,
   spriteHeartContainerArray
 } from "./sprite-data-items.mock";
+import { spriteOctorok2Array, spriteOctorokArray } from "./sprite-data-monsters-overworld.mock";
 
 @Injectable({
   providedIn: "root"
@@ -1375,6 +1376,27 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
             name: "Heart Container",
             access: readWrite,
             array: spriteHeartContainerArray
+          }
+        ],
+        options: EightBitX2
+      },
+      {
+        id: "917319e7-9381-4830-89e5-c84d42c8eecd",
+        name: "Overworld Monsters - Blue",
+        access: readWrite,
+        colors: itemsColors2,
+        sprites: [
+          {
+            id: "77caa5ef-8162-4d20-9f6c-53283c64cd84",
+            name: "Octorok",
+            access: readWrite,
+            array: spriteOctorokArray
+          },
+          {
+            id: "f38bcbd6-f01b-4ad8-8d03-9b399cf5dbef",
+            name: "Octorok - Alternate",
+            access: readWrite,
+            array: spriteOctorok2Array
           }
         ],
         options: EightBitX2

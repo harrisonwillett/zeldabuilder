@@ -68,8 +68,12 @@ describe("EditableCanvasComponent", () => {
     component = fixture.componentInstance;
     // component.selectedColor = 8;
     const sprite: Sprite = {
-      id: 1,
+      id: "0000-0000-0000-0000",
       name: "Stairs - Brown",
+      access: {
+        read: true,
+        write: true
+      },
       array: spriteStairArray.map((arr) => {
         return arr.slice();
       })

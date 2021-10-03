@@ -1,5 +1,12 @@
 import { Controller } from "./controller";
 
+export enum DIRECTION {
+	TOP = "top",
+	BOTTOM ="bottom",
+	LEFT = "left",
+	RIGHT ="right"
+}
+
 export class spriteConfig {
 	constructor(public spriteSheetId: string, public spriteNumber: string, public collitionMap: null | [boolean, boolean, boolean, boolean]) {}
 }
@@ -180,12 +187,12 @@ export class Door extends Actor {
 
 // MOVABLE ACTORS ETC
 export class Bot extends Actor {
-	team;
-	requestedPositionX;
-	requestedPositionY;
-	direction;
-	canMove;
-	canLeave;
+	team: string | undefined;
+	requestedPositionX: number;
+	requestedPositionY: number;
+	direction: DIRECTION;
+	canMove: boolean;
+	canLeave: boolean;
 
 	constructor(name = "bot", positionX = 0, positionY = 0) {
 		super(name, positionX, positionY);
@@ -193,7 +200,7 @@ export class Bot extends Actor {
 		this.spriteSheetId = "0c595db0-e6ab-4999-a3f3-a1a60b8cede5";
 		this.requestedPositionX = this.positionX;
 		this.requestedPositionY = this.positionY;
-		this.direction = "bottom";
+		this.direction = DIRECTION.BOTTOM;
 		this.canMove = true;
 		this.canLeave = false;
 	}
@@ -212,10 +219,10 @@ export class Bot extends Actor {
 				this.requestedPositionY = this.positionY;
 			}
 			if ( speed > 0 ) {
-				this.direction = "right";
+				this.direction = DIRECTION.RIGHT;
 			}
 			if ( speed < 0 ) {
-				this.direction = "left";
+				this.direction = DIRECTION.LEFT;
 			}
 		}
 
@@ -227,10 +234,10 @@ export class Bot extends Actor {
 				this.requestedPositionY = this.positionY + speed;
 			}
 			if ( speed > 0 ) {
-				this.direction = "bottom";
+				this.direction = DIRECTION.BOTTOM;
 			}
 			if ( speed < 0 ) {
-				this.direction = "top";
+				this.direction = DIRECTION.TOP;
 			}
 		}
 
@@ -268,7 +275,26 @@ export class AI extends Bot {
 		this.team = "red";
 		this.owner = "ai";
 	}
+}
 
+// OCTOROK
+export class Octorok extends Bot {
+	constructor(name = "Octorak", positionX = 0, positionY = 0) {
+		super(name, positionX, positionY);
+		this.spriteSheetId = "917319e7-9381-4830-89e5-c84d42c8eecd";
+		this.spriteNumber = "77caa5ef-8162-4d20-9f6c-53283c64cd84";
+		this.team = "red";
+		this.owner = "ai";
+	}
+
+	updateSpriteNumber = function() {
+		if ( this.spriteNumber === "f38bcbd6-f01b-4ad8-8d03-9b399cf5dbef" ) {
+			this.spriteNumber = "77caa5ef-8162-4d20-9f6c-53283c64cd84";
+		} else {
+			this.spriteNumber = "f38bcbd6-f01b-4ad8-8d03-9b399cf5dbef";
+		}
+		this.direction
+	}
 }
 
 // MOVABLE ACTORS HANDLED BY CONTROLLER

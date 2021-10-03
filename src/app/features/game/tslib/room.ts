@@ -1,4 +1,4 @@
-import { Wall, Door, Player, Decoration, AI, Item, spriteConfig } from "./actors";
+import { Wall, Door, Player, Decoration, AI, Item, spriteConfig, Octorok } from "./actors";
 import { Items } from "./items";
 export class Room {
 
@@ -119,12 +119,10 @@ export class Room {
             this.roomItems.setItems(tempPlayer);
 
             // Create the AI on the page
-            const aiArray = [[3, 5], [10, 5], [8, 3]];
-            if (aiArray.length > 0) {
-                for (const aiData of aiArray) {
-                    const tempAi = new AI("Monster Type 1", (aiData[0] * 2), (aiData[1] * 2));
-                    tempAi.spriteSheetId = "0b8edc27-79d6-4f10-8272-b09f339dc20f";
-                    tempAi.spriteNumber = "d4da32ea-10f2-460c-8723-45cfdace9e73";
+            const octoArray = [[3, 5], [10, 5], [8, 3]];
+            if (octoArray.length > 0) {
+                for (const octoData of octoArray) {
+                    const tempAi = new Octorok(`Octorok`, (octoData[0] * 2), (octoData[1] * 2));
                     this.roomItems.setItems(tempAi);
                 }
             }
