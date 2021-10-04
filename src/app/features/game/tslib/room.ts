@@ -17,7 +17,7 @@ export class Room {
             for (let i = 0; i < (22); i = i + 2) {
                 for (let j = 0; j < (32); j = j + 2) {
                     const tempfloor = new Decoration();
-                    tempfloor.setPossition(j, i);
+                    tempfloor.setPosition(j, i);
                     this.roomItems.setDecoration(tempfloor);
                 }
 
@@ -85,7 +85,7 @@ export class Room {
                 for (const wall of walls) {
                     const tempwall = new Wall();
 
-                    tempwall.setPossition(wall[0] * 2, wall[1] * 2);
+                    tempwall.setPosition(wall[0] * 2, wall[1] * 2);
                     tempwall.spriteSheetId = wall[2].spriteSheetId;
                     tempwall.setSpriteNumber(wall[2].spriteNumber);
                     if ( wall[2].collitionMap !== undefined ) {
@@ -101,7 +101,7 @@ export class Room {
             if (doors.length > 0) {
                 for (const door of doors) {
                     const tempdoors = new Door();
-                    tempdoors.setPossition((door[0] * 2), (door[1] * 2));
+                    tempdoors.setPosition((door[0] * 2), (door[1] * 2));
                     tempdoors.setSpriteNumber(door[2]);
                     if ( door[3] !== undefined ) {
                         tempdoors.setRoomRequest( door[3] );
@@ -134,7 +134,7 @@ export class Room {
                     const tempAi = new AI("Monster Type 2", (aiData[0] * 2), (aiData[1] * 2));
                     tempAi.spriteSheetId = "5e24b4c7-eb38-4bb0-8fe4-3ae79cf91005";
                     tempAi.spriteNumber = "2c05ef1d-cb9b-47e0-a170-96e86cb6bcab";
-                    tempAi.passable = false;
+                    tempAi.setPassable(false);
                     this.roomItems.setItems(tempAi);
                 }
             }

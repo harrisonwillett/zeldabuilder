@@ -126,12 +126,12 @@ export class GameComponent implements OnInit, AfterViewInit {
               this.gamescreenCnxt.drawImage(
                 subSprite,
                 Math.floor(
-                  currentItem.positionX *
+                  currentItem.getPosition()[0] *
                   Math.floor(this.topdownEightBitDisplay.boundingRects.sprite.natural.width) +
                   this.topdownEightBitDisplay.boundingRects.room.natural.left
                 ),
                 Math.floor(
-                  currentItem.positionY *
+                  currentItem.getPosition()[1] *
                   Math.floor(this.topdownEightBitDisplay.boundingRects.sprite.natural.height) +
                   this.topdownEightBitDisplay.boundingRects.room.natural.top
                 ),
@@ -250,12 +250,12 @@ export class GameComponent implements OnInit, AfterViewInit {
               this.gamescreenCnxt.drawImage(
                 subSprite,
                 Math.floor(
-                  currentItem.positionX *
+                  currentItem.getPosition()[0] *
                   Math.floor(this.topdownEightBitDisplay.boundingRects.sprite.natural.width) +
                   this.topdownEightBitDisplay.boundingRects.room.natural.left
                 ),
                 Math.floor(
-                  currentItem.positionY *
+                  currentItem.getPosition()[1] *
                   Math.floor(this.topdownEightBitDisplay.boundingRects.sprite.natural.height) +
                   this.topdownEightBitDisplay.boundingRects.room.natural.top
                 ),

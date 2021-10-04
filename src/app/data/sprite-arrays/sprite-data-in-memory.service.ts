@@ -1400,6 +1400,27 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
           }
         ],
         options: EightBitX2
+      },
+      {
+        id: "329ae04d-0b31-48c5-869e-22b7c3d75f71",
+        name: "Overworld Monsters - Red",
+        access: readWrite,
+        colors: itemsColors3,
+        sprites: [
+          {
+            id: "9f65561e-b08d-4478-bb24-28ea7f1a55a9",
+            name: "Octorok",
+            access: readWrite,
+            array: spriteOctorokArray
+          },
+          {
+            id: "1b56c392-27df-430c-a73b-1108a7c73328",
+            name: "Octorok - Alternate",
+            access: readWrite,
+            array: spriteOctorok2Array
+          }
+        ],
+        options: EightBitX2
       }
     ];
     return { sheets };

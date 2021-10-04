@@ -7,20 +7,25 @@ export enum DIRECTION {
 	RIGHT ="right"
 }
 
+export enum OWNER {
+	AI = "ai",
+	CONTROLLER = "controller"
+}
+
 export class spriteConfig {
 	constructor(public spriteSheetId: string, public spriteNumber: string, public collitionMap: null | [boolean, boolean, boolean, boolean]) {}
 }
 
 /*sets the location of an object in space*/
 export class Item {
-	name: string;
-	positionX: number;
-	positionY: number;
-	height: number;
-	width: number;
-	passable: boolean;
-	collitionMap: null | [boolean, boolean, boolean, boolean];
-	owner;
+	private name: string;
+	private positionX: number;
+	private positionY: number;
+	private height: number;
+	private width: number;
+	private passable: boolean;
+	private collitionMap: null | [boolean, boolean, boolean, boolean];
+	private owner: OWNER | Item | null;
 	spriteSheetId: string;
 	spriteNumber: string;
 	facing: number;
@@ -46,19 +51,17 @@ export class Item {
 		this.name = name;
 	}
 
-	getName = (x, y) => {
+	getName = () => {
 		return this.name;
 	}
 
-	setPossition = (x, y) => {
+	setPosition = (x, y) => {
 		this.positionX = x;
 		this.positionY = y;
 	}
 
-	getPossition = (x, y) => {
-
-		return [x, y];
-
+	getPosition = () => {
+		return [this.positionX, this.positionY];
 	}
 
 	getCollitionMap = () => {
@@ -70,6 +73,38 @@ export class Item {
 			this.collitionMap = x;
 		}
 	}
+
+	setOwner = (owner: OWNER | Item) => {
+		this.owner = owner;
+	}
+
+	getOwner = () => {
+		return this.owner;
+	}
+
+	getHeight = () => {
+		return this.height;
+	}
+
+	setHeight = (height: number) => {
+		this.height = height;
+	}
+
+	getWidth = () => {
+		return this.width;
+	}
+
+	setWidth = (width: number) => {
+		this.width = width;
+	}
+
+	getPassable = () => {
+		return this.passable;
+	};
+
+	setPassable = (passable: boolean) => {
+		this.passable = passable;
+	};
 
 	getHitbox =  () => {
 		const x1 = this.positionX;
@@ -124,7 +159,7 @@ export class Actor extends Decoration {
 export class Wall extends Actor {
 	constructor(name = "wall", positionX = 0, positionY = 0) {
 		super(name, positionX, positionY);
-		this.passable = false;
+		this.setPassable(false);
 		this.spriteSheetId = "0b9bcda2-c278-4539-83d0-7b92a413847d";
 		this.spriteNumber = "9db8c14b-fa65-4717-b50a-f002bf954fe9";
 	}
@@ -198,8 +233,7 @@ export class Bot extends Actor {
 		super(name, positionX, positionY);
 		this.team = undefined;
 		this.spriteSheetId = "0c595db0-e6ab-4999-a3f3-a1a60b8cede5";
-		this.requestedPositionX = this.positionX;
-		this.requestedPositionY = this.positionY;
+		[this.requestedPositionX, this.requestedPositionY] = this.getPosition();
 		this.direction = DIRECTION.BOTTOM;
 		this.canMove = true;
 		this.canLeave = false;
@@ -209,14 +243,18 @@ export class Bot extends Actor {
 
 	}
 
-	moveRequest = (dirct, speed) => {
+	tick = () => {
 
+	}
+
+	moveRequest = (dirct, speed) => {
+		const [x, y] = this.getPosition();
 		if (dirct === "x") {
-			if ( !isNaN(this.positionX + speed)) {
-				this.requestedPositionX = this.positionX + speed;
+			if ( !isNaN(x + speed)) {
+				this.requestedPositionX = x + speed;
 			}
-			if ( !isNaN(this.positionY)) {
-				this.requestedPositionY = this.positionY;
+			if ( !isNaN(y)) {
+				this.requestedPositionY = y;
 			}
 			if ( speed > 0 ) {
 				this.direction = DIRECTION.RIGHT;
@@ -227,11 +265,11 @@ export class Bot extends Actor {
 		}
 
 		if (dirct === "y") {
-			if ( !isNaN(this.positionX)) {
-				this.requestedPositionX = this.positionX;
+			if ( !isNaN(x)) {
+				this.requestedPositionX = x;
 			}
-			if ( !isNaN(this.positionY + speed)) {
-				this.requestedPositionY = this.positionY + speed;
+			if ( !isNaN(y + speed)) {
+				this.requestedPositionY = y + speed;
 			}
 			if ( speed > 0 ) {
 				this.direction = DIRECTION.BOTTOM;
@@ -250,19 +288,21 @@ export class Bot extends Actor {
 	getRequestedHitbox =  () => {
 		const x1 = this.requestedPositionX;
 		const y1 = this.requestedPositionY;
-		const x2 = this.height + x1;
-		const y2 = this.width + y1;
+		const x2 = this.getHeight() + x1;
+		const y2 = this.getWidth() + y1;
 
 		return [x1, x2, y1, y2];
 
 	}
 
 	moveApprove = () => {
-		this.positionX = this.requestedPositionX;
-		this.positionY = this.requestedPositionY;
+		this.setPosition(
+			this.requestedPositionX,
+			this.requestedPositionY
+		);
 	}
 
-	projectileRequest = ( val, parent ) => {
+	projectileRequest = ( val: string, parent:Bot ) => {
 		return (new Projectile(val, parent));
 	}
 
@@ -273,7 +313,7 @@ export class AI extends Bot {
 	constructor(name = "Monster", positionX = 0, positionY = 0) {
 		super(name, positionX, positionY);
 		this.team = "red";
-		this.owner = "ai";
+		this.setOwner(OWNER.AI);
 	}
 }
 
@@ -284,16 +324,19 @@ export class Octorok extends Bot {
 		this.spriteSheetId = "917319e7-9381-4830-89e5-c84d42c8eecd";
 		this.spriteNumber = "77caa5ef-8162-4d20-9f6c-53283c64cd84";
 		this.team = "red";
-		this.owner = "ai";
+		this.setOwner(OWNER.AI);
 	}
 
-	updateSpriteNumber = function() {
+	updateSpriteNumber = () => {
 		if ( this.spriteNumber === "f38bcbd6-f01b-4ad8-8d03-9b399cf5dbef" ) {
 			this.spriteNumber = "77caa5ef-8162-4d20-9f6c-53283c64cd84";
 		} else {
 			this.spriteNumber = "f38bcbd6-f01b-4ad8-8d03-9b399cf5dbef";
 		}
-		this.direction
+	}
+
+	tick = () => {
+		this.updateSpriteNumber();
 	}
 }
 
@@ -307,7 +350,7 @@ export class Player extends Bot {
 		this.spriteSheetId = "5e24b4c7-eb38-4bb0-8fe4-3ae79cf91005";
 		this.spriteNumber = "c9781df1-56f7-476e-a17e-911862a1df90";
 		this.team = "green";
-		this.owner = "controller";
+		this.setOwner(OWNER.CONTROLLER);
 		this.canLeave = true;
 	}
 
@@ -347,10 +390,11 @@ export class Player extends Bot {
 
 // MOVABLE ACTORS HANDLED BY AI
 export class Projectile extends Bot {
-	constructor( val, parent ) {
-		super(val, parent.positionX, parent.positionY);
+	constructor( val:string, parent:(Bot) ) {
+		const [x, y] = parent.getPosition();
+		super(val, x, y);
 		this.team = undefined;
-		this.owner = parent;
+		this.setOwner(parent as Item);
 		this.spriteSheetId = "f475af10-d131-4490-a41c-1c9cd068e3e6";
 		this.spriteNumber = "7eb68029-cfc3-42c0-84e8-8bcd2801a022";
 	}
