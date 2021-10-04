@@ -15,6 +15,8 @@ import { Room } from "./tslib/room";
 import { TopdownEightBitDisplay } from "./tslib/eight-bit-display";
 import { of, Observable } from "rxjs";
 import { RgbaStringPipe } from "src/app/pipe/rgba-string.pipe";
+import { Wall, Door, Decoration } from "./tslib/actors";
+import { Sprite } from "src/app/model/sprite";
 
 @Component({
   selector: "app-game",
@@ -169,19 +171,19 @@ export class GameComponent implements OnInit, AfterViewInit {
         this.drawActorsToCanvas();
       }, 120);
   }
-  sheetDataToCanvas(data: Spritesheet) {
+
+  spriteDataToCanvas(sheet: Spritesheet, sprite: Sprite) {
     const pipe = new RgbaStringPipe();
-    data.sprites.forEach((sprite) => {
-      const newCanvas = document.createElement("canvas");
-      newCanvas.height = data.options.height * this.topdownEightBitDisplay.boundingRects.pixel.natural.height;
-      newCanvas.width = data.options.width * this.topdownEightBitDisplay.boundingRects.pixel.natural.width;
+    const newCanvas = document.createElement("canvas");
+      newCanvas.height = sheet.options.height * this.topdownEightBitDisplay.boundingRects.pixel.natural.height;
+      newCanvas.width = sheet.options.width * this.topdownEightBitDisplay.boundingRects.pixel.natural.width;
       const spriteContext: CanvasRenderingContext2D = newCanvas.getContext("2d");
       Promise.resolve( spriteContext ).then(() => {
         if (spriteContext != null) {
           spriteContext.clearRect(0, 0, newCanvas.width, newCanvas.height);
           sprite.array.forEach((row, rowIndex) => {
             row.forEach((cell, columnIndex) => {
-              spriteContext.fillStyle = pipe.transform( data.colors[cell] );
+              spriteContext.fillStyle = pipe.transform( sheet.colors[cell] );
               spriteContext.fillRect(
                 Math.floor((this.topdownEightBitDisplay.boundingRects.pixel.natural.width * columnIndex)),
                 Math.floor((this.topdownEightBitDisplay.boundingRects.pixel.natural.height) * rowIndex),
@@ -194,6 +196,11 @@ export class GameComponent implements OnInit, AfterViewInit {
         }
         sprite.canvas = of(newCanvas);
       });
+  }
+
+  sheetDataToCanvas(data: Spritesheet) {
+    data.sprites.forEach((sprite) => {
+      this.spriteDataToCanvas(data, sprite);
     });
     Promise.resolve(
       this.gamescreenCnxt &&
@@ -222,6 +229,48 @@ export class GameComponent implements OnInit, AfterViewInit {
 
   }
 
+  backgroundSpriteUpdate(currentItem: (Wall | Door | Decoration)) {
+    let actSprite: Observable<HTMLCanvasElement>;
+    this.spriteSheets.subscribe(sheets => {
+      sheets.forEach(sheet => {
+        if ( sheet.id === currentItem.spriteSheetId ) {
+          sheet.sprites.forEach(sprite => {
+            if ( sprite.id === currentItem.spriteNumber ) {
+              actSprite = sprite.canvas;
+            }
+          });
+        }
+      });
+    });
+    Promise.resolve(actSprite).then(() => {
+      if (actSprite !== undefined ) {
+        actSprite.subscribe(subSprite => {
+          this.gamescreenCnxt.drawImage(
+            subSprite,
+            Math.floor(
+              currentItem.getPosition()[0] *
+              Math.floor(this.topdownEightBitDisplay.boundingRects.sprite.natural.width) +
+              this.topdownEightBitDisplay.boundingRects.room.natural.left
+            ),
+            Math.floor(
+              currentItem.getPosition()[1] *
+              Math.floor(this.topdownEightBitDisplay.boundingRects.sprite.natural.height) +
+              this.topdownEightBitDisplay.boundingRects.room.natural.top
+            ),
+            Math.ceil(subSprite.width),
+            Math.ceil(subSprite.height)
+          );
+          this.backgroundCache = this.gamescreenCnxt.getImageData(
+            0,
+            0,
+            this.topdownEightBitDisplay.boundingRects.screen.natural.width,
+            this.topdownEightBitDisplay.boundingRects.screen.natural.height
+          );
+        });
+      }
+    });
+  }
+
   drawRoomToCanvas() {
     // Get Decorations
     // ("Get Decorations");
@@ -232,45 +281,7 @@ export class GameComponent implements OnInit, AfterViewInit {
         this.gamescreenCnxt.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
       }
       room.roomItems.getDecoration().forEach(currentItem => {
-        let actSprite: Observable<HTMLCanvasElement>;
-        this.spriteSheets.subscribe(sheets => {
-          sheets.forEach(sheet => {
-            if ( sheet.id === currentItem.spriteSheetId ) {
-              sheet.sprites.forEach(sprite => {
-                if ( sprite.id === currentItem.spriteNumber ) {
-                  actSprite = sprite.canvas;
-                }
-              });
-            }
-          });
-        });
-        Promise.resolve(actSprite).then(() => {
-          if (actSprite !== undefined ) {
-            actSprite.subscribe(subSprite => {
-              this.gamescreenCnxt.drawImage(
-                subSprite,
-                Math.floor(
-                  currentItem.getPosition()[0] *
-                  Math.floor(this.topdownEightBitDisplay.boundingRects.sprite.natural.width) +
-                  this.topdownEightBitDisplay.boundingRects.room.natural.left
-                ),
-                Math.floor(
-                  currentItem.getPosition()[1] *
-                  Math.floor(this.topdownEightBitDisplay.boundingRects.sprite.natural.height) +
-                  this.topdownEightBitDisplay.boundingRects.room.natural.top
-                ),
-                Math.ceil(subSprite.width),
-                Math.ceil(subSprite.height)
-              );
-              this.backgroundCache = this.gamescreenCnxt.getImageData(
-                0,
-                0,
-                this.topdownEightBitDisplay.boundingRects.screen.natural.width,
-                this.topdownEightBitDisplay.boundingRects.screen.natural.height
-              );
-            });
-          }
-        });
+        this.backgroundSpriteUpdate(currentItem);
       });
     });
   }
