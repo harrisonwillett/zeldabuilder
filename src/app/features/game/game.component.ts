@@ -5,12 +5,10 @@ import {
   ViewChild,
   AfterViewInit
 } from "@angular/core";
-// import "./tslib/hud";
 
 
 import { Spritesheet } from "../../model/spritesheet";
 import { SpriteService } from "../../service/sprite.service";
-import { Controller } from "./tslib/controller";
 import { Room } from "./tslib/room";
 import { TopdownEightBitDisplay } from "./tslib/eight-bit-display";
 import { of, Observable } from "rxjs";
@@ -29,21 +27,19 @@ export class GameComponent implements OnInit, AfterViewInit {
     HTMLCanvasElement
   >;
   gamescreenCnxt: CanvasRenderingContext2D;
-  controller: Controller;
   bindingClientRect: DOMRect;
   topdownEightBitDisplay = new TopdownEightBitDisplay();
   spriteScale: number;
   pixelScale: number;
-  canvasRefresh;
+  canvasRefresh: ReturnType<typeof setInterval>;
   backgroundCache: ImageData = undefined;
-  gameScaled;
+  gameScaled: MutationObserver;
   spriteSheets: Observable<Spritesheet[]> = of([]);
   playerButtons: Observable<string[]> = of([]);
   currentRoom: Observable<Room>;
+  controllerRequests: string[] = [];
 
-  constructor(private spriteService: SpriteService) {
-    this.controller = new Controller();
-  }
+  constructor(private spriteService: SpriteService) {}
 
   ngOnInit(): void {
     this.getSpriteSheets();
@@ -92,9 +88,7 @@ export class GameComponent implements OnInit, AfterViewInit {
   }
 
   getCurrentRoom(): void {
-    Promise.resolve(this.controller).then(() => {
       this.currentRoom = of( new Room(1));
-    });
   }
 
   onScroll() {
@@ -146,6 +140,13 @@ export class GameComponent implements OnInit, AfterViewInit {
       });
     });
   }
+
+  updateControllerRequests($event) {
+    if($event !== undefined) {
+      this.controllerRequests = $event;
+    }
+  }
+
   resizeCanvas() {
     Promise.resolve(this.gamescreenCnxt).then(() => {
       this.spriteScale = Math.min(
@@ -166,7 +167,7 @@ export class GameComponent implements OnInit, AfterViewInit {
     clearInterval(this.canvasRefresh);
     this.canvasRefresh = setInterval(() => {
         this.currentRoom.subscribe(room => {
-          room.roomItems.updateItems(this.controller.activeMap);
+          room.roomItems.updateItems(this.controllerRequests);
         });
         this.drawActorsToCanvas();
       }, 120);

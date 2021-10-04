@@ -12,11 +12,13 @@ import { GameComponent } from "./features/game/game.component";
 import { SpriteModule } from "./features/sprite-feature/sprite-feature";
 import { SpriteSheetModule } from "./features/sprite-sheet-feature/sprite-sheet-feature";
 import { SpriteDataInMemoryService } from "./data/sprite-arrays/sprite-data-in-memory.service";
+import { GameControllerDirective } from './directive/game-controller/game-controller.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameComponent,
+    GameControllerDirective,
   ],
   imports: [
     BrowserModule,

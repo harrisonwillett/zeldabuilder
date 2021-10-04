@@ -1,13 +1,13 @@
-<div
-  #gamewrapper
+<div #gamewrapper
+  appGameController
+  (activeMap)="updateControllerRequests($event)"
+  (resizeEvent)="requestResizeCanvas()"
+  (scrollEvent)="onScroll()"
+  tabindex="0"
+  autofocus
   class="game-wrapper"
-  (window:resize)="requestResizeCanvas()"
-  (window:scroll)="onScroll()"
-  (window:keydown)="controller?.onKeyDown($event)"
-  (window:keyup)="controller?.onKeyUp($event)"
 >
-  <canvas
-    #gamescreen
+  <canvas #gamescreen
     width="{{ this.topdownEightBitDisplay.boundingRects.screen.natural.width }}"
     height="{{ this.topdownEightBitDisplay.boundingRects.screen.natural.height }}"
   ></canvas>

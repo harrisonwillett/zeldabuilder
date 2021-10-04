@@ -1,5 +1,3 @@
-import { Controller } from "./controller";
-
 export enum DIRECTION {
 	TOP = "top",
 	BOTTOM ="bottom",
@@ -342,8 +340,6 @@ export class Octorok extends Bot {
 
 // MOVABLE ACTORS HANDLED BY CONTROLLER
 export class Player extends Bot {
-
-	controller: Controller;
 
 	constructor( name: string = "Link", positionX: number = 0, positionY: number = 0 ) {
 		super(name, positionX, positionY);
