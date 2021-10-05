@@ -242,11 +242,7 @@ export class GameComponent implements OnInit, AfterViewInit {
 
   drawRoomToCanvas() {
     this.currentRoom.subscribe(room => {
-      if (this.backgroundCache !== undefined) {
-        this.gamescreenCnxt.putImageData(this.backgroundCache, 0, 0);
-      } else {
-        this.gamescreenCnxt.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
-      }
+      this.gamescreenCnxt.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
       room.roomItems.getDecoration().forEach(currentItem => {
         this.backgroundSpriteUpdate(currentItem);
       });
