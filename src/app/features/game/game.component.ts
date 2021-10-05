@@ -11,10 +11,11 @@ import { Spritesheet } from "../../model/spritesheet";
 import { SpriteService } from "../../service/sprite.service";
 import { Room } from "./tslib/room";
 import { TopdownEightBitDisplay } from "./tslib/eight-bit-display";
-import { of, Observable } from "rxjs";
+import { of, Observable, forkJoin } from "rxjs";
 import { RgbaStringPipe } from "src/app/pipe/rgba-string.pipe";
 import { Wall, Door, Decoration } from "./tslib/actors";
 import { Sprite } from "src/app/model/sprite";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: "app-game",
@@ -51,12 +52,8 @@ export class GameComponent implements OnInit, AfterViewInit {
   }
 
   requestResizeCanvas() {
-    Promise.resolve(
-      this.gamescreenCnxt &&
-      this.getSpriteSheets &&
-      this.getCurrentRoom
-    ).then(() => {
-      this.resizeCanvas();
+    forkJoin([this.spriteSheets, this.currentRoom]).subscribe(() => {
+      this.resizeCanvas()
     });
   }
 
@@ -155,20 +152,20 @@ export class GameComponent implements OnInit, AfterViewInit {
     const newCanvas = document.createElement("canvas");
       newCanvas.height = sheet.options.height * this.topdownEightBitDisplay.boundingRects.pixel.natural.height;
       newCanvas.width = sheet.options.width * this.topdownEightBitDisplay.boundingRects.pixel.natural.width;
-      const spriteContext: CanvasRenderingContext2D = newCanvas.getContext("2d");
-      Promise.resolve( spriteContext ).then(() => {
-        if (spriteContext != null) {
-          spriteContext.clearRect(0, 0, newCanvas.width, newCanvas.height);
+      const spriteContext: Observable<CanvasRenderingContext2D> = of(newCanvas.getContext("2d"));
+      spriteContext.subscribe((context) => {
+        if (context != null) {
+          context.clearRect(0, 0, newCanvas.width, newCanvas.height);
           sprite.array.forEach((row, rowIndex) => {
             row.forEach((cell, columnIndex) => {
-              spriteContext.fillStyle = pipe.transform( sheet.colors[cell] );
-              spriteContext.fillRect(
+              context.fillStyle = pipe.transform( sheet.colors[cell] );
+              context.fillRect(
                 Math.floor((this.topdownEightBitDisplay.boundingRects.pixel.natural.width * columnIndex)),
                 Math.floor((this.topdownEightBitDisplay.boundingRects.pixel.natural.height) * rowIndex),
                 Math.ceil(this.topdownEightBitDisplay.boundingRects.pixel.natural.width),
                 Math.ceil(this.topdownEightBitDisplay.boundingRects.pixel.natural.height)
               );
-              spriteContext.fill();
+              context.fill();
             });
           });
         }
@@ -180,14 +177,7 @@ export class GameComponent implements OnInit, AfterViewInit {
     data.sprites.forEach((sprite) => {
       this.spriteDataToCanvas(data, sprite);
     });
-    Promise.resolve(
-      this.gamescreenCnxt &&
-      this.getSpriteSheets &&
-      this.getCurrentRoom &&
-      this.resizeCanvas
-    ).then(() => {
-      this.drawRoomToCanvas();
-    });
+    this.drawRoomToCanvas();
   }
 
   resizeSprites() {
@@ -211,33 +201,31 @@ export class GameComponent implements OnInit, AfterViewInit {
         }
       });
     });
-    Promise.resolve(actSprite).then(() => {
-      if (actSprite !== undefined ) {
-        actSprite.subscribe(subSprite => {
-          this.gamescreenCnxt.drawImage(
-            subSprite,
-            Math.floor(
-              currentItem.getPosition()[0] *
-              Math.floor(this.topdownEightBitDisplay.boundingRects.sprite.natural.width) +
-              this.topdownEightBitDisplay.boundingRects.room.natural.left
-            ),
-            Math.floor(
-              currentItem.getPosition()[1] *
-              Math.floor(this.topdownEightBitDisplay.boundingRects.sprite.natural.height) +
-              this.topdownEightBitDisplay.boundingRects.room.natural.top
-            ),
-            Math.ceil(subSprite.width),
-            Math.ceil(subSprite.height)
-          );
-          this.backgroundCache = this.gamescreenCnxt.getImageData(
-            0,
-            0,
-            this.topdownEightBitDisplay.boundingRects.screen.natural.width,
-            this.topdownEightBitDisplay.boundingRects.screen.natural.height
-          );
-        });
-      }
-    });
+    if (actSprite) {
+      actSprite.subscribe(subSprite => {
+        this.gamescreenCnxt.drawImage(
+          subSprite,
+          Math.floor(
+            currentItem.getPosition()[0] *
+            Math.floor(this.topdownEightBitDisplay.boundingRects.sprite.natural.width) +
+            this.topdownEightBitDisplay.boundingRects.room.natural.left
+          ),
+          Math.floor(
+            currentItem.getPosition()[1] *
+            Math.floor(this.topdownEightBitDisplay.boundingRects.sprite.natural.height) +
+            this.topdownEightBitDisplay.boundingRects.room.natural.top
+          ),
+          Math.ceil(subSprite.width),
+          Math.ceil(subSprite.height)
+        );
+        this.backgroundCache = this.gamescreenCnxt.getImageData(
+          0,
+          0,
+          this.topdownEightBitDisplay.boundingRects.screen.natural.width,
+          this.topdownEightBitDisplay.boundingRects.screen.natural.height
+        );
+      });
+    }
   }
 
   drawRoomToCanvas() {
