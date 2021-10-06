@@ -1250,37 +1250,37 @@ export class SpriteDataInMemoryService implements InMemoryDbService {
           },
           {
             id: "d80b2145-eb9e-4419-bca8-04181d3baa2b",
-            name: "Link Bottom - Alternate",
+            name: "Link Bottom - Attacking",
             access: readWrite,
             array: spriteLinkBottomAttackArray
           },
           {
             id: "4e36a492-5d7e-4132-98cc-de4a6fdd1b6c",
-            name: "Link Top",
+            name: "Link Top - Attacking",
             access: readWrite,
             array: spriteLinkTopAttackArray
           },
           {
             id: "73857caf-0dd4-4524-b6ae-edbc8fe5f95e",
-            name: "Link Top - Alternate",
+            name: "Link Left - Attacking",
             access: readWrite,
             array: spriteLinkLeftAttackArray
           },
           {
             id: "48e34731-a0c4-46c4-ae3f-9a47c4671243",
-            name: "Link Left",
+            name: "Link Right - Attacking",
             access: readWrite,
             array: spriteLinkRightAttackArray
           },
           {
             id: "2c05ef1d-cb9b-47e0-a170-96e86cb6bcab",
-            name: "Link Left - Alternate",
+            name: "Link - Celebrate Full",
             access: readWrite,
             array: spriteLinkFanfare1Array
           },
           {
             id: "c5f0806d-d428-456c-b36a-e821b06a24ef",
-            name: "Link Right",
+            name: "Link - Celebrate Half",
             access: readWrite,
             array: spriteLinkFanfare2Array
           }
